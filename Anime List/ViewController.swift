@@ -26,9 +26,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case topRankedAnime
         case topUpcomingAnime
 
-        init?(indexPath: NSIndexPath) {
-            self.init(rawValue: indexPath.section)
-        }
+//        init?(indexPath: IndexPath) {
+//            self.init(rawValue: indexPath.section)
+//        }
 
         static var numberOfSections: Int { return 3 }
     }
@@ -38,10 +38,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
-//        getTopAiring()
-//        getTopRanked()
-//        getTopUpcoming()
                 
         //        networkManager.getSearchedAnime(name: "TokyoGhoul") { (searchedAnime, error) in
         //            if let error = error {
@@ -157,15 +153,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
-        if let cell = cell as? HomeTableViewCell {
-            cell.collectionView.dataSource = self
-            cell.collectionView.reloadData()
-        }
-
+        guard let homeTableViewCell = cell as? HomeTableViewCell else { return }
+        
+        homeTableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
+        
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         switch Section(rawValue: section) {
@@ -186,7 +181,7 @@ extension ViewController: UICollectionViewDataSource {
         
         let topElement: TopElement
         
-        switch Section(indexPath: indexPath as NSIndexPath) {
+        switch Section(rawValue: cell.tag) {
         case .topAiringAnime:
             topElement = topAiringArray[indexPath.row]
             cell.textView.text = topElement.title

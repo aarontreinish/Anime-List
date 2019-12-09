@@ -25,4 +25,12 @@ class HomeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate, forRow row: Int) {
+        
+        collectionView.delegate = dataSourceDelegate
+        collectionView.dataSource = dataSourceDelegate
+        collectionView.tag = row
+        collectionView.reloadData()
+    }
+    
 }
