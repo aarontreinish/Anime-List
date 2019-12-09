@@ -19,17 +19,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var topRankedArray: [TopElement] = []
     var topUpcomingArray: [TopElement] = []
     
+    var selection = 0
+    
     var homeTableViewCell = HomeTableViewCell()
     
     private enum Section: Int {
         case topAiringAnime
         case topRankedAnime
         case topUpcomingAnime
-
-//        init?(indexPath: IndexPath) {
-//            self.init(rawValue: indexPath.section)
-//        }
-
+        
         static var numberOfSections: Int { return 3 }
     }
     
@@ -38,25 +36,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-                
-        //        networkManager.getSearchedAnime(name: "TokyoGhoul") { (searchedAnime, error) in
-        //            if let error = error {
-        //                print(error)
-        //            }
-        //
-        //            if let searchedAnime = searchedAnime {
-        //                print(searchedAnime)
-        //            }
-        //        }
         
-        //        networkManager.getNewAnime(id: 1) { (anime, error) in
-        //            if let error = error {
-        //                print(error)
-        //            }
-        //            if let anime = anime {
-        //                print(anime)
-        //            }
-        //        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,52 +48,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func getTopRanked() {
-         networkManager.getTopRanked { (topRanked, error) in
-             if let error = error {
-                 print(error)
-             }
-             
-             DispatchQueue.main.async {
-                 if let topRanked = topRanked {
-                     self.topRankedArray = topRanked
-                     self.tableView.reloadData()
-                     print(self.topRankedArray.count)
-                 }
-             }
-         }
-     }
-     
-     func getTopAiring() {
-         networkManager.getTopAiring { (topAiring, error) in
-             if let error = error {
-                 print(error)
-             }
-             
-             DispatchQueue.main.async {
-                 if let topAiring = topAiring {
-                     self.topAiringArray = topAiring
-                     self.tableView.reloadData()
-                     print(self.topAiringArray.count)
-                 }
-             }
-         }
-     }
-     
-     func getTopUpcoming() {
-         networkManager.getTopUpcoming { (topUpcoming, error) in
-             if let error = error {
-                 print(error)
-             }
-             
-             DispatchQueue.main.async {
-                 if let topUpcoming = topUpcoming {
-                     self.topUpcomingArray = topUpcoming
-                     self.tableView.reloadData()
-                     print(self.topUpcomingArray.count)
-                 }
-             }
-         }
-     }
+        networkManager.getTopRanked { (topRanked, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            DispatchQueue.main.async {
+                if let topRanked = topRanked {
+                    self.topRankedArray = topRanked
+                    self.tableView.reloadData()
+                    print(self.topRankedArray)
+                }
+            }
+        }
+    }
+    
+    func getTopAiring() {
+        networkManager.getTopAiring { (topAiring, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            DispatchQueue.main.async {
+                if let topAiring = topAiring {
+                    self.topAiringArray = topAiring
+                    self.tableView.reloadData()
+                    print(self.topAiringArray.count)
+                }
+            }
+        }
+    }
+    
+    func getTopUpcoming() {
+        networkManager.getTopUpcoming { (topUpcoming, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            DispatchQueue.main.async {
+                if let topUpcoming = topUpcoming {
+                    self.topUpcomingArray = topUpcoming
+                    self.tableView.reloadData()
+                    print(self.topUpcomingArray.count)
+                }
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
@@ -152,7 +132,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
+        
         guard let homeTableViewCell = cell as? HomeTableViewCell else { return }
         
         homeTableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
@@ -179,26 +159,63 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! HomeCollectionViewCell
         
+        //        cell.imageView.layer.cornerRadius = 50.0
+        //        cell.imageView.clipsToBounds = true
+        
         let topElement: TopElement
         
-        switch Section(rawValue: cell.tag) {
+        switch Section(rawValue: collectionView.tag) {
         case .topAiringAnime:
             topElement = topAiringArray[indexPath.row]
             cell.textView.text = topElement.title
-          //  cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
         case .topRankedAnime:
             topElement = topRankedArray[indexPath.row]
             cell.textView.text = topElement.title
-            //cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
         case .topUpcomingAnime:
             topElement = topUpcomingArray[indexPath.row]
             cell.textView.text = topElement.title
-            //cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
         case .none:
             cell.textView.text = "No Anime Available"
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as? HomeTableViewCell
+        
+        cell?.collectionView.tag = indexPath.row
+        
+        let topElement: TopElement
+        
+        switch Section(rawValue: collectionView.tag) {
+        case .topAiringAnime:
+            topElement = topAiringArray[indexPath.row]
+            selection = topElement.mal_id ?? 0
+            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+        case .topRankedAnime:
+            topElement = topRankedArray[indexPath.row]
+            selection = topElement.mal_id ?? 0
+            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+        case .topUpcomingAnime:
+            topElement = topUpcomingArray[indexPath.row]
+            selection = topElement.mal_id ?? 0
+            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+        case .none:
+            selection = 0
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailsSegue" {
+            let detailsViewController = segue.destination as? DetailsViewController
+            
+            detailsViewController?.selection = selection
+        }
     }
     
     
