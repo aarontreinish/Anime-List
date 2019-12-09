@@ -21,6 +21,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var selection = 0
     
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     var homeTableViewCell = HomeTableViewCell()
     
     private enum Section: Int {
@@ -37,17 +39,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        setupActivityIndicator()
         
         getTopRanked()
         getTopUpcoming()
         getTopAiring()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = UIColor.black
+        let horizontalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
+        view.addConstraint(horizontalConstraint)
+        let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
+        view.addConstraint(verticalConstraint)
+        
+    }
+    
     func getTopRanked() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+        
         networkManager.getTopRanked { (topRanked, error) in
             if let error = error {
                 print(error)
@@ -88,7 +108,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 if let topUpcoming = topUpcoming {
                     self.topUpcomingArray = topUpcoming
+                    self.activityIndicator.stopAnimating()
                     self.tableView.reloadData()
+                    self.tableView.isHidden = false
                     print(self.topUpcomingArray.count)
                 }
             }
