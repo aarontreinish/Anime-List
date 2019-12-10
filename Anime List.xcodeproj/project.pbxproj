@@ -44,6 +44,7 @@
 		2160EE42239C1A67002C9202 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */; };
 		2160EE48239C54DF002C9202 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */; };
 		21C3D8C0239D52ED00C0CE55 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8BF239D52ED00C0CE55 /* Section.swift */; };
+		21C3D8C2239F43D800C0CE55 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8C1239F43D800C0CE55 /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		21C3D8BF239D52ED00C0CE55 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		21C3D8C1239F43D800C0CE55 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				2160EDEB2399F5B8002C9202 /* ViewController.swift */,
 				2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */,
 				2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */,
+				21C3D8C1239F43D800C0CE55 /* DetailsViewController.swift */,
 				2160EDED2399F5B8002C9202 /* Main.storyboard */,
 				2160EDF02399F5BC002C9202 /* Assets.xcassets */,
 				2160EDF22399F5BC002C9202 /* LaunchScreen.storyboard */,
@@ -323,6 +326,7 @@
 				2160EE0F2399F6F6002C9202 /* NetworkLogger.swift in Sources */,
 				2160EE2E2399F7C7002C9202 /* Producers.swift in Sources */,
 				2160EE362399F7F6002C9202 /* Studios.swift in Sources */,
+				21C3D8C2239F43D800C0CE55 /* DetailsViewController.swift in Sources */,
 				2160EE032399F6A6002C9202 /* JikanEndPoint.swift in Sources */,
 				2160EE2C2399F7BD002C9202 /* Licensors.swift in Sources */,
 				2160EDEC2399F5B8002C9202 /* ViewController.swift in Sources */,

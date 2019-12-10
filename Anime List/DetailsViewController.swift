@@ -9,30 +9,14 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-    
-    var networkManager = NetworkManager()
-    
+
     var selection = 0
+    var networkManager = NetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        networkManager.getSearchedAnime(name: "Tokyo Ghoul") { (searchedAnime, error) in
-//            if let error = error {
-//                print(error)
-//            }
-//
-//            if let searchedAnime = searchedAnime {
-//                print(searchedAnime)
-//            }
-//        }
-//
-        
+
         print(selection)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         getAnimeDetails()
     }
@@ -47,5 +31,4 @@ class DetailsViewController: UIViewController {
             }
         }
     }
-    
 }
