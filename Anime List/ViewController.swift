@@ -75,12 +75,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print(error)
             }
             
+            if let topRanked = topRanked {
+                self.topRankedArray = topRanked
+            }
+            
             DispatchQueue.main.async {
-                if let topRanked = topRanked {
-                    self.topRankedArray = topRanked
-                    self.tableView.reloadData()
-                    print(self.topRankedArray)
-                }
+                self.tableView.reloadData()
             }
         }
     }
@@ -91,12 +91,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print(error)
             }
             
+            if let topAiring = topAiring {
+                self.topAiringArray = topAiring
+                
+            }
+            
             DispatchQueue.main.async {
-                if let topAiring = topAiring {
-                    self.topAiringArray = topAiring
-                    self.tableView.reloadData()
-                    print(self.topAiringArray.count)
-                }
+                self.tableView.reloadData()
             }
         }
     }
@@ -107,14 +108,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print(error)
             }
             
+            if let topUpcoming = topUpcoming {
+                self.topUpcomingArray = topUpcoming
+            }
+            
             DispatchQueue.main.async {
-                if let topUpcoming = topUpcoming {
-                    self.topUpcomingArray = topUpcoming
-                    self.activityIndicator.stopAnimating()
-                    self.tableView.reloadData()
-                    self.tableView.isHidden = false
-                    print(self.topUpcomingArray.count)
-                }
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
