@@ -12,6 +12,8 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var imageView: CustomImageView!
     
+    @IBOutlet weak var labelView: UIView!
+    
     @IBOutlet weak var staticTypeLabel: UILabel!
     @IBOutlet weak var staticSeasonLabel: UILabel!
     @IBOutlet weak var staticStudioLabel: UILabel!
@@ -42,6 +44,7 @@ class DetailsViewController: UIViewController {
     
     var allStudios = ""
     var allGenres = ""
+    var allGenresArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +59,8 @@ class DetailsViewController: UIViewController {
         imageView.layer.cornerRadius = 10.0
         setupActivityIndicator()
         getAnimeDetails()
+        
+        self.genreLabel.preferredMaxLayoutWidth = labelView.bounds.size.width
     }
     
     func hideUI() {
@@ -119,10 +124,19 @@ class DetailsViewController: UIViewController {
                 self.animeGenresArray = genres
             }
             
-            self.animeGenresArray.forEach { (genres) in
-                self.allGenres.append(contentsOf: genres.name ?? "")
-                print(self.allGenres)
-            }
+            self.allGenresArray = self.animeGenresArray.map { ($0.name ?? "") }
+            print(self.allGenresArray)
+            self.allGenres = self.allGenresArray.joined(separator: ", ")
+            print(self.allGenres)
+            
+//            self.animeGenresArray.forEach { (genres) in
+//                //self.allGenresArray?.append(contentsOf: genres.name ?? "")
+//
+//
+//
+//                self.allGenres.append(contentsOf: genres.name ?? "")
+//                print(self.allGenres)
+//            }
         }
         
         networkManager.getNewAnimeStudios(id: selection) { (studios, error) in
