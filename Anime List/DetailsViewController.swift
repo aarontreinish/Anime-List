@@ -31,7 +31,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     
-    @IBOutlet weak var desctiptionTextView: UITextView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
@@ -45,6 +46,7 @@ class DetailsViewController: UIViewController {
     var allStudios = ""
     var allGenres = ""
     var allGenresArray: [String] = []
+    var allStudiosArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +81,7 @@ class DetailsViewController: UIViewController {
         seasonLabel.isHidden = true
         scoreLabel.isHidden = true
         rankLabel.isHidden = true
-        desctiptionTextView.isHidden = true
+        descriptionLabel.isHidden = true
     }
     
     func showUI() {
@@ -98,7 +100,7 @@ class DetailsViewController: UIViewController {
         seasonLabel.isHidden = false
         scoreLabel.isHidden = false
         rankLabel.isHidden = false
-        desctiptionTextView.isHidden = false
+        descriptionLabel.isHidden = false
     }
     
     func setupActivityIndicator() {
@@ -136,9 +138,9 @@ class DetailsViewController: UIViewController {
                 self.animeStudiosArray = studios
             }
             
-            self.animeStudiosArray.forEach { (studios) in
-                self.allStudios.append(contentsOf: studios.name ?? "")
-            }
+            self.allStudiosArray = self.animeStudiosArray.map { ($0.name ?? "") }
+            self.allStudios = self.allStudiosArray.joined(separator: ", ")
+        
         }
         
         networkManager.getNewAnime(id: selection) { (anime, error) in
@@ -157,7 +159,7 @@ class DetailsViewController: UIViewController {
                 self.title = self.animeDetailsArray?.title
                 self.imageView.loadImageUsingCacheWithUrlString(urlString: self.animeDetailsArray?.image_url ?? "")
                 self.episodesLabel.text = episodes
-                self.desctiptionTextView.text = self.animeDetailsArray?.synopsis
+                self.descriptionLabel.text = self.animeDetailsArray?.synopsis
                 self.rankLabel.text = rank
                 self.scoreLabel.text = score
                 self.studioLabel.text = self.allStudios

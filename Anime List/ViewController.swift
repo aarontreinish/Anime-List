@@ -24,6 +24,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
+    lazy var refresher: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .black
+        refreshControl.addTarget(self, action: #selector(getData), for: .valueChanged)
+        
+        return refreshControl
+    }()
+    
     var homeTableViewCell = HomeTableViewCell()
     
     private enum Section: Int {
@@ -38,13 +46,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.refreshControl = refresher
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        
-        
+        activityIndicator.startAnimating()
         getTopRanked()
         getTopUpcoming()
         getTopAiring()
@@ -54,6 +63,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tableView.isHidden = true
         setupActivityIndicator()
     }
     
@@ -69,10 +79,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    func getTopRanked() {
+    @objc func getData() {
+        getTopRanked()
+        getTopUpcoming()
+        getTopAiring()
+        getMostPopular()
         
-        tableView.isHidden = true
-        activityIndicator.startAnimating()
+        refresher.endRefreshing()
+    }
+    
+    func getTopRanked() {
         
         networkManager.getTopRanked { (topRanked, error) in
             if let error = error {
@@ -141,7 +157,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let headerView = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
         
         switch Section(rawValue: section) {
         case .topAiringAnime:
@@ -160,7 +176,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 15
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -210,25 +226,29 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let topElement: TopElement
         
-        switch Section(rawValue: collectionView.tag) {
-        case .topAiringAnime:
-            topElement = topAiringArray[indexPath.row]
-            cell.textView.text = topElement.title
-            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-        case .topRankedAnime:
-            topElement = topRankedArray[indexPath.row]
-            cell.textView.text = topElement.title
-            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-        case .mostPopularAnime:
-            topElement = mostPopularArray[indexPath.row]
-            cell.textView.text = topElement.title
-            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-        case .topUpcomingAnime:
-            topElement = topUpcomingArray[indexPath.row]
-            cell.textView.text = topElement.title
-            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-        case .none:
-            cell.textView.text = "No Anime Available"
+        
+        if topAiringArray.count != 0 && topRankedArray.count != 0 && mostPopularArray.count != 0 && topUpcomingArray.count != 0 {
+            
+            switch Section(rawValue: collectionView.tag) {
+            case .topAiringAnime:
+                topElement = topAiringArray[indexPath.row]
+                cell.titleLabel.text = topElement.title
+                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            case .topRankedAnime:
+                topElement = topRankedArray[indexPath.row]
+                cell.titleLabel.text = topElement.title
+                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            case .mostPopularAnime:
+                topElement = mostPopularArray[indexPath.row]
+                cell.titleLabel.text = topElement.title
+                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            case .topUpcomingAnime:
+                topElement = topUpcomingArray[indexPath.row]
+                cell.titleLabel.text = topElement.title
+                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+            case .none:
+                cell.titleLabel.text = "No Anime Available"
+            }
         }
         
         return cell
