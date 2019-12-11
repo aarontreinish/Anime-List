@@ -21,7 +21,9 @@ public enum JikanAPI {
 //    case popular(page:Int)
 //    case newMovies(page:Int)
 //    case video(id:Int)
+    //https://api.jikan.moe/v3/top/anime/1/bypopularity
     case topAiring
+    case mostPopular
     case anime(id: Int)
     case searchAnime(name: String)
     case topRanked
@@ -55,6 +57,8 @@ extension JikanAPI: EndPointType {
             return "/top/anime/"
         case .topUpcoming:
             return "/top/anime/1/upcoming"
+        case .mostPopular:
+            return "/top/anime/1/bypopularity"
         }
     }
     

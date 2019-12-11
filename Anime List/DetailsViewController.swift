@@ -125,18 +125,7 @@ class DetailsViewController: UIViewController {
             }
             
             self.allGenresArray = self.animeGenresArray.map { ($0.name ?? "") }
-            print(self.allGenresArray)
             self.allGenres = self.allGenresArray.joined(separator: ", ")
-            print(self.allGenres)
-            
-//            self.animeGenresArray.forEach { (genres) in
-//                //self.allGenresArray?.append(contentsOf: genres.name ?? "")
-//
-//
-//
-//                self.allGenres.append(contentsOf: genres.name ?? "")
-//                print(self.allGenres)
-//            }
         }
         
         networkManager.getNewAnimeStudios(id: selection) { (studios, error) in
@@ -158,7 +147,6 @@ class DetailsViewController: UIViewController {
             }
             if let anime = anime {
                 self.animeDetailsArray = anime
-                //print(self.animeDetailsArray ?? "")
             }
             
             let episodes = String(self.animeDetailsArray?.episodes ?? 0)

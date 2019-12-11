@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var topAiringArray: [TopElement] = []
     var topRankedArray: [TopElement] = []
     var topUpcomingArray: [TopElement] = []
+    var mostPopularArray: [TopElement] = []
     
     var selection = 0
     
@@ -28,9 +29,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     private enum Section: Int {
         case topAiringAnime
         case topRankedAnime
+        case mostPopularAnime
         case topUpcomingAnime
         
-        static var numberOfSections: Int { return 3 }
+        static var numberOfSections: Int { return 4 }
     }
     
     override func viewDidLoad() {
@@ -41,16 +43,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        setupActivityIndicator()
+        
         
         getTopRanked()
         getTopUpcoming()
         getTopAiring()
+        getMostPopular()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setupActivityIndicator()
     }
     
     func setupActivityIndicator() {
@@ -77,6 +81,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             if let topRanked = topRanked {
                 self.topRankedArray = topRanked
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func getMostPopular() {
+        networkManager.getMostPopular { (mostPopular, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            if let mostPopular = mostPopular {
+                self.mostPopularArray = mostPopular
             }
             
             DispatchQueue.main.async {
@@ -128,6 +148,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             headerView.text = "Top Airing Anime"
         case .topRankedAnime:
             headerView.text = "Top Ranked Anime"
+        case .mostPopularAnime:
+            headerView.text = "Most Popular Anime"
         case .topUpcomingAnime:
             headerView.text = "Top Upcoming Anime"
         case .none:
@@ -173,6 +195,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             return topAiringArray.count
         case .topRankedAnime:
             return topRankedArray.count
+        case .mostPopularAnime:
+            return mostPopularArray.count
         case .topUpcomingAnime:
             return topUpcomingArray.count
         case .none:
@@ -184,9 +208,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! HomeCollectionViewCell
         
-        //        cell.imageView.layer.cornerRadius = 50.0
-        //        cell.imageView.clipsToBounds = true
-        
         let topElement: TopElement
         
         switch Section(rawValue: collectionView.tag) {
@@ -196,6 +217,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
         case .topRankedAnime:
             topElement = topRankedArray[indexPath.row]
+            cell.textView.text = topElement.title
+            cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+        case .mostPopularAnime:
+            topElement = mostPopularArray[indexPath.row]
             cell.textView.text = topElement.title
             cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
         case .topUpcomingAnime:
@@ -224,6 +249,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             self.performSegue(withIdentifier: "detailsSegue", sender: self)
         case .topRankedAnime:
             topElement = topRankedArray[indexPath.row]
+            selection = topElement.mal_id ?? 0
+            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+        case .mostPopularAnime:
+            topElement = mostPopularArray[indexPath.row]
             selection = topElement.mal_id ?? 0
             self.performSegue(withIdentifier: "detailsSegue", sender: self)
         case .topUpcomingAnime:
