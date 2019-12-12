@@ -63,7 +63,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableView.isHidden = true
         setupActivityIndicator()
     }
     
@@ -81,6 +80,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @objc func getData() {
         getTopRanked()
+        tableView.isHidden = false
         getTopUpcoming()
         getTopAiring()
         getMostPopular()
@@ -89,6 +89,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func getTopRanked() {
+        
+        tableView.isHidden = true
         
         networkManager.getTopRanked { (topRanked, error) in
             if let error = error {
