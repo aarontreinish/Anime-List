@@ -48,6 +48,8 @@ class DetailsViewController: UIViewController {
     var allGenresArray: [String] = []
     var allStudiosArray: [String] = []
     
+    var screenWillShow = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,12 +59,34 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        hideUI()
+        
+        if screenWillShow == false {
+            hideUI()
+        }
+        
         imageView.layer.cornerRadius = 10.0
         setupActivityIndicator()
         getAnimeDetails()
         
         self.genreLabel.preferredMaxLayoutWidth = labelView.bounds.size.width
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        screenWillShow = false
+    }
+    
+    func removeData() {
+        allGenresArray.removeAll()
+        animeGenresArray.removeAll()
+        allGenres.removeAll()
+        
+        animeStudiosArray.removeAll()
+        allStudios.removeAll()
+        allStudiosArray.removeAll()
+        
+        animeDetailsArray = nil
     }
     
     func hideUI() {
@@ -140,7 +164,7 @@ class DetailsViewController: UIViewController {
             
             self.allStudiosArray = self.animeStudiosArray.map { ($0.name ?? "") }
             self.allStudios = self.allStudiosArray.joined(separator: ", ")
-        
+            
         }
         
         networkManager.getNewAnime(id: selection) { (anime, error) in
@@ -155,20 +179,23 @@ class DetailsViewController: UIViewController {
             let rank = String(self.animeDetailsArray?.rank ?? 0)
             let score = String(self.animeDetailsArray?.score ?? 0)
             
-            DispatchQueue.main.async {
-                self.title = self.animeDetailsArray?.title
-                self.imageView.loadImageUsingCacheWithUrlString(urlString: self.animeDetailsArray?.image_url ?? "")
-                self.episodesLabel.text = episodes
-                self.descriptionLabel.text = self.animeDetailsArray?.synopsis
-                self.rankLabel.text = rank
-                self.scoreLabel.text = score
-                self.studioLabel.text = self.allStudios
-                self.genreLabel.text = self.allGenres
-                self.typeLabel.text = self.animeDetailsArray?.type
-                self.seasonLabel.text = self.animeDetailsArray?.premiered
-                
-                self.activityIndicator.stopAnimating()
-                self.showUI()
+            if self.allGenres != "" && self.allStudios != "" {
+                DispatchQueue.main.async {
+                    self.title = self.animeDetailsArray?.title
+                    self.imageView.loadImageUsingCacheWithUrlString(urlString: self.animeDetailsArray?.image_url ?? "")
+                    self.episodesLabel.text = episodes
+                    self.descriptionLabel.text = self.animeDetailsArray?.synopsis
+                    self.rankLabel.text = rank
+                    self.scoreLabel.text = score
+                    self.studioLabel.text = self.allStudios
+                    self.genreLabel.text = self.allGenres
+                    self.typeLabel.text = self.animeDetailsArray?.type
+                    self.seasonLabel.text = self.animeDetailsArray?.premiered
+                    
+                    self.activityIndicator.stopAnimating()
+                    self.showUI()
+                }
+                self.screenWillShow = true
             }
         }
     }
