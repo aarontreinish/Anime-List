@@ -178,7 +178,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 15
+        return 20
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -7,32 +7,11 @@
 //
 
 import UIKit
+import WebKit
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var imageView: CustomImageView!
-    
-    @IBOutlet weak var labelView: UIView!
-    
-    @IBOutlet weak var staticTypeLabel: UILabel!
-    @IBOutlet weak var staticSeasonLabel: UILabel!
-    @IBOutlet weak var staticStudioLabel: UILabel!
-    @IBOutlet weak var staticEpisodesLabel: UILabel!
-    @IBOutlet weak var staticGenreLabel: UILabel!
-    @IBOutlet weak var staticScoreLabel: UILabel!
-    @IBOutlet weak var staticRankLabel: UILabel!
-    
-    
-    @IBOutlet weak var studioLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var episodesLabel: UILabel!
-    @IBOutlet weak var genreLabel: UILabel!
-    @IBOutlet weak var seasonLabel: UILabel!
-    @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var rankLabel: UILabel!
-    
-    @IBOutlet weak var descriptionLabel: UILabel!
-    
+    @IBOutlet weak var tableView: UITableView!
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
@@ -48,31 +27,35 @@ class DetailsViewController: UIViewController {
     var allGenresArray: [String] = []
     var allStudiosArray: [String] = []
     
+    var episodesString = ""
+    var rankString = ""
+    var scoreString = ""
+    
     var screenWillShow = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.dataSource = self
+        tableView.delegate = self
+        
         activityIndicator.startAnimating()
+        getAllData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        if screenWillShow == false {
-            hideUI()
-        }
+        tableView.isHidden = true
         
-        imageView.layer.cornerRadius = 10.0
         setupActivityIndicator()
-        getAnimeDetails()
-        
-        self.genreLabel.preferredMaxLayoutWidth = labelView.bounds.size.width
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+        removeData()
         
         screenWillShow = false
     }
@@ -89,44 +72,6 @@ class DetailsViewController: UIViewController {
         animeDetailsArray = nil
     }
     
-    func hideUI() {
-        staticRankLabel.isHidden = true
-        staticTypeLabel.isHidden = true
-        staticGenreLabel.isHidden = true
-        staticScoreLabel.isHidden = true
-        staticSeasonLabel.isHidden = true
-        staticStudioLabel.isHidden = true
-        staticEpisodesLabel.isHidden = true
-        imageView.isHidden = true
-        studioLabel.isHidden = true
-        typeLabel.isHidden = true
-        episodesLabel.isHidden = true
-        genreLabel.isHidden = true
-        seasonLabel.isHidden = true
-        scoreLabel.isHidden = true
-        rankLabel.isHidden = true
-        descriptionLabel.isHidden = true
-    }
-    
-    func showUI() {
-        staticRankLabel.isHidden = false
-        staticTypeLabel.isHidden = false
-        staticGenreLabel.isHidden = false
-        staticScoreLabel.isHidden = false
-        staticSeasonLabel.isHidden = false
-        staticStudioLabel.isHidden = false
-        staticEpisodesLabel.isHidden = false
-        imageView.isHidden = false
-        studioLabel.isHidden = false
-        typeLabel.isHidden = false
-        episodesLabel.isHidden = false
-        genreLabel.isHidden = false
-        seasonLabel.isHidden = false
-        scoreLabel.isHidden = false
-        rankLabel.isHidden = false
-        descriptionLabel.isHidden = false
-    }
-    
     func setupActivityIndicator() {
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -139,8 +84,7 @@ class DetailsViewController: UIViewController {
         
     }
     
-    func getAnimeDetails() {
-        
+    func getGenres() {
         networkManager.getNewAnimeGenres(id: selection) { (genres, error) in
             if let error = error {
                 print(error)
@@ -152,8 +96,15 @@ class DetailsViewController: UIViewController {
             
             self.allGenresArray = self.animeGenresArray.map { ($0.name ?? "") }
             self.allGenres = self.allGenresArray.joined(separator: ", ")
+            
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
-        
+    }
+
+    func getStudios() {
         networkManager.getNewAnimeStudios(id: selection) { (studios, error) in
             if let error = error {
                 print(error)
@@ -165,7 +116,13 @@ class DetailsViewController: UIViewController {
             self.allStudiosArray = self.animeStudiosArray.map { ($0.name ?? "") }
             self.allStudios = self.allStudiosArray.joined(separator: ", ")
             
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
+    }
+    
+    func getAnimeDetails() {
         
         networkManager.getNewAnime(id: selection) { (anime, error) in
             if let error = error {
@@ -175,28 +132,63 @@ class DetailsViewController: UIViewController {
                 self.animeDetailsArray = anime
             }
             
-            let episodes = String(self.animeDetailsArray?.episodes ?? 0)
-            let rank = String(self.animeDetailsArray?.rank ?? 0)
-            let score = String(self.animeDetailsArray?.score ?? 0)
+            self.episodesString = String(self.animeDetailsArray?.episodes ?? 0)
+            self.rankString = String(self.animeDetailsArray?.rank ?? 0)
+            self.scoreString = String(self.animeDetailsArray?.score ?? 0)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func getAllData() {
+        getGenres()
+        getStudios()
+        getAnimeDetails()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            //self.title = self.animeDetailsArray?.title
+            self.tableView.isHidden = false
+        }
+        
+        self.screenWillShow = true
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell1") as? DetailsTableViewCell else { return UITableViewCell() }
             
             if self.allGenres != "" && self.allStudios != "" {
-                DispatchQueue.main.async {
-                    self.title = self.animeDetailsArray?.title
-                    self.imageView.loadImageUsingCacheWithUrlString(urlString: self.animeDetailsArray?.image_url ?? "")
-                    self.episodesLabel.text = episodes
-                    self.descriptionLabel.text = self.animeDetailsArray?.synopsis
-                    self.rankLabel.text = rank
-                    self.scoreLabel.text = score
-                    self.studioLabel.text = self.allStudios
-                    self.genreLabel.text = self.allGenres
-                    self.typeLabel.text = self.animeDetailsArray?.type
-                    self.seasonLabel.text = self.animeDetailsArray?.premiered
-                    
-                    self.activityIndicator.stopAnimating()
-                    self.showUI()
-                }
-                self.screenWillShow = true
+                cell.detailsImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
+                cell.descriptionLabel.text = animeDetailsArray?.synopsis
+                cell.typeLabel.text = animeDetailsArray?.type
+                cell.seasonLabel.text = animeDetailsArray?.premiered
+                cell.episodesLabel.text = episodesString
+                cell.rankLabel.text = rankString
+                cell.scoreLabel.text = scoreString
+                cell.studioLabel.text = allStudios
+                cell.genreLabel.text = allGenres
             }
+            
+            return cell
+            
+        } else if indexPath.section == 1 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell2") as? DetailsTableViewCell else { return UITableViewCell() }
+            
+            return cell
+        
+        } else {
+            guard let cell2 = tableView.dequeueReusableCell(withIdentifier: "detailsCell2") as? DetailsTableViewCell else { return UITableViewCell() }
+            
+            return cell2
         }
     }
 }
