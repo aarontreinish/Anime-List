@@ -26,9 +26,6 @@ class DetailsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    @IBOutlet weak var webView: WKWebView!
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

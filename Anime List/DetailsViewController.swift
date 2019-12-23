@@ -49,6 +49,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.isHidden = true
         
+        navigationItem.largeTitleDisplayMode = .always
+        
         setupActivityIndicator()
     }
     
@@ -103,7 +105,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
     }
-
+    
     func getStudios() {
         networkManager.getNewAnimeStudios(id: selection) { (studios, error) in
             if let error = error {
@@ -138,6 +140,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.title = self.animeDetailsArray?.title
             }
         }
     }
@@ -150,10 +153,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            //self.title = self.animeDetailsArray?.title
             self.tableView.isHidden = false
         }
-        
         self.screenWillShow = true
     }
     
@@ -180,15 +181,10 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             return cell
             
-        } else if indexPath.section == 1 {
+        } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell2") as? DetailsTableViewCell else { return UITableViewCell() }
             
             return cell
-        
-        } else {
-            guard let cell2 = tableView.dequeueReusableCell(withIdentifier: "detailsCell2") as? DetailsTableViewCell else { return UITableViewCell() }
-            
-            return cell2
         }
     }
 }

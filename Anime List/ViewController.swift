@@ -22,6 +22,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var selection = 0
     
+    var viewHasShown = false
+    
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
     lazy var refresher: UIRefreshControl = {
@@ -80,12 +82,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @objc func getData() {
         getTopRanked()
-        tableView.isHidden = false
         getTopUpcoming()
         getTopAiring()
         getMostPopular()
         
         refresher.endRefreshing()
+        
+        tableView.isHidden = false
     }
     
     func getTopRanked() {

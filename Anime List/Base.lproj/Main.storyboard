@@ -114,7 +114,7 @@
             </objects>
             <point key="canvasLocation" x="1960.8695652173915" y="75.669642857142847"/>
         </scene>
-        <!--Details-->
+        <!--Details View Controller-->
         <scene sceneID="cvR-i1-RvZ">
             <objects>
                 <viewController id="z1s-pA-xND" customClass="DetailsViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -122,7 +122,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BY9-5Q-2Tf">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BY9-5Q-2Tf">
                                 <rect key="frame" x="0.0" y="88" width="414" height="724"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -324,22 +324,6 @@
                                             <outlet property="typeLabel" destination="8av-kl-yg8" id="dZV-Vy-qcl"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailsCell2" rowHeight="314" id="6aT-8p-GSy" customClass="DetailsTableViewCell" customModule="Anime_List" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="288" width="414" height="314"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6aT-8p-GSy" id="tDp-Sn-fO3">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="314"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailsCell3" rowHeight="235" id="q5f-HD-28J" customClass="DetailsTableViewCell" customModule="Anime_List" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="602" width="414" height="235"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="q5f-HD-28J" id="u37-ym-WbQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="235"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -347,12 +331,12 @@
                         <constraints>
                             <constraint firstItem="BY9-5Q-2Tf" firstAttribute="leading" secondItem="kB7-TF-Njp" secondAttribute="leading" id="83w-Xs-bCT"/>
                             <constraint firstItem="BY9-5Q-2Tf" firstAttribute="trailing" secondItem="kB7-TF-Njp" secondAttribute="trailing" id="VbP-Lg-BEo"/>
-                            <constraint firstItem="BY9-5Q-2Tf" firstAttribute="top" secondItem="rJT-oh-aPf" secondAttribute="top" constant="88" id="dZq-WQ-mn6"/>
+                            <constraint firstItem="BY9-5Q-2Tf" firstAttribute="top" secondItem="kB7-TF-Njp" secondAttribute="top" id="Y32-7h-rXu"/>
                             <constraint firstItem="kB7-TF-Njp" firstAttribute="bottom" secondItem="BY9-5Q-2Tf" secondAttribute="bottom" constant="1" id="sEn-Et-qx3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kB7-TF-Njp"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Details" id="yYg-z8-6zL"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="yYg-z8-6zL"/>
                     <connections>
                         <outlet property="tableView" destination="BY9-5Q-2Tf" id="nXR-QD-VrF"/>
                     </connections>
