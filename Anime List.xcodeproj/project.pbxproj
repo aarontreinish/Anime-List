@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2135379723B564D3005AE975 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135379623B564D3005AE975 /* SearchViewController.swift */; };
+		2135379923B564E5005AE975 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135379823B564E5005AE975 /* SearchTableViewCell.swift */; };
 		2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EDE72399F5B8002C9202 /* AppDelegate.swift */; };
 		2160EDEA2399F5B8002C9202 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EDE92399F5B8002C9202 /* SceneDelegate.swift */; };
 		2160EDEC2399F5B8002C9202 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EDEB2399F5B8002C9202 /* ViewController.swift */; };
@@ -53,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2135379623B564D3005AE975 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		2135379823B564E5005AE975 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		2160EDE42399F5B8002C9202 /* Anime List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anime List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2160EDE72399F5B8002C9202 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2160EDE92399F5B8002C9202 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 				2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */,
 				21920B0B23B11DEB00C9A3B9 /* DetailsTableViewCell.swift */,
 				2197FD1D23B159A30037C88B /* ScheduleTableViewCell.swift */,
+				2135379823B564E5005AE975 /* SearchTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				2160EDEB2399F5B8002C9202 /* ViewController.swift */,
 				21C3D8C1239F43D800C0CE55 /* DetailsViewController.swift */,
 				21920B0F23B1588000C9A3B9 /* ScheduleViewController.swift */,
+				2135379623B564D3005AE975 /* SearchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -388,8 +394,10 @@
 				2160EE1E2399F77B002C9202 /* Searched.swift in Sources */,
 				2197FD2323B15D100037C88B /* Schedule.swift in Sources */,
 				2160EE112399F704002C9202 /* ParameterEncoding.swift in Sources */,
+				2135379923B564E5005AE975 /* SearchTableViewCell.swift in Sources */,
 				2160EE092399F6D3002C9202 /* Router.swift in Sources */,
 				2160EE222399F792002C9202 /* Adaptation.swift in Sources */,
+				2135379723B564D3005AE975 /* SearchViewController.swift in Sources */,
 				2160EE262399F7A3002C9202 /* From.swift in Sources */,
 				2160EE322399F7DF002C9202 /* Related.swift in Sources */,
 				2160EE0B2399F6DF002C9202 /* HTTPMethod.swift in Sources */,
@@ -563,7 +571,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NP8854APR4;
+				DEVELOPMENT_TEAM = S2MU333RF6;
 				INFOPLIST_FILE = "Anime List/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

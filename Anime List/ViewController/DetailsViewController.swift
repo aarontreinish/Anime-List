@@ -55,23 +55,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         activityIndicator.startAnimating()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-    }
-    
-    func removeData() {
-        allGenresArray.removeAll()
-        animeGenresArray.removeAll()
-        allGenres.removeAll()
-        
-        animeStudiosArray.removeAll()
-        allStudios.removeAll()
-        allStudiosArray.removeAll()
-        
-        animeDetailsArray = nil
-    }
-    
     func setupActivityIndicator() {
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -166,6 +149,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.activityIndicator.stopAnimating()
                 self.tableView.isHidden = false
                 
+                cell.loadYoutube(url: animeDetailsArray?.trailer_url ?? "")
                 cell.detailsImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
                 cell.titleLabel.text = animeDetailsArray?.title
                 cell.descriptionLabel.text = animeDetailsArray?.synopsis

@@ -22,9 +22,19 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     
     var selection = 0
     
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    lazy var refresher: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.refreshControl = refresher
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -34,13 +44,65 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //tableView.isHidden = true
+        setupActivityIndicator()
+        
+        tableView.isHidden = true
+        
+        activityIndicator.startAnimating()
+        
         navigationItem.largeTitleDisplayMode = .always
         
         getMondayData()
     }
     
+    func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.hidesWhenStopped = true
+        let horizontalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
+        view.addConstraint(horizontalConstraint)
+        let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
+        view.addConstraint(verticalConstraint)
+        
+    }
+    
+    @objc func refreshData() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            getMondayData()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == 1 {
+            getTuesdayData()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == 2 {
+            getWednesdayData()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == 3 {
+            getThursdayData()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == 4 {
+            getFridayData()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == 5 {
+            getSaturdayData()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == 6 {
+            getSundayData()
+        }
+        
+        refresher.endRefreshing()
+    }
+    
     func getMondayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getMondaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -52,11 +114,17 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
     
     func getTuesdayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getTuesdaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -68,11 +136,17 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
     
     func getWednesdayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getWednesdaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -84,11 +158,17 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
     
     func getThursdayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getThursdaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -100,11 +180,17 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
     
     func getFridayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getFridaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -116,11 +202,17 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
     
     func getSaturdayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getSaturdaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -132,11 +224,17 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
     
     func getSundayData() {
+        
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+
         networkManager.getSundaySchedule(day: dayString) { (day, error) in
             if let error = error {
                 print(error)
@@ -148,6 +246,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
             }
         }
     }
@@ -157,34 +257,22 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         if segmentedControl.selectedSegmentIndex == 0 {
             dayString = "monday"
             getMondayData()
-        }
-        
-        if segmentedControl.selectedSegmentIndex == 1 {
+        } else if segmentedControl.selectedSegmentIndex == 1 {
             dayString = "tuesday"
             getTuesdayData()
-        }
-        
-        if segmentedControl.selectedSegmentIndex == 2 {
+        } else if segmentedControl.selectedSegmentIndex == 2 {
             dayString = "wednesday"
             getWednesdayData()
-        }
-        
-        if segmentedControl.selectedSegmentIndex == 3 {
+        } else if segmentedControl.selectedSegmentIndex == 3 {
             dayString = "thursday"
             getThursdayData()
-        }
-        
-        if segmentedControl.selectedSegmentIndex == 4 {
+        } else if segmentedControl.selectedSegmentIndex == 4 {
             dayString = "friday"
             getFridayData()
-        }
-        
-        if segmentedControl.selectedSegmentIndex == 5 {
+        } else if segmentedControl.selectedSegmentIndex == 5 {
             dayString = "saturday"
             getSaturdayData()
-        }
-        
-        if segmentedControl.selectedSegmentIndex == 6 {
+        } else if segmentedControl.selectedSegmentIndex == 6 {
             dayString = "sunday"
             getSundayData()
         }

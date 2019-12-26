@@ -28,7 +28,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .black
         refreshControl.addTarget(self, action: #selector(getData), for: .valueChanged)
         
         return refreshControl
@@ -161,7 +160,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
+        let headerView = UILabelPadding.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
+       // headerView.intrinsicContentSize
         
         switch Section(rawValue: section) {
         case .topAiringAnime:
@@ -295,5 +295,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
-    
+}
+
+class UILabelPadding: UILabel {
+
+    let padding = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: padding))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let superContentSize = super.intrinsicContentSize
+        let width = superContentSize.width + padding.left + padding.right
+        let heigth = superContentSize.height + padding.top + padding.bottom
+        return CGSize(width: width, height: heigth)
+    }
+
 }

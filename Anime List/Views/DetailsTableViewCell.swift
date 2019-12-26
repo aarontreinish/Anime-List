@@ -26,6 +26,8 @@ class DetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    @IBOutlet weak var webView: WKWebView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -39,6 +41,11 @@ class DetailsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func loadYoutube(url: String) {
+        guard let youtubeURL = URL(string: url) else { return }
+        webView.load(URLRequest(url: youtubeURL))
     }
 
 }
