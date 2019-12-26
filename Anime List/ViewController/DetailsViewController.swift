@@ -76,7 +76,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = UIColor.black
         let horizontalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
         view.addConstraint(horizontalConstraint)
         let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
@@ -138,7 +137,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                self.title = self.animeDetailsArray?.title
+               // self.title = self.animeDetailsArray?.title
             }
         }
     }
@@ -168,6 +167,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.tableView.isHidden = false
                 
                 cell.detailsImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
+                cell.titleLabel.text = animeDetailsArray?.title
                 cell.descriptionLabel.text = animeDetailsArray?.synopsis
                 cell.typeLabel.text = animeDetailsArray?.type
                 cell.seasonLabel.text = animeDetailsArray?.premiered

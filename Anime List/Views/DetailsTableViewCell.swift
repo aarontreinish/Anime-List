@@ -23,7 +23,7 @@ class DetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var seasonLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
-    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     override func awakeFromNib() {
