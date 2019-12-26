@@ -32,6 +32,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tableView.keyboardDismissMode = .onDrag
         tableView.isHidden = true
     }
 
@@ -73,8 +74,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchText \(searchBar.text ?? "")")
-        activityIndicator.startAnimating()
-        getSearchedData()
+        searchBar.resignFirstResponder()
+        
+        if searchBar.text == "" {
+            tableView.isHidden = true
+        } else {
+            activityIndicator.startAnimating()
+            getSearchedData()
+        }
     }
     
     
