@@ -47,8 +47,8 @@ struct NetworkManager {
                     }
                     do {
                         print(responseData)
-                       // let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
-                       // print(jsonData)
+                        // let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        // print(jsonData)
                         let apiResponse = try JSONDecoder().decode(Searched.self, from: responseData)
                         completion(apiResponse.results, nil)
                     } catch {
@@ -310,6 +310,230 @@ struct NetworkManager {
                         let apiResponse = try JSONDecoder().decode(Anime.self, from: responseData)
                         completion(apiResponse, nil)
                     }catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getMondaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.monday, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getTuesdaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.tuesday, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getWednesdaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.wednesday, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getThursdaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.thursday, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getFridaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.friday, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getSaturdaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.saturday, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getSundaySchedule(day: String, completion: @escaping (_ topRanked: [Day]?, _ error: String?) -> ()) {
+        router.request(.schedule(day: day)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //                        let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //                        print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
+                        completion(apiResponse.sunday, nil)
+                    } catch {
                         print(error)
                         completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }

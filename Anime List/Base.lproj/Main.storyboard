@@ -343,13 +343,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rWH-1T-IaV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2857.971014492754" y="75.669642857142847"/>
+            <point key="canvasLocation" x="2875" y="441"/>
         </scene>
-        <!--Item-->
+        <!--Discover-->
         <scene sceneID="ieL-qQ-CNx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zl3-hn-yHh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="PN9-Wl-2j6"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="magnifyingglass" catalog="system" id="PN9-Wl-2j6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YOW-Wg-WRe">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -376,11 +376,128 @@
                     </tabBar>
                     <connections>
                         <segue destination="Zl3-hn-yHh" kind="relationship" relationship="viewControllers" id="qVr-nk-cdO"/>
+                        <segue destination="rPa-Kc-EMQ" kind="relationship" relationship="viewControllers" id="0bs-7T-YEY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oRz-h5-WZ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140.57971014492756" y="75.669642857142847"/>
+            <point key="canvasLocation" x="172" y="76"/>
+        </scene>
+        <!--Schedule-->
+        <scene sceneID="ESo-N7-0Kx">
+            <objects>
+                <viewController id="a5W-x6-cDE" customClass="ScheduleViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iMH-Fn-DxI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="etT-VY-olQ">
+                                <rect key="frame" x="0.0" y="88" width="414" height="32"/>
+                                <segments>
+                                    <segment title="Monday"/>
+                                    <segment title="Tuesday"/>
+                                    <segment title="Wednesday"/>
+                                    <segment title="Thursday"/>
+                                    <segment title="Friday"/>
+                                    <segment title="Saturday"/>
+                                    <segment title="Sunday"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlChanged:" destination="a5W-x6-cDE" eventType="valueChanged" id="NPG-aM-Nsl"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kxO-V5-4yD">
+                                <rect key="frame" x="0.0" y="119" width="414" height="694"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="265" id="Bvj-A5-NzD" customClass="ScheduleTableViewCell" customModule="Anime_List" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="265"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bvj-A5-NzD" id="TIM-Vi-vfZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="265"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQV-Vo-SEU">
+                                                    <rect key="frame" x="20" y="233" width="374" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5M-QW-Cvs" customClass="CustomImageView" customModule="Anime_List" customModuleProvider="target">
+                                                    <rect key="frame" x="114" y="0.0" width="186" height="225"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="225" id="JzU-av-2c2"/>
+                                                        <constraint firstAttribute="width" constant="186" id="rZ5-zi-EhR"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="LQV-Vo-SEU" firstAttribute="leading" secondItem="TIM-Vi-vfZ" secondAttribute="leading" constant="20" id="81c-11-Vyw"/>
+                                                <constraint firstAttribute="bottom" secondItem="LQV-Vo-SEU" secondAttribute="bottom" constant="11" id="C7a-Bw-VfB"/>
+                                                <constraint firstAttribute="trailing" secondItem="c5M-QW-Cvs" secondAttribute="trailing" constant="114" id="ZKy-Tj-vsX"/>
+                                                <constraint firstAttribute="trailing" secondItem="LQV-Vo-SEU" secondAttribute="trailing" constant="20" id="d5v-Sy-jse"/>
+                                                <constraint firstItem="c5M-QW-Cvs" firstAttribute="centerX" secondItem="TIM-Vi-vfZ" secondAttribute="centerX" id="fUg-fb-lWl"/>
+                                                <constraint firstItem="c5M-QW-Cvs" firstAttribute="leading" secondItem="TIM-Vi-vfZ" secondAttribute="leading" constant="114" id="fd5-I9-gk4"/>
+                                                <constraint firstItem="LQV-Vo-SEU" firstAttribute="top" secondItem="c5M-QW-Cvs" secondAttribute="bottom" constant="8" id="oKu-sL-luJ"/>
+                                                <constraint firstItem="c5M-QW-Cvs" firstAttribute="top" secondItem="TIM-Vi-vfZ" secondAttribute="top" id="ogs-kW-Tsf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="scheduleImageView" destination="c5M-QW-Cvs" id="EGo-Nm-rA3"/>
+                                            <outlet property="titleLabel" destination="LQV-Vo-SEU" id="Nt0-Sb-RFs"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="etT-VY-olQ" firstAttribute="top" secondItem="mp1-BP-VYK" secondAttribute="top" id="49k-RF-emo"/>
+                            <constraint firstItem="kxO-V5-4yD" firstAttribute="top" secondItem="etT-VY-olQ" secondAttribute="bottom" id="BTp-mi-Kzl"/>
+                            <constraint firstItem="etT-VY-olQ" firstAttribute="trailing" secondItem="mp1-BP-VYK" secondAttribute="trailing" id="Mrb-xy-pPx"/>
+                            <constraint firstItem="kxO-V5-4yD" firstAttribute="leading" secondItem="mp1-BP-VYK" secondAttribute="leading" id="Nbl-4X-B9y"/>
+                            <constraint firstItem="etT-VY-olQ" firstAttribute="leading" secondItem="mp1-BP-VYK" secondAttribute="leading" id="iC9-fE-Pqv"/>
+                            <constraint firstItem="kxO-V5-4yD" firstAttribute="trailing" secondItem="mp1-BP-VYK" secondAttribute="trailing" id="iWQ-UU-W9t"/>
+                            <constraint firstItem="kxO-V5-4yD" firstAttribute="bottom" secondItem="mp1-BP-VYK" secondAttribute="bottom" id="jBp-eR-J9g"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mp1-BP-VYK"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Schedule" largeTitleDisplayMode="always" id="3iB-g8-Kp7"/>
+                    <connections>
+                        <outlet property="segmentedControl" destination="etT-VY-olQ" id="dQU-3n-cfC"/>
+                        <outlet property="tableView" destination="kxO-V5-4yD" id="CSG-MF-FL8"/>
+                        <segue destination="z1s-pA-xND" kind="show" identifier="scheduleDetailsSegue" id="Bc3-NC-Fp3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OmJ-GG-nZ3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1960.8695652173915" y="787.5"/>
+        </scene>
+        <!--Schedule-->
+        <scene sceneID="sUI-bl-Tqf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rPa-Kc-EMQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Schedule" image="tv" catalog="system" id="Onw-tp-jN9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="73h-B4-P6W">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="a5W-x6-cDE" kind="relationship" relationship="rootViewController" id="Ivu-VJ-Qsy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZH-97-EIz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050.7246376811595" y="787.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="64" height="56"/>
+        <image name="tv" catalog="system" width="64" height="46"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Bc3-NC-Fp3"/>
+    </inferredMetricsTieBreakers>
 </document>

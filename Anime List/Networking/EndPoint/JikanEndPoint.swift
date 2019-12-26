@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 enum NetworkEnvironment {
     case qa
     case production
@@ -17,17 +15,13 @@ enum NetworkEnvironment {
 }
 
 public enum JikanAPI {
-//    case recommended(id:Int)
-//    case popular(page:Int)
-//    case newMovies(page:Int)
-//    case video(id:Int)
-    //https://api.jikan.moe/v3/top/anime/1/bypopularity
     case topAiring
     case mostPopular
     case anime(id: Int)
     case searchAnime(name: String)
     case topRanked
     case topUpcoming
+    case schedule(day: String)
 }
 
 extension JikanAPI: EndPointType {
@@ -59,6 +53,8 @@ extension JikanAPI: EndPointType {
             return "/top/anime/1/upcoming"
         case .mostPopular:
             return "/top/anime/1/bypopularity"
+        case .schedule(let day):
+            return "/schedule/\(day)"
         }
     }
     

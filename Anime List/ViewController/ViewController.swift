@@ -231,7 +231,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let topElement: TopElement
         
-        
         if topAiringArray.count != 0 && topRankedArray.count != 0 && mostPopularArray.count != 0 && topUpcomingArray.count != 0 {
             
             switch Section(rawValue: collectionView.tag) {

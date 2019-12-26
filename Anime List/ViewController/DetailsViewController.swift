@@ -39,7 +39,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         tableView.delegate = self
         
-        activityIndicator.startAnimating()
         getAllData()
     }
     
@@ -52,14 +51,13 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         navigationItem.largeTitleDisplayMode = .always
         
         setupActivityIndicator()
+    
+        activityIndicator.startAnimating()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        removeData()
-        
-        screenWillShow = false
     }
     
     func removeData() {
@@ -152,10 +150,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            self.activityIndicator.stopAnimating()
-            self.tableView.isHidden = false
         }
-        self.screenWillShow = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,6 +163,10 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell1") as? DetailsTableViewCell else { return UITableViewCell() }
             
             if self.allGenres != "" && self.allStudios != "" {
+                
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
+                
                 cell.detailsImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
                 cell.descriptionLabel.text = animeDetailsArray?.synopsis
                 cell.typeLabel.text = animeDetailsArray?.type
