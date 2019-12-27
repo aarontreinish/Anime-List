@@ -13,8 +13,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchPlacementLabel: UILabel!
     
     var networkManager = NetworkManager()
+    
+    var selection = 0
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
@@ -32,6 +35,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setupActivityIndicator()
         tableView.keyboardDismissMode = .onDrag
         tableView.isHidden = true
     }
@@ -55,7 +59,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if let results = results {
                 self.resultsArray = results
-                print(self.resultsArray)
             }
             
             DispatchQueue.main.async {
@@ -67,10 +70,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        print("searchText \(searchText)")
-//
-//    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == "" {
+            searchPlacementLabel.isHidden = false
+            tableView.isHidden = true
+        }
+
+    }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchText \(searchBar.text ?? "")")
@@ -79,7 +85,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if searchBar.text == "" {
             tableView.isHidden = true
         } else {
-            activityIndicator.startAnimating()
+            searchPlacementLabel.isHidden = true
+            self.activityIndicator.startAnimating()
             getSearchedData()
         }
     }
@@ -101,5 +108,23 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: results.image_url ?? "")
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
+        let results: Results
+        
+        results = resultsArray[indexPath.row]
+        selection = results.mal_id ?? 0
+        self.performSegue(withIdentifier: "searchDetailsSegue", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "searchDetailsSegue" {
+            let detailsViewController = segue.destination as? DetailsViewController
+            
+            detailsViewController?.selection = selection
+        }
     }
 }

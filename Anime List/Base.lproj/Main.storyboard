@@ -369,13 +369,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rWH-1T-IaV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2873.913043478261" y="440.625"/>
+            <point key="canvasLocation" x="3114" y="76"/>
         </scene>
-        <!--Home-->
+        <!--Discover-->
         <scene sceneID="ieL-qQ-CNx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zl3-hn-yHh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="PN9-Wl-2j6"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="house" catalog="system" id="PN9-Wl-2j6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YOW-Wg-WRe">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -500,7 +500,7 @@
             </objects>
             <point key="canvasLocation" x="1960.8695652173915" y="787.5"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Search-->
         <scene sceneID="mO5-Ym-F5f">
             <objects>
                 <viewController id="acZ-c0-U12" customClass="SearchViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -516,6 +516,12 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search for your favorite anime!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZP-a0-02a">
+                                <rect key="frame" x="43.5" y="433" width="327" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="75F-5W-FSK">
                                 <rect key="frame" x="0.0" y="144" width="414" height="669"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -560,20 +566,24 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="hZP-a0-02a" firstAttribute="centerY" secondItem="t0b-9D-XYS" secondAttribute="centerY" id="JvH-Jt-d3h"/>
                             <constraint firstItem="oaZ-cE-o64" firstAttribute="top" secondItem="bi2-NZ-IG1" secondAttribute="top" id="PBc-hj-TMd"/>
                             <constraint firstItem="oaZ-cE-o64" firstAttribute="trailing" secondItem="bi2-NZ-IG1" secondAttribute="trailing" id="ce0-7R-CRf"/>
                             <constraint firstItem="oaZ-cE-o64" firstAttribute="leading" secondItem="bi2-NZ-IG1" secondAttribute="leading" id="f4e-fU-Qwq"/>
                             <constraint firstItem="75F-5W-FSK" firstAttribute="bottom" secondItem="bi2-NZ-IG1" secondAttribute="bottom" id="gsP-ji-dpM"/>
                             <constraint firstItem="75F-5W-FSK" firstAttribute="top" secondItem="oaZ-cE-o64" secondAttribute="bottom" id="nEv-NC-OtZ"/>
+                            <constraint firstItem="hZP-a0-02a" firstAttribute="centerX" secondItem="t0b-9D-XYS" secondAttribute="centerX" id="nHs-rL-dsA"/>
                             <constraint firstItem="75F-5W-FSK" firstAttribute="leading" secondItem="bi2-NZ-IG1" secondAttribute="leading" id="nov-Xh-fjh"/>
                             <constraint firstItem="75F-5W-FSK" firstAttribute="trailing" secondItem="bi2-NZ-IG1" secondAttribute="trailing" id="wed-Pj-t1H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bi2-NZ-IG1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="KGe-ji-nDo"/>
+                    <navigationItem key="navigationItem" title="Search" largeTitleDisplayMode="always" id="KGe-ji-nDo"/>
                     <connections>
                         <outlet property="searchBar" destination="oaZ-cE-o64" id="sSZ-Ts-VrU"/>
+                        <outlet property="searchPlacementLabel" destination="hZP-a0-02a" id="Az3-O6-PH7"/>
                         <outlet property="tableView" destination="75F-5W-FSK" id="ceu-EA-vOw"/>
+                        <segue destination="z1s-pA-xND" kind="presentation" identifier="searchDetailsSegue" id="puX-hv-rMb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jME-Fs-aXt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -599,11 +609,11 @@
             </objects>
             <point key="canvasLocation" x="1050.7246376811595" y="787.5"/>
         </scene>
-        <!--Discover-->
+        <!--Search-->
         <scene sceneID="Dvt-gu-Wow">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CE9-Mh-ADH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Discover" image="magnifyingglass" catalog="system" id="kDh-36-NKH"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="kDh-36-NKH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7ax-jK-FEi">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -625,6 +635,6 @@
         <image name="tv" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5MW-8H-7ak"/>
+        <segue reference="puX-hv-rMb"/>
     </inferredMetricsTieBreakers>
 </document>
