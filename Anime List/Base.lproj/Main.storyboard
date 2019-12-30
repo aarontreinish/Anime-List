@@ -12,10 +12,16 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is an error getting the Anime! Please check your network connection and try again." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meh-vL-W7Q">
+                                <rect key="frame" x="0.0" y="405" width="414" height="86"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="g1Q-ze-xEf">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -98,8 +104,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="meh-vL-W7Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2RF-Lj-hrT"/>
+                            <constraint firstItem="meh-vL-W7Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4UR-i8-pAV"/>
                             <constraint firstAttribute="bottom" secondItem="g1Q-ze-xEf" secondAttribute="bottom" constant="83" id="6k5-dm-xoa"/>
+                            <constraint firstItem="meh-vL-W7Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CDn-Xy-bxD"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="GnE-Bh-9Cr"/>
+                            <constraint firstAttribute="trailing" secondItem="meh-vL-W7Q" secondAttribute="trailing" id="TaG-4k-PVI"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="URO-B4-11J"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XK3-Hx-etM"/>
                         </constraints>
@@ -107,6 +117,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Discover" largeTitleDisplayMode="always" id="IzR-Ns-6s5"/>
                     <connections>
+                        <outlet property="errorLabel" destination="meh-vL-W7Q" id="hY0-Qy-1cj"/>
                         <outlet property="tableView" destination="g1Q-ze-xEf" id="8sx-5C-mhU"/>
                         <segue destination="z1s-pA-xND" kind="presentation" identifier="detailsSegue" id="5MW-8H-7ak"/>
                     </connections>
@@ -300,7 +311,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfb-Jf-meS">
-                                                    <rect key="frame" x="8" y="265" width="398" height="20"/>
+                                                    <rect key="frame" x="8" y="265" width="398" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -635,6 +646,6 @@
         <image name="tv" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="puX-hv-rMb"/>
+        <segue reference="5MW-8H-7ak"/>
     </inferredMetricsTieBreakers>
 </document>

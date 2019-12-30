@@ -39,6 +39,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         tableView.delegate = self
         
+        
+        
         getAllData()
     }
     
@@ -46,13 +48,21 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        tableView.isHidden = true
-        
         navigationItem.largeTitleDisplayMode = .always
         
         setupActivityIndicator()
     
-        activityIndicator.startAnimating()
+        if screenWillShow == false {
+            tableView.isHidden = true
+            activityIndicator.startAnimating()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        screenWillShow = false
+        
     }
     
     func setupActivityIndicator() {
@@ -113,6 +123,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let anime = anime {
                 self.animeDetailsArray = anime
             }
+            
+            self.screenWillShow = true
             
             self.episodesString = String(self.animeDetailsArray?.episodes ?? 0)
             self.rankString = String(self.animeDetailsArray?.rank ?? 0)

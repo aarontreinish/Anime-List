@@ -12,6 +12,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var errorLabel: UILabel!
+    
     var id = 2
     var networkManager = NetworkManager()
     
@@ -53,18 +55,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
-        activityIndicator.startAnimating()
-        getTopRanked()
-        getTopUpcoming()
-        getTopAiring()
-        getMostPopular()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        errorLabel.isHidden = true
+        
         setupActivityIndicator()
+        activityIndicator.startAnimating()
+        
+        getTopRanked()
+        getTopUpcoming()
+        getTopAiring()
+        getMostPopular()
+        
     }
     
     func setupActivityIndicator() {
@@ -95,15 +100,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         networkManager.getTopRanked { (topRanked, error) in
             if let error = error {
+                DispatchQueue.main.async {
+                    self.tableView.isHidden = true
+                    self.errorLabel.isHidden = false
+                }
                 print(error)
             }
             
             if let topRanked = topRanked {
                 self.topRankedArray = topRanked
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -111,15 +120,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getMostPopular() {
         networkManager.getMostPopular { (mostPopular, error) in
             if let error = error {
+                DispatchQueue.main.async {
+                    self.tableView.isHidden = true
+                    self.errorLabel.isHidden = false
+                }
                 print(error)
             }
             
             if let mostPopular = mostPopular {
                 self.mostPopularArray = mostPopular
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -127,16 +140,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getTopAiring() {
         networkManager.getTopAiring { (topAiring, error) in
             if let error = error {
+                DispatchQueue.main.async {
+                    self.tableView.isHidden = true
+                    self.errorLabel.isHidden = false
+                }
                 print(error)
             }
             
             if let topAiring = topAiring {
                 self.topAiringArray = topAiring
-                
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+             
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -144,17 +160,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getTopUpcoming() {
         networkManager.getTopUpcoming { (topUpcoming, error) in
             if let error = error {
+                DispatchQueue.main.async {
+                    self.tableView.isHidden = true
+                    self.errorLabel.isHidden = false
+                }
+
                 print(error)
             }
             
             if let topUpcoming = topUpcoming {
                 self.topUpcomingArray = topUpcoming
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.isHidden = false
+                }
             }
         }
     }
@@ -222,6 +243,22 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         case .none:
             return 1
         }
+    }
+    
+    /// UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let referenceHeight: CGFloat = 283 // Approximate height of the cell
+        // Cell width calculation 156
+        let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
+        let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
+            - sectionInset.left
+            - sectionInset.right
+            - collectionView.contentInset.left
+            - collectionView.contentInset.right
+        
+        return CGSize(width: referenceWidth, height: referenceHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
