@@ -30,7 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(getData), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
         return refreshControl
     }()
@@ -64,12 +64,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         setupActivityIndicator()
         activityIndicator.startAnimating()
-        
-        getTopRanked()
-        getTopUpcoming()
-        getTopAiring()
-        getMostPopular()
-        
+
+        getAllData()
     }
     
     func setupActivityIndicator() {
@@ -83,100 +79,87 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    @objc func getData() {
-        getTopRanked()
-        getTopUpcoming()
-        getTopAiring()
-        getMostPopular()
+    @objc func refreshData() {
+        getAllData()
         
         refresher.endRefreshing()
         
         tableView.isHidden = false
     }
     
-    func getTopRanked() {
-        
+    func getAllData() {
         tableView.isHidden = true
         
-        networkManager.getTopRanked { (topRanked, error) in
+        let group = DispatchGroup()
+        
+        group.enter()
+        networkManager.getTopRanked { [weak self] (topRanked, error) in
             if let error = error {
-                DispatchQueue.main.async {
-                    self.tableView.isHidden = true
-                    self.errorLabel.isHidden = false
-                }
                 print(error)
             }
             
             if let topRanked = topRanked {
-                self.topRankedArray = topRanked
+                self?.topRankedArray = topRanked
                 
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 }
+                group.leave()
             }
         }
-    }
-    
-    func getMostPopular() {
-        networkManager.getMostPopular { (mostPopular, error) in
+        
+        group.enter()
+        networkManager.getMostPopular { [weak self] (mostPopular, error) in
             if let error = error {
-                DispatchQueue.main.async {
-                    self.tableView.isHidden = true
-                    self.errorLabel.isHidden = false
-                }
                 print(error)
             }
             
             if let mostPopular = mostPopular {
-                self.mostPopularArray = mostPopular
+                self?.mostPopularArray = mostPopular
                 
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 }
+                group.leave()
             }
         }
-    }
-    
-    func getTopAiring() {
-        networkManager.getTopAiring { (topAiring, error) in
+        
+        group.enter()
+        networkManager.getTopAiring { [weak self] (topAiring, error) in
             if let error = error {
-                DispatchQueue.main.async {
-                    self.tableView.isHidden = true
-                    self.errorLabel.isHidden = false
-                }
                 print(error)
             }
             
             if let topAiring = topAiring {
-                self.topAiringArray = topAiring
-             
+                self?.topAiringArray = topAiring
+                
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 }
+                group.leave()
             }
         }
-    }
-    
-    func getTopUpcoming() {
-        networkManager.getTopUpcoming { (topUpcoming, error) in
+        
+        group.enter()
+        networkManager.getTopUpcoming { [weak self] (topUpcoming, error) in
             if let error = error {
-                DispatchQueue.main.async {
-                    self.tableView.isHidden = true
-                    self.errorLabel.isHidden = false
-                }
-
                 print(error)
             }
             
             if let topUpcoming = topUpcoming {
-                self.topUpcomingArray = topUpcoming
+                self?.topUpcomingArray = topUpcoming
                 
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                    self.tableView.isHidden = false
+                    self?.tableView.reloadData()
                 }
+                group.leave()
             }
+        }
+        
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.tableView.isHidden = false
         }
     }
     
@@ -228,7 +211,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         switch Section(rawValue: section) {
@@ -245,20 +228,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
-    /// UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: collectionView.bounds.width / 2.2, height: collectionView.bounds.height)
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let referenceHeight: CGFloat = 283 // Approximate height of the cell
-        // Cell width calculation 156
-        let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
-        let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
-            - sectionInset.left
-            - sectionInset.right
-            - collectionView.contentInset.left
-            - collectionView.contentInset.right
-        
-        return CGSize(width: referenceWidth, height: referenceHeight)
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

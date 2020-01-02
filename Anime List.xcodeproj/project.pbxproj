@@ -52,6 +52,7 @@
 		2197FD2523B15D170037C88B /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2423B15D170037C88B /* Day.swift */; };
 		21C3D8C0239D52ED00C0CE55 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8BF239D52ED00C0CE55 /* Section.swift */; };
 		21C3D8C2239F43D800C0CE55 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8C1239F43D800C0CE55 /* DetailsViewController.swift */; };
+		22C24224A2D72F9B51D2FBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 06EB6880F10013E3C73E3AD4 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +103,7 @@
 		2197FD2423B15D170037C88B /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21C3D8BF239D52ED00C0CE55 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		21C3D8C1239F43D800C0CE55 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		C71C5715BCA4026B14020A4C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				2160EDF02399F5BC002C9202 /* Assets.xcassets */,
 				2160EDF22399F5BC002C9202 /* LaunchScreen.storyboard */,
 				2160EDF52399F5BC002C9202 /* Info.plist */,
+				2EC0DA008B089FAB0DC56381 /* Resources */,
 			);
 			path = "Anime List";
 			sourceTree = "<group>";
@@ -296,6 +299,14 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
+		2EC0DA008B089FAB0DC56381 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				06EB6880F10013E3C73E3AD4 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -357,6 +368,7 @@
 				2160EDF42399F5BC002C9202 /* LaunchScreen.storyboard in Resources */,
 				2160EDF12399F5BC002C9202 /* Assets.xcassets in Resources */,
 				2160EDEF2399F5B8002C9202 /* Main.storyboard in Resources */,
+				22C24224A2D72F9B51D2FBCB /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +427,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		06EB6880F10013E3C73E3AD4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C71C5715BCA4026B14020A4C /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		2160EDED2399F5B8002C9202 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -553,7 +573,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NP8854APR4;
+				DEVELOPMENT_TEAM = S2MU333RF6;
 				INFOPLIST_FILE = "Anime List/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,7 +591,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NP8854APR4;
+				DEVELOPMENT_TEAM = S2MU333RF6;
 				INFOPLIST_FILE = "Anime List/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
