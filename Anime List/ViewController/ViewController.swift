@@ -14,6 +14,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var errorLabel: UILabel!
     
+    @IBOutlet weak var tryAgainButton: UIButton!
+    
     var id = 2
     var networkManager = NetworkManager()
     
@@ -55,17 +57,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        activityIndicator.startAnimating()
+        
+        getAllData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         errorLabel.isHidden = true
+        tryAgainButton.isHidden = true
         
         setupActivityIndicator()
-        activityIndicator.startAnimating()
-
-        getAllData()
     }
     
     func setupActivityIndicator() {
@@ -92,80 +96,120 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let group = DispatchGroup()
         
-        group.enter()
-        networkManager.getTopRanked { [weak self] (topRanked, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let topRanked = topRanked {
-                self?.topRankedArray = topRanked
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+        if topRankedArray.count == 0 {
+            group.enter()
+            networkManager.getTopRanked { [weak self] (topRanked, error) in
+                if let error = error {
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.stopAnimating()
+                        self?.errorLabel.isHidden = false
+                        self?.tryAgainButton.isHidden = false
+                    }
                 }
-                group.leave()
+                
+                if let topRanked = topRanked {
+                    self?.topRankedArray = topRanked
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                    group.leave()
+                }
             }
         }
         
-        group.enter()
-        networkManager.getMostPopular { [weak self] (mostPopular, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let mostPopular = mostPopular {
-                self?.mostPopularArray = mostPopular
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+        if mostPopularArray.count == 0 {
+            group.enter()
+            networkManager.getMostPopular { [weak self] (mostPopular, error) in
+                if let error = error {
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.stopAnimating()
+                        self?.errorLabel.isHidden = false
+                        self?.tryAgainButton.isHidden = false
+                    }
                 }
-                group.leave()
+                
+                if let mostPopular = mostPopular {
+                    self?.mostPopularArray = mostPopular
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                    group.leave()
+                }
             }
         }
         
-        group.enter()
-        networkManager.getTopAiring { [weak self] (topAiring, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let topAiring = topAiring {
-                self?.topAiringArray = topAiring
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+        if topAiringArray.count == 0 {
+            group.enter()
+            networkManager.getTopAiring { [weak self] (topAiring, error) in
+                if let error = error {
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.stopAnimating()
+                        self?.errorLabel.isHidden = false
+                        self?.tryAgainButton.isHidden = false
+                    }
                 }
-                group.leave()
+                
+                if let topAiring = topAiring {
+                    self?.topAiringArray = topAiring
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                    group.leave()
+                }
             }
         }
         
-        group.enter()
-        networkManager.getTopUpcoming { [weak self] (topUpcoming, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let topUpcoming = topUpcoming {
-                self?.topUpcomingArray = topUpcoming
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+        if topUpcomingArray.count == 0 {
+            group.enter()
+            networkManager.getTopUpcoming { [weak self] (topUpcoming, error) in
+                if let error = error {
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.activityIndicator.stopAnimating()
+                        self?.errorLabel.isHidden = false
+                        self?.tryAgainButton.isHidden = false
+                    }
                 }
-                group.leave()
+                
+                if let topUpcoming = topUpcoming {
+                    self?.topUpcomingArray = topUpcoming
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                    group.leave()
+                }
             }
         }
-        
         group.notify(queue: .main) {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.tableView.isHidden = false
         }
+
+        if topUpcomingArray.count > 0 && topRankedArray.count > 0 && topAiringArray.count > 0 && mostPopularArray.count > 0 {
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
+            }
+        }
     }
+    
+    @IBAction func tryAgainButtonAction(_ sender: Any) {
+        getAllData()
+    }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UILabelPadding.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
-       // headerView.intrinsicContentSize
         
         switch Section(rawValue: section) {
         case .topAiringAnime:
@@ -237,7 +281,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -274,7 +326,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as? HomeTableViewCell
         
         cell?.collectionView.tag = indexPath.row
@@ -314,17 +366,17 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 class UILabelPadding: UILabel {
-
+    
     let padding = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: padding))
     }
-
+    
     override var intrinsicContentSize: CGSize {
         let superContentSize = super.intrinsicContentSize
         let width = superContentSize.width + padding.left + padding.right
         let heigth = superContentSize.height + padding.top + padding.bottom
         return CGSize(width: width, height: heigth)
     }
-
+    
 }
