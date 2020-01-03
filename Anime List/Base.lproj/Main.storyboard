@@ -16,12 +16,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is an error getting the Anime! Please check your network connection and try again." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meh-vL-W7Q">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is an error getting the Anime! Please check your network connection and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meh-vL-W7Q">
                                 <rect key="frame" x="6" y="405" width="402.5" height="86"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kgt-Ph-lfl">
+                                <rect key="frame" x="166.5" y="499" width="81" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Try Again"/>
+                                <connections>
+                                    <action selector="tryAgainButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CPo-WF-iSv"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="g1Q-ze-xEf">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -105,10 +113,12 @@
                             <constraint firstItem="meh-vL-W7Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2RF-Lj-hrT"/>
                             <constraint firstItem="meh-vL-W7Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4UR-i8-pAV"/>
                             <constraint firstItem="meh-vL-W7Q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CDn-Xy-bxD"/>
+                            <constraint firstItem="Kgt-Ph-lfl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="InF-2C-0TI"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="PgN-fh-cpS"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="meh-vL-W7Q" secondAttribute="trailing" id="TaG-4k-PVI"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Z4x-fk-NFf"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="nm3-gP-xLm"/>
+                            <constraint firstItem="Kgt-Ph-lfl" firstAttribute="top" secondItem="meh-vL-W7Q" secondAttribute="bottom" constant="8" id="o3j-LY-kJb"/>
                             <constraint firstItem="g1Q-ze-xEf" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="xVC-l2-bDJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -117,6 +127,7 @@
                     <connections>
                         <outlet property="errorLabel" destination="meh-vL-W7Q" id="hY0-Qy-1cj"/>
                         <outlet property="tableView" destination="g1Q-ze-xEf" id="8sx-5C-mhU"/>
+                        <outlet property="tryAgainButton" destination="Kgt-Ph-lfl" id="hF9-Ap-rB1"/>
                         <segue destination="z1s-pA-xND" kind="presentation" identifier="detailsSegue" id="5MW-8H-7ak"/>
                     </connections>
                 </viewController>
@@ -143,7 +154,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="494"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xyI-jx-ntk" customClass="CustomImageView" customModule="Anime_List" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xyI-jx-ntk" customClass="CustomImageView" customModule="Anime_List" customModuleProvider="target">
                                                     <rect key="frame" x="8" y="57" width="140" height="200"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="200" id="83K-Ob-GIn"/>
@@ -517,7 +528,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search for an anime" showsSearchResultsButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oaZ-cE-o64">
+                            <searchBar contentMode="redraw" placeholder="Search for an anime" translatesAutoresizingMaskIntoConstraints="NO" id="oaZ-cE-o64">
                                 <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
@@ -545,8 +556,8 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uyo-jh-nVS" customClass="CustomImageView" customModule="Anime_List" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="11" width="90" height="126"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="126" id="3Nw-KD-bDT"/>
                                                         <constraint firstAttribute="width" constant="90" id="Jg0-xj-cW9"/>
-                                                        <constraint firstAttribute="height" constant="126" id="xh9-Pd-OMr"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-gW-wu5">
@@ -644,6 +655,6 @@
         <image name="tv" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5MW-8H-7ak"/>
+        <segue reference="puX-hv-rMb"/>
     </inferredMetricsTieBreakers>
 </document>

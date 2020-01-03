@@ -38,7 +38,10 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
-        // Do any additional setup after loading the view.
+        
+        activityIndicator.startAnimating()
+        
+        getMondayData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,13 +49,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         setupActivityIndicator()
         
-        tableView.isHidden = true
-        
-        activityIndicator.startAnimating()
-        
         navigationItem.largeTitleDisplayMode = .always
-        
-        getMondayData()
     }
     
     func setupActivityIndicator() {
@@ -99,6 +96,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getMondayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -120,6 +118,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getTuesdayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -141,6 +140,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getWednesdayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -162,6 +162,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getThursdayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -183,6 +184,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getFridayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -204,6 +206,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getSaturdayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -225,6 +228,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getSundayData() {
+        tableView.isHidden = true
         
         activityIndicator.startAnimating()
 
@@ -249,31 +253,31 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         if segmentedControl.selectedSegmentIndex == 0 {
             dayString = "monday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getMondayData()
         } else if segmentedControl.selectedSegmentIndex == 1 {
             dayString = "tuesday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getTuesdayData()
         } else if segmentedControl.selectedSegmentIndex == 2 {
             dayString = "wednesday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getWednesdayData()
         } else if segmentedControl.selectedSegmentIndex == 3 {
             dayString = "thursday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getThursdayData()
         } else if segmentedControl.selectedSegmentIndex == 4 {
             dayString = "friday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getFridayData()
         } else if segmentedControl.selectedSegmentIndex == 5 {
             dayString = "saturday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getSaturdayData()
         } else if segmentedControl.selectedSegmentIndex == 6 {
             dayString = "sunday"
-            tableView.isHidden = true
+            scheduleArray.removeAll()
             getSundayData()
         }
         
