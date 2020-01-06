@@ -39,6 +39,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         activityIndicator.startAnimating()
         
         getMondayData()

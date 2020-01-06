@@ -31,7 +31,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         searchBar.delegate = self
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
         tableView.isHidden = true
