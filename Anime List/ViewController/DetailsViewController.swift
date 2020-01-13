@@ -21,6 +21,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var animeDetailsArray: Anime?
     var animeGenresArray: [Genres] = []
     var animeStudiosArray: [Studios] = []
+    var animeCharactersArray: [Characters] = []
+    var animeRecommendationsArray: [Recommendations_results] = []
     
     var allStudios = ""
     var allGenres = ""
@@ -33,13 +35,18 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var screenWillShow = false
     
+    private enum Section: Int {
+        case characters
+        case recommendations
+        
+        static var numberOfSections: Int { return 2 }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.dataSource = self
         tableView.delegate = self
-        
-        
         
         getAllData()
     }
@@ -137,13 +144,63 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func getAnimeCharacters() {
+        networkManager.getCharacters(id: selection) { [weak self] (characters, error) in
+            if let error = error {
+                print(error)
+            }
+            if let characters = characters {
+                self?.animeCharactersArray = characters
+            }
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+    }
+    
+    func getAnimeRecommendations() {
+        networkManager.getRecommendations(id: selection) { [weak self] (recommendations, error) in
+            if let error = error {
+                print(error)
+            }
+            if let recommendations = recommendations {
+                self?.animeRecommendationsArray = recommendations
+            }
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+    }
+    
     func getAllData() {
-        getGenres()
-        getStudios()
-        getAnimeDetails()
+        let group = DispatchGroup()
         
-        DispatchQueue.main.async {
+        group.enter()
+        getAnimeRecommendations()
+        group.leave()
+        
+        group.enter()
+        getAnimeCharacters()
+        group.leave()
+        
+        group.enter()
+        getGenres()
+        group.leave()
+        
+        group.enter()
+        getStudios()
+        group.leave()
+        
+        group.enter()
+        getAnimeDetails()
+        group.leave()
+        
+        group.notify(queue: .main) {
             self.tableView.reloadData()
+            //self.activityIndicator.stopAnimating()
+           // self.tableView.isHidden = false
         }
     }
     
@@ -182,4 +239,88 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let detailsTableViewCell = cell as? DetailsTableViewCell else { return }
+        
+        detailsTableViewCell.setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
+        
+        detailsTableViewCell.setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
+        
+        
+    }
+}
+
+extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+        
+        if collectionView.tag == 1 {
+            return animeRecommendationsArray.count
+        }
+        return animeCharactersArray.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let charactersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath) as! CharactersCollectionViewCell
+        
+        let characters: Characters
+        
+        characters = animeCharactersArray[indexPath.row]
+        charactersCell.imageView.loadImageUsingCacheWithUrlString(urlString: characters.image_url ?? "")
+        charactersCell.label.text = characters.name
+        
+        if collectionView.tag == 1 {
+            let recommendationsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendationsCell", for: indexPath) as! RecommendationsCollectionViewCell
+            
+            let recommendations: Recommendations_results
+            
+            recommendations = animeRecommendationsArray[indexPath.row]
+            recommendationsCell.imageView.loadImageUsingCacheWithUrlString(urlString: recommendations.image_url ?? "")
+            recommendationsCell.label.text = recommendations.title
+            
+            return recommendationsCell
+        }
+        
+        return charactersCell
+    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as? HomeTableViewCell
+//
+//        cell?.collectionView.tag = indexPath.row
+//
+//        let topElement: TopElement
+//
+//        switch Section(rawValue: collectionView.tag) {
+//        case .topAiringAnime:
+//            topElement = topAiringArray[indexPath.row]
+//            selection = topElement.mal_id ?? 0
+//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+//        case .topRankedAnime:
+//            topElement = topRankedArray[indexPath.row]
+//            selection = topElement.mal_id ?? 0
+//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+//        case .mostPopularAnime:
+//            topElement = mostPopularArray[indexPath.row]
+//            selection = topElement.mal_id ?? 0
+//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+//        case .topUpcomingAnime:
+//            topElement = topUpcomingArray[indexPath.row]
+//            selection = topElement.mal_id ?? 0
+//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+//        case .none:
+//            selection = 0
+//        }
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "detailsSegue" {
+//            let detailsViewController = segue.destination as? DetailsViewController
+//
+//            detailsViewController?.selection = selection
+//        }
+//    }
 }

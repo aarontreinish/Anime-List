@@ -28,6 +28,10 @@ class DetailsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var webView: WKWebView!
     
+    @IBOutlet weak var charactersCollectionView: UICollectionView!
+    
+    @IBOutlet weak var recommendationsCollectionView: UICollectionView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -47,5 +51,22 @@ class DetailsTableViewCell: UITableViewCell {
         guard let youtubeURL = URL(string: url) else { return }
         webView.load(URLRequest(url: youtubeURL))
     }
+    
+    func setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
+        
+        charactersCollectionView.delegate = dataSourceDelegate
+        charactersCollectionView.dataSource = dataSourceDelegate
+        charactersCollectionView.tag = row
+        charactersCollectionView.reloadData()
+    }
+    
+    func setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
+        
+        recommendationsCollectionView.delegate = dataSourceDelegate
+        recommendationsCollectionView.dataSource = dataSourceDelegate
+        recommendationsCollectionView.tag = row
+        recommendationsCollectionView.reloadData()
+    }
+
 
 }
