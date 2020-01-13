@@ -26,7 +26,7 @@ struct Top: Codable {
 struct TopElement: Codable {
     let mal_id: Int?
     let title: String?
-    let image_url : String?
+    let image_url: String?
     
 }
 

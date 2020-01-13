@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Prop : Codable {
-    let from : From?
-    let to : To?
+struct Prop: Codable {
+    let from: From?
+    let to: To?
 
     enum CodingKeys: String, CodingKey {
 

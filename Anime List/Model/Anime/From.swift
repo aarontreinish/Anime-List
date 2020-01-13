@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct From : Codable {
-    let day : Int?
-    let month : Int?
-    let year : Int?
+struct From: Codable {
+    let day: Int?
+    let month: Int?
+    let year: Int?
 
     enum CodingKeys: String, CodingKey {
 

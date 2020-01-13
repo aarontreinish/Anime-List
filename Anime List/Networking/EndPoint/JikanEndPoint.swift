@@ -22,11 +22,13 @@ public enum JikanAPI {
     case topRanked
     case topUpcoming
     case schedule(day: String)
+    case characters_staff(id: Int)
+    case recommendations(id: Int)
 }
 
 extension JikanAPI: EndPointType {
     
-    var environmentBaseURL : String {
+    var environmentBaseURL: String {
         switch NetworkManager.environment {
         case .production: return "https://api.jikan.moe/v3"
         case .qa: return "https://api.jikan.moe/v3"
@@ -55,6 +57,10 @@ extension JikanAPI: EndPointType {
             return "/top/anime/1/bypopularity"
         case .schedule(let day):
             return "/schedule/\(day)"
+        case .characters_staff(let id):
+            return "anime/\(id)/characters_staff"
+        case .recommendations(let id):
+            return "anime/\(id)/recommendations"
         }
     }
     

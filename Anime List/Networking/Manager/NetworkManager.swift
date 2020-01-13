@@ -24,11 +24,9 @@ enum Result<String>{
 }
 
 struct NetworkManager {
-    static let environment : NetworkEnvironment = .production
+    static let environment: NetworkEnvironment = .production
     //static let MovieAPIKey = ""
     let router = Router<JikanAPI>()
-    
-    
     
     func getSearchedAnime(name: String, completion: @escaping (_ searchedAnime: [Results]?, _ error: String?) -> ()) {
         router.request(.searchAnime(name: name)) { (data, response, error) in
@@ -534,6 +532,70 @@ struct NetworkManager {
                         let apiResponse = try JSONDecoder().decode(Schedule.self, from: responseData)
                         completion(apiResponse.sunday, nil)
                     } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getCharacters(id: Int, completion: @escaping (_ anime: [Characters]?,_ error: String?)->()) {
+        router.request(.characters_staff(id: id)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Characters_staff.self, from: responseData)
+                        completion(apiResponse.characters, nil)
+                    }catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getRecommendations(id: Int, completion: @escaping (_ anime: [Recommendations_results]?,_ error: String?)->()) {
+        router.request(.recommendations(id: id)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Recommendations.self, from: responseData)
+                        completion(apiResponse.recommendations, nil)
+                    }catch {
                         print(error)
                         completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }

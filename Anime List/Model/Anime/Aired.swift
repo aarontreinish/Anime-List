@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct Aired : Codable {
-    let from : String?
-    let to : String?
-    let prop : Prop?
-    let string : String?
+struct Aired: Codable {
+    let from: String?
+    let to: String?
+    let prop: Prop?
+    let string: String?
 
     enum CodingKeys: String, CodingKey {
 

@@ -8,43 +8,43 @@
 
 import Foundation
 
-struct Anime : Codable {
-    let request_hash : String?
-    let request_cached : Bool?
-    let request_cache_expiry : Int?
-    let mal_id : Int?
-    let url : String?
-    let image_url : String?
-    let trailer_url : String?
-    let title : String?
-    let title_english : String?
-    let title_japanese : String?
-    let title_synonyms : [String]?
-    let type : String?
-    let source : String?
-    let episodes : Int?
-    let status : String?
-    let airing : Bool?
-    let aired : Aired?
-    let duration : String?
-    let rating : String?
-    let score : Double?
-    let scored_by : Int?
-    let rank : Int?
-    let popularity : Int?
-    let members : Int?
-    let favorites : Int?
-    let synopsis : String?
-    let background : String?
-    let premiered : String?
-    let broadcast : String?
-    let related : Related?
-    let producers : [Producers]?
-    let licensors : [Licensors]?
-    let studios : [Studios]?
-    let genres : [Genres]?
-    let opening_themes : [String]?
-    let ending_themes : [String]?
+struct Anime: Codable {
+    let request_hash: String?
+    let request_cached: Bool?
+    let request_cache_expiry: Int?
+    let mal_id: Int?
+    let url: String?
+    let image_url: String?
+    let trailer_url: String?
+    let title: String?
+    let title_english: String?
+    let title_japanese: String?
+    let title_synonyms: [String]?
+    let type: String?
+    let source: String?
+    let episodes: Int?
+    let status: String?
+    let airing: Bool?
+    let aired: Aired?
+    let duration: String?
+    let rating: String?
+    let score: Double?
+    let scored_by: Int?
+    let rank: Int?
+    let popularity: Int?
+    let members: Int?
+    let favorites: Int?
+    let synopsis: String?
+    let background: String?
+    let premiered: String?
+    let broadcast: String?
+    let related: Related?
+    let producers: [Producers]?
+    let licensors: [Licensors]?
+    let studios: [Studios]?
+    let genres: [Genres]?
+    let opening_themes: [String]?
+    let ending_themes: [String]?
 
     enum CodingKeys: String, CodingKey {
 
