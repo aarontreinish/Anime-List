@@ -178,7 +178,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case .mostPopularManga:
             headerView.text = "Most Popular Manga"
         case .topFavoriteManga:
-            headerView.text = "Top Upcoming Manga"
+            headerView.text = "Favorite Manga"
         case .none:
             headerView.text = "No Manga available"
         }

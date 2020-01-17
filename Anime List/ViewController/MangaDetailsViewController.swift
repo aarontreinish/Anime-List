@@ -167,6 +167,8 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func checkIfDataIsAllThere() {
         if mangaDetailsArray == nil || mangaCharactersArray.isEmpty {
+            allGenresArray.removeAll()
+            allAuthorsArray.removeAll()
             getAllData()
         }
     }

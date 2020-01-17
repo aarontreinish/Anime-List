@@ -167,6 +167,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func checkIfDataIsAllThere() {
         if animeDetailsArray == nil || animeCharactersArray.isEmpty {
+            allGenresArray.removeAll()
+            allStudiosArray.removeAll()
             getAllData()
         }
     }

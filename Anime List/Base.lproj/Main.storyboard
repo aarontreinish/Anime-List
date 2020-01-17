@@ -737,7 +737,7 @@
                                                         <constraint firstAttribute="height" constant="200" id="ibf-Wc-Ler"/>
                                                         <constraint firstAttribute="width" constant="250" id="lEu-WW-nCa"/>
                                                         <constraint firstAttribute="trailing" secondItem="Wgh-qi-ZtI" secondAttribute="trailing" constant="8" id="tcc-wj-a4R"/>
-                                                        <constraint firstItem="Wgh-qi-ZtI" firstAttribute="leading" secondItem="ca8-lb-HXL" secondAttribute="trailing" constant="30.5" id="waj-5l-b11"/>
+                                                        <constraint firstItem="Wgh-qi-ZtI" firstAttribute="leading" relation="lessThanOrEqual" secondItem="ca8-lb-HXL" secondAttribute="trailing" constant="30.5" id="waj-5l-b11"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hvc-ZF-GwG">
