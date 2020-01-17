@@ -17,10 +17,10 @@ protocol NetworkRouter: class {
 }
 
 class Router<EndPoint: EndPointType>: NetworkRouter {
+    private let session = URLSession(configuration: .default)
     private var task: URLSessionTask?
     
     func request(_ route: EndPoint, completion: @escaping NetworkRouterCompletion) {
-        let session = URLSession.shared
         do {
             let request = try self.buildRequest(from: route)
             NetworkLogger.log(request: request)

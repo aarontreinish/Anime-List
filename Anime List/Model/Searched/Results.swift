@@ -8,20 +8,20 @@
 
 import Foundation
 
-struct Results : Codable {
-    let mal_id : Int?
-    let url : String?
-    let image_url : String?
-    let title : String?
-    let airing : Bool?
-    let synopsis : String?
-    let type : String?
-    let episodes : Int?
-    let score : Double?
-    let start_date : String?
-    let end_date : String?
-    let members : Int?
-    let rated : String?
+struct Results: Codable {
+    let mal_id: Int?
+    let url: String?
+    let image_url: String?
+    let title: String?
+    let airing: Bool?
+    let synopsis: String?
+    let type: String?
+    let episodes: Int?
+    let score: Double?
+    let start_date: String?
+    let end_date: String?
+    let members: Int?
+    let rated: String?
 
     enum CodingKeys: String, CodingKey {
 

@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct Adaptation : Codable {
-    let mal_id : Int?
-    let type : String?
-    let name : String?
-    let url : String?
+struct Adaptation: Codable {
+    let mal_id: Int?
+    let type: String?
+    let name: String?
+    let url: String?
 
     enum CodingKeys: String, CodingKey {
 

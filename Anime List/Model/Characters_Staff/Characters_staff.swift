@@ -1,27 +1,27 @@
 //
-//  Searched.swift
+//  Characters_staff.swift
 //  Anime List
 //
-//  Created by Aaron Treinish on 12/5/19.
-//  Copyright © 2019 Aaron Treinish. All rights reserved.
+//  Created by Aaron Treinish on 1/12/20.
+//  Copyright © 2020 Aaron Treinish. All rights reserved.
 //
 
 import Foundation
 
-struct Searched: Codable {
+struct Characters_staff: Codable {
     let request_hash: String?
     let request_cached: Bool?
     let request_cache_expiry: Int?
-    let results: [Results]?
-    let last_page: Int?
+    let characters: [Characters]?
+    let staff: [Staff]?
 
     enum CodingKeys: String, CodingKey {
 
         case request_hash = "request_hash"
         case request_cached = "request_cached"
         case request_cache_expiry = "request_cache_expiry"
-        case results = "results"
-        case last_page = "last_page"
+        case characters = "characters"
+        case staff = "staff"
     }
 
     init(from decoder: Decoder) throws {
@@ -29,8 +29,8 @@ struct Searched: Codable {
         request_hash = try values.decodeIfPresent(String.self, forKey: .request_hash)
         request_cached = try values.decodeIfPresent(Bool.self, forKey: .request_cached)
         request_cache_expiry = try values.decodeIfPresent(Int.self, forKey: .request_cache_expiry)
-        results = try values.decodeIfPresent([Results].self, forKey: .results)
-        last_page = try values.decodeIfPresent(Int.self, forKey: .last_page)
+        characters = try values.decodeIfPresent([Characters].self, forKey: .characters)
+        staff = try values.decodeIfPresent([Staff].self, forKey: .staff)
     }
 
 }

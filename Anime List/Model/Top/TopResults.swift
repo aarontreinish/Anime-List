@@ -9,17 +9,17 @@
 import Foundation
 
 struct TopResults: Codable {
-    let mal_id : Int?
-    let rank : Int?
-    let title : String?
-    let url : String?
-    let image_url : String?
-    let type : String?
-    let episodes : Int?
-    let start_date : String?
-    let end_date : String?
-    let members : Int?
-    let score : Double?
+    let mal_id: Int?
+    let rank: Int?
+    let title: String?
+    let url: String?
+    let image_url: String?
+    let type: String?
+    let episodes: Int?
+    let start_date: String?
+    let end_date: String?
+    let members: Int?
+    let score: Double?
 
     enum CodingKeys: String, CodingKey {
 

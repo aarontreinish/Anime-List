@@ -28,11 +28,17 @@ class DetailsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var webView: WKWebView!
     
+    @IBOutlet weak var charactersCollectionView: UICollectionView!
+    
+    //@IBOutlet weak var recommendationsCollectionView: UICollectionView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         detailsImageView.layer.cornerRadius = 10.0
+        
+        
         
         genreLabel.preferredMaxLayoutWidth = labelView.bounds.size.width
     }
@@ -46,6 +52,21 @@ class DetailsTableViewCell: UITableViewCell {
     func loadYoutube(url: String) {
         guard let youtubeURL = URL(string: url) else { return }
         webView.load(URLRequest(url: youtubeURL))
+    }
+    
+    func setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
+        
+        //charactersCollectionView.register(CharactersCollectionViewCell.self, forCellWithReuseIdentifier: "charactersCell")
+        charactersCollectionView.delegate = dataSourceDelegate
+        charactersCollectionView.dataSource = dataSourceDelegate
+        charactersCollectionView.tag = row
+        charactersCollectionView.reloadData()
+        
+        //recommendationsCollectionView.register(RecommendationsCollectionViewCell.self, forCellWithReuseIdentifier: "recommendationsCell")
+//        recommendationsCollectionView.delegate = dataSourceDelegate
+//        recommendationsCollectionView.dataSource = dataSourceDelegate
+//        recommendationsCollectionView.tag = row
+//        recommendationsCollectionView.reloadData()
     }
 
 }

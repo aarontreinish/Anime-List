@@ -1,23 +1,21 @@
 //
-//  ViewController.swift
+//  MangaViewController.swift
 //  Anime List
 //
-//  Created by Aaron Treinish on 12/5/19.
-//  Copyright © 2019 Aaron Treinish. All rights reserved.
+//  Created by Aaron Treinish on 1/17/20.
+//  Copyright © 2020 Aaron Treinish. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var id = 2
     var networkManager = NetworkManager()
     
-    var topAiringArray: [TopElement] = []
     var topRankedArray: [TopElement] = []
-    var topUpcomingArray: [TopElement] = []
+    var topFavoritesArray: [TopElement] = []
     var mostPopularArray: [TopElement] = []
     
     var selection = 0
@@ -33,15 +31,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return refreshControl
     }()
     
-    var homeTableViewCell = HomeTableViewCell()
-    
     private enum Section: Int {
-        case topAiringAnime
-        case topRankedAnime
-        case mostPopularAnime
-        case topUpcomingAnime
+        case topRankedManga
+        case mostPopularManga
+        case topFavoriteManga
         
-        static var numberOfSections: Int { return 4 }
+        static var numberOfSections: Int { return 3 }
     }
     
     override func viewDidLoad() {
@@ -76,21 +71,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    func callFunctions() {
-        let group = DispatchGroup()
-        
-        group.enter()
-        getAllData()
-        group.leave()
-        
-        group.enter()
-        let deadlineTime = DispatchTime.now() + 2.0
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.checkIfDataIsAllThere()
-        }
-        group.leave()
-    }
-    
     @objc func refreshData() {
         getAllData()
         
@@ -107,7 +87,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if topRankedArray.count == 0 {
             group.enter()
             
-            self.networkManager.getTopRanked(type: "anime") { [weak self] (topRanked, error) in
+            self.networkManager.getTopRanked(type: "manga") { [weak self] (topRanked, error) in
                 if let error = error {
                     print(error)
                 }
@@ -126,10 +106,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if mostPopularArray.count == 0 {
             group.enter()
             
-            self.networkManager.getMostPopular(type: "anime") { [weak self] (mostPopular, error) in
+            self.networkManager.getMostPopular(type: "manga") { [weak self] (mostPopular, error) in
                 if let error = error {
                     print(error)
-                    
                 }
                 
                 if let mostPopular = mostPopular {
@@ -143,35 +122,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        if topAiringArray.count == 0 {
+        if topFavoritesArray.count == 0 {
             group.enter()
             
-            self.networkManager.getTopAiring(type: "anime") { [weak self] (topAiring, error) in
-                if let error = error {
-                    print(error)
-                }
-                
-                if let topAiring = topAiring {
-                    self?.topAiringArray = topAiring
-                    
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
-                    }
-                    group.leave()
-                }
-            }
-        }
-        
-        if topUpcomingArray.count == 0 {
-            group.enter()
-            
-            self.networkManager.getTopUpcoming(type: "anime") { [weak self] (topUpcoming, error) in
+            self.networkManager.getTopFavorties(type: "manga") { [weak self] (topUpcoming, error) in
                 if let error = error {
                     print(error)
                 }
                 
                 if let topUpcoming = topUpcoming {
-                    self?.topUpcomingArray = topUpcoming
+                    self?.topFavoritesArray = topUpcoming
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -186,29 +146,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.activityIndicator.stopAnimating()
             self.tableView.isHidden = false
         }
-        
     }
     
     func checkIfDataIsAllThere() {
-        if topUpcomingArray.count == 0 || topRankedArray.count == 0 || topAiringArray.count == 0 || mostPopularArray.count == 0 {
+        if topFavoritesArray.isEmpty || mostPopularArray.isEmpty || topRankedArray.isEmpty {
             getAllData()
         }
+    }
+    
+    func callFunctions() {
+        let group = DispatchGroup()
+        
+        group.enter()
+        getAllData()
+        group.leave()
+        
+        group.enter()
+        let deadlineTime = DispatchTime.now() + 1.0
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.checkIfDataIsAllThere()
+        }
+        group.leave()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UILabelPadding.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
         
         switch Section(rawValue: section) {
-        case .topAiringAnime:
-            headerView.text = "Top Airing Anime"
-        case .topRankedAnime:
-            headerView.text = "Top Ranked Anime"
-        case .mostPopularAnime:
-            headerView.text = "Most Popular Anime"
-        case .topUpcomingAnime:
-            headerView.text = "Top Upcoming Anime"
+        case .topRankedManga:
+            headerView.text = "Top Ranked Manga"
+        case .mostPopularManga:
+            headerView.text = "Most Popular Manga"
+        case .topFavoriteManga:
+            headerView.text = "Top Upcoming Manga"
         case .none:
-            headerView.text = "No Anime available"
+            headerView.text = "No Manga available"
         }
         
         return headerView
@@ -228,32 +200,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as? HomeTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "mangaCell") as? MangaTableViewCell else { return UITableViewCell() }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        guard let homeTableViewCell = cell as? HomeTableViewCell else { return }
+        guard let mangaTableViewCell = cell as? MangaTableViewCell else { return }
         
-        homeTableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
+        mangaTableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
         
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MangaViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         switch Section(rawValue: section) {
-        case .topAiringAnime:
-            return topAiringArray.count
-        case .topRankedAnime:
+        case .topRankedManga:
             return topRankedArray.count
-        case .mostPopularAnime:
+        case .mostPopularManga:
             return mostPopularArray.count
-        case .topUpcomingAnime:
-            return topUpcomingArray.count
+        case .topFavoriteManga:
+            return topFavoritesArray.count
         case .none:
             return 1
         }
@@ -281,31 +251,27 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! HomeCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mangaCollectionCell", for: indexPath) as! MangaCollectionViewCell
         
         let topElement: TopElement
         
-        if topAiringArray.count != 0 && topRankedArray.count != 0 && mostPopularArray.count != 0 && topUpcomingArray.count != 0 {
+        if topRankedArray.count != 0 && mostPopularArray.count != 0 && topFavoritesArray.count != 0 {
             
             switch Section(rawValue: collectionView.tag) {
-            case .topAiringAnime:
-                topElement = topAiringArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .topRankedAnime:
+            case .topRankedManga:
                 topElement = topRankedArray[indexPath.row]
                 cell.titleLabel.text = topElement.title
                 cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .mostPopularAnime:
+            case .mostPopularManga:
                 topElement = mostPopularArray[indexPath.row]
                 cell.titleLabel.text = topElement.title
                 cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .topUpcomingAnime:
-                topElement = topUpcomingArray[indexPath.row]
+            case .topFavoriteManga:
+                topElement = topFavoritesArray[indexPath.row]
                 cell.titleLabel.text = topElement.title
                 cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
             case .none:
-                cell.titleLabel.text = "No Anime Available"
+                cell.titleLabel.text = "No Manga Available"
             }
         }
         
@@ -314,56 +280,36 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as? HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mangaCell") as? MangaTableViewCell
         
         cell?.collectionView.tag = indexPath.row
         
         let topElement: TopElement
         
         switch Section(rawValue: collectionView.tag) {
-        case .topAiringAnime:
-            topElement = topAiringArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .topRankedAnime:
+        case .topRankedManga:
             topElement = topRankedArray[indexPath.row]
             selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .mostPopularAnime:
+            self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+        case .mostPopularManga:
             topElement = mostPopularArray[indexPath.row]
             selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .topUpcomingAnime:
-            topElement = topUpcomingArray[indexPath.row]
+            self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+        case .topFavoriteManga:
+            topElement = topFavoritesArray[indexPath.row]
             selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
         case .none:
             selection = 0
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "detailsSegue" {
-            let detailsViewController = segue.destination as? DetailsViewController
+        if segue.identifier == "mangaDetailsSegue" {
+            let mangaDetailsViewController = segue.destination as? MangaDetailsViewController
             
-            detailsViewController?.selection = selection
+            mangaDetailsViewController?.selection = selection
         }
-    }
-    
-}
-
-class UILabelPadding: UILabel {
-    
-    let padding = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-    override func drawText(in rect: CGRect) {
-        super.drawText(in: rect.inset(by: padding))
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        let superContentSize = super.intrinsicContentSize
-        let width = superContentSize.width + padding.left + padding.right
-        let heigth = superContentSize.height + padding.top + padding.bottom
-        return CGSize(width: width, height: heigth)
     }
     
 }

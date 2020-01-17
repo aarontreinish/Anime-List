@@ -30,6 +30,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         
         searchBar.delegate = self
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        tableView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +45,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         setupActivityIndicator()
         tableView.keyboardDismissMode = .onDrag
-        tableView.isHidden = true
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     func setupActivityIndicator() {

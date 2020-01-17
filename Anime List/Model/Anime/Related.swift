@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Related : Codable {
-    let adaptation : [Adaptation]?
-    let sideStory : [SideStory]?
-    let summary : [Summary]?
+struct Related: Codable {
+    let adaptation: [Adaptation]?
+    let sideStory: [SideStory]?
+    let summary: [Summary]?
 
     enum CodingKeys: String, CodingKey {
 

@@ -38,7 +38,12 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
-        // Do any additional setup after loading the view.
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        activityIndicator.startAnimating()
+        
+        getMondayData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,13 +51,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         setupActivityIndicator()
         
-        tableView.isHidden = true
-        
-        activityIndicator.startAnimating()
-        
         navigationItem.largeTitleDisplayMode = .always
-        
-        getMondayData()
     }
     
     func setupActivityIndicator() {
@@ -99,8 +98,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getMondayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getMondaySchedule(day: dayString) { (day, error) in
@@ -121,8 +120,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getTuesdayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getTuesdaySchedule(day: dayString) { (day, error) in
@@ -143,8 +142,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getWednesdayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getWednesdaySchedule(day: dayString) { (day, error) in
@@ -165,8 +164,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getThursdayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getThursdaySchedule(day: dayString) { (day, error) in
@@ -187,8 +186,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getFridayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getFridaySchedule(day: dayString) { (day, error) in
@@ -209,8 +208,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getSaturdayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getSaturdaySchedule(day: dayString) { (day, error) in
@@ -231,8 +230,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getSundayData() {
-        
         tableView.isHidden = true
+        
         activityIndicator.startAnimating()
 
         networkManager.getSundaySchedule(day: dayString) { (day, error) in
@@ -256,24 +255,31 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         if segmentedControl.selectedSegmentIndex == 0 {
             dayString = "monday"
+            scheduleArray.removeAll()
             getMondayData()
         } else if segmentedControl.selectedSegmentIndex == 1 {
             dayString = "tuesday"
+            scheduleArray.removeAll()
             getTuesdayData()
         } else if segmentedControl.selectedSegmentIndex == 2 {
             dayString = "wednesday"
+            scheduleArray.removeAll()
             getWednesdayData()
         } else if segmentedControl.selectedSegmentIndex == 3 {
             dayString = "thursday"
+            scheduleArray.removeAll()
             getThursdayData()
         } else if segmentedControl.selectedSegmentIndex == 4 {
             dayString = "friday"
+            scheduleArray.removeAll()
             getFridayData()
         } else if segmentedControl.selectedSegmentIndex == 5 {
             dayString = "saturday"
+            scheduleArray.removeAll()
             getSaturdayData()
         } else if segmentedControl.selectedSegmentIndex == 6 {
             dayString = "sunday"
+            scheduleArray.removeAll()
             getSundayData()
         }
         

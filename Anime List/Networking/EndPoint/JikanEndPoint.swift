@@ -15,18 +15,24 @@ enum NetworkEnvironment {
 }
 
 public enum JikanAPI {
-    case topAiring
-    case mostPopular
+    case topAiring(type: String)
+    case mostPopular(type: String)
     case anime(id: Int)
     case searchAnime(name: String)
-    case topRanked
-    case topUpcoming
+    case topRanked(type: String)
+    case topUpcoming(type: String)
     case schedule(day: String)
+    case characters_staff(id: Int)
+    case recommendations(id: Int)
+    case favorites(type: String)
+    case manga(id: Int)
+    case mangaCharacters(id: Int)
+    case mangaRecommendations(id: Int)
 }
 
 extension JikanAPI: EndPointType {
     
-    var environmentBaseURL : String {
+    var environmentBaseURL: String {
         switch NetworkManager.environment {
         case .production: return "https://api.jikan.moe/v3"
         case .qa: return "https://api.jikan.moe/v3"
@@ -41,20 +47,32 @@ extension JikanAPI: EndPointType {
     
     var path: String {
         switch self {
-        case .topAiring:
-            return "/top/anime/1/airing"
+        case .topAiring(let type):
+            return "/top/\(type)/1/airing"
         case .anime(let id):
             return "/anime/\(id)"
         case .searchAnime:
             return "/search/anime"
-        case .topRanked:
-            return "/top/anime/"
-        case .topUpcoming:
-            return "/top/anime/1/upcoming"
-        case .mostPopular:
-            return "/top/anime/1/bypopularity"
+        case .topRanked(let type):
+            return "/top/\(type)/"
+        case .topUpcoming(let type):
+            return "/top/\(type)/1/upcoming"
+        case .mostPopular(let type):
+            return "/top/\(type)/1/bypopularity"
         case .schedule(let day):
             return "/schedule/\(day)"
+        case .characters_staff(let id):
+            return "anime/\(id)/characters_staff"
+        case .recommendations(let id):
+            return "anime/\(id)/recommendations"
+        case .favorites(let type):
+            return "/top/\(type)/1/favorite"
+        case .manga(let id):
+            return "/manga/\(id)"
+        case .mangaCharacters(let id):
+            return "/manga/\(id)/characters"
+        case .mangaRecommendations(let id):
+            return "/manga/\(id)/recommendations"
         }
     }
     
