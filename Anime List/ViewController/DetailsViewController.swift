@@ -19,8 +19,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var networkManager = NetworkManager()
     
     var animeDetailsArray: Anime?
-    var animeGenresArray: [Genres] = []
-    var animeStudiosArray: [Studios] = []
     var animeCharactersArray: [Characters] = []
     var animeRecommendationsArray: [Recommendations_results] = []
     
@@ -48,7 +46,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         tableView.delegate = self
         
-        getAllData()
+        callFunctions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +82,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     func getAnimeDetails() {
-        
         networkManager.getNewAnime(id: selection) { [weak self] (anime, error) in
             if let error = error {
                 print(error)
@@ -150,32 +147,44 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func getAllData() {
         let group = DispatchGroup()
-        
-        let deadlineTime = DispatchTime.now() + 2.0
-        
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            group.enter()
-            self.getAnimeRecommendations()
-            group.leave()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            group.enter()
-            self.getAnimeCharacters()
-            group.leave()
-        }
+
+        group.enter()
+        self.getAnimeDetails()
+        group.leave()
     
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            group.enter()
-            self.getAnimeDetails()
-            group.leave()
-        }
+        group.enter()
+        self.getAnimeCharacters()
+        group.leave()
+        
+//        group.enter()
+//        self.getAnimeRecommendations()
+//        group.leave()
         
         group.notify(queue: .main) {
             self.tableView.reloadData()
-            //self.activityIndicator.stopAnimating()
-           // self.tableView.isHidden = false
         }
+    }
+    
+    func checkIfDataIsAllThere() {
+        if animeDetailsArray == nil || animeCharactersArray.isEmpty {
+            getAllData()
+        }
+    }
+    
+    func callFunctions() {
+        let group = DispatchGroup()
+        
+        group.enter()
+        getAllData()
+        group.leave()
+        
+        group.enter()
+        let deadlineTime = DispatchTime.now() + 1.0
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.checkIfDataIsAllThere()
+        }
+        group.leave()
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -215,20 +224,12 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let detailsTableViewCell = cell as? DetailsTableViewCell else { return }
         
         detailsTableViewCell.setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
-        
-        //detailsTableViewCell.setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
-        
-        
+    
     }
 }
 
 extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        return CGSize(width: collectionView.bounds.width / 2.2, height: collectionView.bounds.height)
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 132.0, height: collectionView.bounds.height)
     }
@@ -253,49 +254,20 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //return (section == 0) ? animeCharactersArray.count : animeRecommendationsArray.count
-        
-        let detailsTableViewCell = DetailsTableViewCell()
-        
-        if collectionView == detailsTableViewCell.recommendationsCollectionView {
-            return animeRecommendationsArray.count
-        } else {
-            return animeCharactersArray.count
-        }
-        
-//        if collectionView.tag == 50 {
-//            return animeRecommendationsArray.count
-//        } else {
-//            return animeCharactersArray.count
-//        }
+        return animeCharactersArray.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let detailsTableViewCell = DetailsTableViewCell()
+        let charactersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath) as! CharactersCollectionViewCell
         
-        if collectionView == detailsTableViewCell.recommendationsCollectionView {
-            let recommendationsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendationsCell", for: indexPath) as! RecommendationsCollectionViewCell
-            
-            let recommendations: Recommendations_results
-            
-            recommendations = animeRecommendationsArray[indexPath.row]
-            recommendationsCell.imageView.loadImageUsingCacheWithUrlString(urlString: recommendations.image_url ?? "")
-            recommendationsCell.label.text = recommendations.title
-            
-            return recommendationsCell
-        } else {
-            
-            let charactersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath) as! CharactersCollectionViewCell
-            
-            let characters: Characters
-            
-            characters = animeCharactersArray[indexPath.row]
-            charactersCell.imageView.loadImageUsingCacheWithUrlString(urlString: characters.image_url ?? "")
-            charactersCell.label.text = characters.name
-            
-            return charactersCell
-        }
-    
+        let characters: Characters
+        
+        characters = animeCharactersArray[indexPath.row]
+        charactersCell.imageView.loadImageUsingCacheWithUrlString(urlString: characters.image_url ?? "")
+        charactersCell.label.text = characters.name
+        
+        return charactersCell
+        
     }
 }

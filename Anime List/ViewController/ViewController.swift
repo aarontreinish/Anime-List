@@ -12,10 +12,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var errorLabel: UILabel!
-    
-    @IBOutlet weak var tryAgainButton: UIButton!
-    
     var id = 2
     var networkManager = NetworkManager()
     
@@ -60,14 +56,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         activityIndicator.startAnimating()
         
-        getAllData()
+        callFunctions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        errorLabel.isHidden = true
-        tryAgainButton.isHidden = true
         
         setupActivityIndicator()
     }
@@ -83,6 +76,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    func callFunctions() {
+        let group = DispatchGroup()
+        
+        group.enter()
+        getAllData()
+        group.leave()
+        
+        group.enter()
+        let deadlineTime = DispatchTime.now() + 2.0
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.checkIfDataIsAllThere()
+        }
+        group.leave()
+    }
+    
     @objc func refreshData() {
         getAllData()
         
@@ -95,31 +103,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.isHidden = true
         
         let group = DispatchGroup()
-        let deadlineTime = DispatchTime.now() + 2.0
         
         if topRankedArray.count == 0 {
             group.enter()
             
-            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.networkManager.getTopRanked(type: "anime") { [weak self] (topRanked, error) in
+                if let error = error {
+                    print(error)
+                }
                 
-                self.networkManager.getTopRanked { [weak self] (topRanked, error) in
-                    if let error = error {
-                        print(error)
-                        DispatchQueue.main.async {
-                            self?.activityIndicator.stopAnimating()
-                            self?.errorLabel.isHidden = false
-                            self?.tryAgainButton.isHidden = false
-                        }
-                    }
+                if let topRanked = topRanked {
+                    self?.topRankedArray = topRanked
                     
-                    if let topRanked = topRanked {
-                        self?.topRankedArray = topRanked
-                        
-                        DispatchQueue.main.async {
-                            self?.tableView.reloadData()
-                        }
-                        group.leave()
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
                     }
+                    group.leave()
                 }
             }
         }
@@ -127,25 +126,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if mostPopularArray.count == 0 {
             group.enter()
             
-            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-                self.networkManager.getMostPopular { [weak self] (mostPopular, error) in
-                    if let error = error {
-                        print(error)
-                        DispatchQueue.main.async {
-                            self?.activityIndicator.stopAnimating()
-                            self?.errorLabel.isHidden = false
-                            self?.tryAgainButton.isHidden = false
-                        }
-                    }
+            self.networkManager.getMostPopular(type: "anime") { [weak self] (mostPopular, error) in
+                if let error = error {
+                    print(error)
                     
-                    if let mostPopular = mostPopular {
-                        self?.mostPopularArray = mostPopular
-                        
-                        DispatchQueue.main.async {
-                            self?.tableView.reloadData()
-                        }
-                        group.leave()
+                }
+                
+                if let mostPopular = mostPopular {
+                    self?.mostPopularArray = mostPopular
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
                     }
+                    group.leave()
                 }
             }
         }
@@ -153,25 +146,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if topAiringArray.count == 0 {
             group.enter()
             
-            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-                self.networkManager.getTopAiring { [weak self] (topAiring, error) in
-                    if let error = error {
-                        print(error)
-                        DispatchQueue.main.async {
-                            self?.activityIndicator.stopAnimating()
-                            self?.errorLabel.isHidden = false
-                            self?.tryAgainButton.isHidden = false
-                        }
-                    }
+            self.networkManager.getTopAiring(type: "anime") { [weak self] (topAiring, error) in
+                if let error = error {
+                    print(error)
+                }
+                
+                if let topAiring = topAiring {
+                    self?.topAiringArray = topAiring
                     
-                    if let topAiring = topAiring {
-                        self?.topAiringArray = topAiring
-                        
-                        DispatchQueue.main.async {
-                            self?.tableView.reloadData()
-                        }
-                        group.leave()
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
                     }
+                    group.leave()
                 }
             }
         }
@@ -179,25 +165,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if topUpcomingArray.count == 0 {
             group.enter()
             
-            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-                self.networkManager.getTopUpcoming { [weak self] (topUpcoming, error) in
-                    if let error = error {
-                        print(error)
-                        DispatchQueue.main.async {
-                            self?.activityIndicator.stopAnimating()
-                            self?.errorLabel.isHidden = false
-                            self?.tryAgainButton.isHidden = false
-                        }
-                    }
+            self.networkManager.getTopUpcoming(type: "anime") { [weak self] (topUpcoming, error) in
+                if let error = error {
+                    print(error)
+                }
+                
+                if let topUpcoming = topUpcoming {
+                    self?.topUpcomingArray = topUpcoming
                     
-                    if let topUpcoming = topUpcoming {
-                        self?.topUpcomingArray = topUpcoming
-                        
-                        DispatchQueue.main.async {
-                            self?.tableView.reloadData()
-                        }
-                        group.leave()
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
                     }
+                    group.leave()
                 }
             }
         }
@@ -208,20 +187,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.tableView.isHidden = false
         }
         
-        if topUpcomingArray.count > 0 && topRankedArray.count > 0 && topAiringArray.count > 0 && mostPopularArray.count > 0 {
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
-            }
+    }
+    
+    func checkIfDataIsAllThere() {
+        if topUpcomingArray.count == 0 || topRankedArray.count == 0 || topAiringArray.count == 0 || mostPopularArray.count == 0 {
+            getAllData()
         }
     }
-    
-    @IBAction func tryAgainButtonAction(_ sender: Any) {
-        getAllData()
-    }
-    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UILabelPadding.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
@@ -302,7 +274,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

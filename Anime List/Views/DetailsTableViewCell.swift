@@ -30,7 +30,7 @@ class DetailsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var charactersCollectionView: UICollectionView!
     
-    @IBOutlet weak var recommendationsCollectionView: UICollectionView!
+    //@IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,19 +63,10 @@ class DetailsTableViewCell: UITableViewCell {
         charactersCollectionView.reloadData()
         
         //recommendationsCollectionView.register(RecommendationsCollectionViewCell.self, forCellWithReuseIdentifier: "recommendationsCell")
-        recommendationsCollectionView.delegate = dataSourceDelegate
-        recommendationsCollectionView.dataSource = dataSourceDelegate
-        recommendationsCollectionView.tag = row
-        recommendationsCollectionView.reloadData()
-    }
-    
-//    func setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
-//
 //        recommendationsCollectionView.delegate = dataSourceDelegate
 //        recommendationsCollectionView.dataSource = dataSourceDelegate
 //        recommendationsCollectionView.tag = row
 //        recommendationsCollectionView.reloadData()
-//    }
-
+    }
 
 }
