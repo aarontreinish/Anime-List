@@ -82,66 +82,40 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         view.addConstraint(verticalConstraint)
         
     }
-    
-    func getGenres() {
-        networkManager.getNewAnimeGenres(id: selection) { (genres, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let genres = genres {
-                self.animeGenresArray = genres
-            }
-            
-            self.allGenresArray = self.animeGenresArray.map { ($0.name ?? "") }
-            self.allGenres = self.allGenresArray.joined(separator: ", ")
-            
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    func getStudios() {
-        networkManager.getNewAnimeStudios(id: selection) { (studios, error) in
-            if let error = error {
-                print(error)
-            }
-            if let studios = studios {
-                self.animeStudiosArray = studios
-            }
-            
-            self.allStudiosArray = self.animeStudiosArray.map { ($0.name ?? "") }
-            self.allStudios = self.allStudiosArray.joined(separator: ", ")
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
+
     func getAnimeDetails() {
         
-        networkManager.getNewAnime(id: selection) { (anime, error) in
+        networkManager.getNewAnime(id: selection) { [weak self] (anime, error) in
             if let error = error {
                 print(error)
             }
             if let anime = anime {
-                self.animeDetailsArray = anime
+                self?.animeDetailsArray = anime
             }
             
-            self.screenWillShow = true
-            
-            self.episodesString = String(self.animeDetailsArray?.episodes ?? 0)
-            self.rankString = String(self.animeDetailsArray?.rank ?? 0)
-            self.scoreString = String(self.animeDetailsArray?.score ?? 0)
+            self?.screenWillShow = true
+            self?.setUpData()
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-               // self.title = self.animeDetailsArray?.title
+                self?.tableView.reloadData()
             }
         }
+    }
+    
+    func setUpData() {
+        episodesString = String(animeDetailsArray?.episodes ?? 0)
+        rankString = String(animeDetailsArray?.rank ?? 0)
+        scoreString = String(animeDetailsArray?.score ?? 0)
+        
+        for studios in animeDetailsArray?.studios ?? [] {
+            allStudiosArray.append(studios.name ?? "")
+        }
+        allStudios = allStudiosArray.joined(separator: ", ")
+        
+        for genres in self.animeDetailsArray?.genres ?? [] {
+            allGenresArray.append(genres.name ?? "")
+        }
+        allGenres = allGenresArray.joined(separator: ", ")
     }
     
     func getAnimeCharacters() {
@@ -177,25 +151,25 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func getAllData() {
         let group = DispatchGroup()
         
-        group.enter()
-        getAnimeRecommendations()
-        group.leave()
+        let deadlineTime = DispatchTime.now() + 2.0
         
-        group.enter()
-        getAnimeCharacters()
-        group.leave()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            group.enter()
+            self.getAnimeRecommendations()
+            group.leave()
+        }
         
-        group.enter()
-        getGenres()
-        group.leave()
-        
-        group.enter()
-        getStudios()
-        group.leave()
-        
-        group.enter()
-        getAnimeDetails()
-        group.leave()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            group.enter()
+            self.getAnimeCharacters()
+            group.leave()
+        }
+    
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            group.enter()
+            self.getAnimeDetails()
+            group.leave()
+        }
         
         group.notify(queue: .main) {
             self.tableView.reloadData()
@@ -210,8 +184,9 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell1") as? DetailsTableViewCell else { return UITableViewCell() }
+        
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell1") as? DetailsTableViewCell else { return UITableViewCell() }
             
             if self.allGenres != "" && self.allStudios != "" {
                 
@@ -230,14 +205,9 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell.studioLabel.text = allStudios
                 cell.genreLabel.text = allGenres
             }
-            
-            return cell
-            
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell2") as? DetailsTableViewCell else { return UITableViewCell() }
-            
-            return cell
         }
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -246,32 +216,65 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         detailsTableViewCell.setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
         
-        detailsTableViewCell.setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
+        //detailsTableViewCell.setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
         
         
     }
 }
 
 extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        return CGSize(width: collectionView.bounds.width / 2.2, height: collectionView.bounds.height)
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 132.0, height: collectionView.bounds.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
         
-        if collectionView.tag == 1 {
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //return (section == 0) ? animeCharactersArray.count : animeRecommendationsArray.count
+        
+        let detailsTableViewCell = DetailsTableViewCell()
+        
+        if collectionView == detailsTableViewCell.recommendationsCollectionView {
             return animeRecommendationsArray.count
+        } else {
+            return animeCharactersArray.count
         }
-        return animeCharactersArray.count
+        
+//        if collectionView.tag == 50 {
+//            return animeRecommendationsArray.count
+//        } else {
+//            return animeCharactersArray.count
+//        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let charactersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath) as! CharactersCollectionViewCell
         
-        let characters: Characters
+        let detailsTableViewCell = DetailsTableViewCell()
         
-        characters = animeCharactersArray[indexPath.row]
-        charactersCell.imageView.loadImageUsingCacheWithUrlString(urlString: characters.image_url ?? "")
-        charactersCell.label.text = characters.name
-        
-        if collectionView.tag == 1 {
+        if collectionView == detailsTableViewCell.recommendationsCollectionView {
             let recommendationsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendationsCell", for: indexPath) as! RecommendationsCollectionViewCell
             
             let recommendations: Recommendations_results
@@ -281,46 +284,18 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
             recommendationsCell.label.text = recommendations.title
             
             return recommendationsCell
+        } else {
+            
+            let charactersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath) as! CharactersCollectionViewCell
+            
+            let characters: Characters
+            
+            characters = animeCharactersArray[indexPath.row]
+            charactersCell.imageView.loadImageUsingCacheWithUrlString(urlString: characters.image_url ?? "")
+            charactersCell.label.text = characters.name
+            
+            return charactersCell
         }
-        
-        return charactersCell
+    
     }
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as? HomeTableViewCell
-//
-//        cell?.collectionView.tag = indexPath.row
-//
-//        let topElement: TopElement
-//
-//        switch Section(rawValue: collectionView.tag) {
-//        case .topAiringAnime:
-//            topElement = topAiringArray[indexPath.row]
-//            selection = topElement.mal_id ?? 0
-//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-//        case .topRankedAnime:
-//            topElement = topRankedArray[indexPath.row]
-//            selection = topElement.mal_id ?? 0
-//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-//        case .mostPopularAnime:
-//            topElement = mostPopularArray[indexPath.row]
-//            selection = topElement.mal_id ?? 0
-//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-//        case .topUpcomingAnime:
-//            topElement = topUpcomingArray[indexPath.row]
-//            selection = topElement.mal_id ?? 0
-//            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-//        case .none:
-//            selection = 0
-//        }
-//    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "detailsSegue" {
-//            let detailsViewController = segue.destination as? DetailsViewController
-//
-//            detailsViewController?.selection = selection
-//        }
-//    }
 }

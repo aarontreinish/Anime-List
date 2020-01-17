@@ -95,104 +95,119 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.isHidden = true
         
         let group = DispatchGroup()
+        let deadlineTime = DispatchTime.now() + 2.0
         
         if topRankedArray.count == 0 {
             group.enter()
-            networkManager.getTopRanked { [weak self] (topRanked, error) in
-                if let error = error {
-                    print(error)
-                    DispatchQueue.main.async {
-                        self?.activityIndicator.stopAnimating()
-                        self?.errorLabel.isHidden = false
-                        self?.tryAgainButton.isHidden = false
-                    }
-                }
+            
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
                 
-                if let topRanked = topRanked {
-                    self?.topRankedArray = topRanked
-                    
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                self.networkManager.getTopRanked { [weak self] (topRanked, error) in
+                    if let error = error {
+                        print(error)
+                        DispatchQueue.main.async {
+                            self?.activityIndicator.stopAnimating()
+                            self?.errorLabel.isHidden = false
+                            self?.tryAgainButton.isHidden = false
+                        }
                     }
-                    group.leave()
+                    
+                    if let topRanked = topRanked {
+                        self?.topRankedArray = topRanked
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
+                    }
                 }
             }
         }
         
         if mostPopularArray.count == 0 {
             group.enter()
-            networkManager.getMostPopular { [weak self] (mostPopular, error) in
-                if let error = error {
-                    print(error)
-                    DispatchQueue.main.async {
-                        self?.activityIndicator.stopAnimating()
-                        self?.errorLabel.isHidden = false
-                        self?.tryAgainButton.isHidden = false
+            
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                self.networkManager.getMostPopular { [weak self] (mostPopular, error) in
+                    if let error = error {
+                        print(error)
+                        DispatchQueue.main.async {
+                            self?.activityIndicator.stopAnimating()
+                            self?.errorLabel.isHidden = false
+                            self?.tryAgainButton.isHidden = false
+                        }
                     }
-                }
-                
-                if let mostPopular = mostPopular {
-                    self?.mostPopularArray = mostPopular
                     
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                    if let mostPopular = mostPopular {
+                        self?.mostPopularArray = mostPopular
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
                     }
-                    group.leave()
                 }
             }
         }
         
         if topAiringArray.count == 0 {
             group.enter()
-            networkManager.getTopAiring { [weak self] (topAiring, error) in
-                if let error = error {
-                    print(error)
-                    DispatchQueue.main.async {
-                        self?.activityIndicator.stopAnimating()
-                        self?.errorLabel.isHidden = false
-                        self?.tryAgainButton.isHidden = false
+            
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                self.networkManager.getTopAiring { [weak self] (topAiring, error) in
+                    if let error = error {
+                        print(error)
+                        DispatchQueue.main.async {
+                            self?.activityIndicator.stopAnimating()
+                            self?.errorLabel.isHidden = false
+                            self?.tryAgainButton.isHidden = false
+                        }
                     }
-                }
-                
-                if let topAiring = topAiring {
-                    self?.topAiringArray = topAiring
                     
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                    if let topAiring = topAiring {
+                        self?.topAiringArray = topAiring
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
                     }
-                    group.leave()
                 }
             }
         }
         
         if topUpcomingArray.count == 0 {
             group.enter()
-            networkManager.getTopUpcoming { [weak self] (topUpcoming, error) in
-                if let error = error {
-                    print(error)
-                    DispatchQueue.main.async {
-                        self?.activityIndicator.stopAnimating()
-                        self?.errorLabel.isHidden = false
-                        self?.tryAgainButton.isHidden = false
+            
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                self.networkManager.getTopUpcoming { [weak self] (topUpcoming, error) in
+                    if let error = error {
+                        print(error)
+                        DispatchQueue.main.async {
+                            self?.activityIndicator.stopAnimating()
+                            self?.errorLabel.isHidden = false
+                            self?.tryAgainButton.isHidden = false
+                        }
                     }
-                }
-                
-                if let topUpcoming = topUpcoming {
-                    self?.topUpcomingArray = topUpcoming
                     
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                    if let topUpcoming = topUpcoming {
+                        self?.topUpcomingArray = topUpcoming
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
                     }
-                    group.leave()
                 }
             }
         }
+        
         group.notify(queue: .main) {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.tableView.isHidden = false
         }
-
+        
         if topUpcomingArray.count > 0 && topRankedArray.count > 0 && topAiringArray.count > 0 && mostPopularArray.count > 0 {
             
             DispatchQueue.main.async {

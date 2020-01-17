@@ -13,4 +13,10 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        imageView.layer.cornerRadius = 10.0
+        
+    }
 }

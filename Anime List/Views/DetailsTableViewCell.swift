@@ -38,6 +38,8 @@ class DetailsTableViewCell: UITableViewCell {
         
         detailsImageView.layer.cornerRadius = 10.0
         
+        
+        
         genreLabel.preferredMaxLayoutWidth = labelView.bounds.size.width
     }
 
@@ -54,19 +56,26 @@ class DetailsTableViewCell: UITableViewCell {
     
     func setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
         
+        //charactersCollectionView.register(CharactersCollectionViewCell.self, forCellWithReuseIdentifier: "charactersCell")
         charactersCollectionView.delegate = dataSourceDelegate
         charactersCollectionView.dataSource = dataSourceDelegate
         charactersCollectionView.tag = row
         charactersCollectionView.reloadData()
-    }
-    
-    func setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
         
+        //recommendationsCollectionView.register(RecommendationsCollectionViewCell.self, forCellWithReuseIdentifier: "recommendationsCell")
         recommendationsCollectionView.delegate = dataSourceDelegate
         recommendationsCollectionView.dataSource = dataSourceDelegate
         recommendationsCollectionView.tag = row
         recommendationsCollectionView.reloadData()
     }
+    
+//    func setRecommendationsCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDelegateFlowLayout, forRow row: Int) {
+//
+//        recommendationsCollectionView.delegate = dataSourceDelegate
+//        recommendationsCollectionView.dataSource = dataSourceDelegate
+//        recommendationsCollectionView.tag = row
+//        recommendationsCollectionView.reloadData()
+//    }
 
 
 }
