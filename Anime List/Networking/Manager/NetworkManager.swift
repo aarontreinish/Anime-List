@@ -61,8 +61,8 @@ struct NetworkManager {
         }
     }
     
-    func getTopRanked(completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
-        router.request(.topRanked) { data, response, error in
+    func getTopRanked(type: String, completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
+        router.request(.topRanked(type: type)) { data, response, error in
             
             if error != nil {
                 completion(nil, "Please check your network connection.")
@@ -93,8 +93,8 @@ struct NetworkManager {
         }
     }
     
-    func getTopUpcoming(completion: @escaping (_ topUpcoming: [TopElement]?,_ error: String?)->()) {
-        router.request(.topUpcoming) { data, response, error in
+    func getTopFavorties(type: String, completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
+        router.request(.favorites(type: type)) { data, response, error in
             
             if error != nil {
                 completion(nil, "Please check your network connection.")
@@ -125,8 +125,8 @@ struct NetworkManager {
         }
     }
     
-    func getTopAiring(completion: @escaping (_ topAiring: [TopElement]?,_ error: String?)->()) {
-        router.request(.topAiring) { data, response, error in
+    func getTopUpcoming(type: String, completion: @escaping (_ topUpcoming: [TopElement]?,_ error: String?)->()) {
+        router.request(.topUpcoming(type: type)) { data, response, error in
             
             if error != nil {
                 completion(nil, "Please check your network connection.")
@@ -157,8 +157,8 @@ struct NetworkManager {
         }
     }
     
-    func getMostPopular(completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
-        router.request(.mostPopular) { data, response, error in
+    func getTopAiring(type: String, completion: @escaping (_ topAiring: [TopElement]?,_ error: String?)->()) {
+        router.request(.topAiring(type: type)) { data, response, error in
             
             if error != nil {
                 completion(nil, "Please check your network connection.")
@@ -188,10 +188,9 @@ struct NetworkManager {
             }
         }
     }
-
     
-    func getNewAnimeGenres(id: Int, completion: @escaping (_ anime: [Genres]?,_ error: String?)->()){
-        router.request(.anime(id: id)) { data, response, error in
+    func getMostPopular(type: String, completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
+        router.request(.mostPopular(type: type)) { data, response, error in
             
             if error != nil {
                 completion(nil, "Please check your network connection.")
@@ -209,73 +208,9 @@ struct NetworkManager {
                         print(responseData)
                         //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
                         //print(jsonData)
-                        let apiResponse = try JSONDecoder().decode(Anime.self, from: responseData)
-                        completion(apiResponse.genres, nil)
-                    }catch {
-                        print(error)
-                        completion(nil, NetworkResponse.unableToDecode.rawValue)
-                    }
-                case .failure(let networkFailureError):
-                    completion(nil, networkFailureError)
-                }
-            }
-        }
-    }
-    
-    func getNewAnimeStudios(id: Int, completion: @escaping (_ anime: [Studios]?,_ error: String?)->()){
-        router.request(.anime(id: id)) { data, response, error in
-            
-            if error != nil {
-                completion(nil, "Please check your network connection.")
-            }
-            
-            if let response = response as? HTTPURLResponse {
-                let result = self.handleNetworkResponse(response)
-                switch result {
-                case .success:
-                    guard let responseData = data else {
-                        completion(nil, NetworkResponse.noData.rawValue)
-                        return
-                    }
-                    do {
-                        print(responseData)
-                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
-                        //print(jsonData)
-                        let apiResponse = try JSONDecoder().decode(Anime.self, from: responseData)
-                        completion(apiResponse.studios, nil)
-                    }catch {
-                        print(error)
-                        completion(nil, NetworkResponse.unableToDecode.rawValue)
-                    }
-                case .failure(let networkFailureError):
-                    completion(nil, networkFailureError)
-                }
-            }
-        }
-    }
-    
-    func getNewAnimeAired(id: Int, completion: @escaping (_ anime: Aired?,_ error: String?)->()){
-        router.request(.anime(id: id)) { data, response, error in
-            
-            if error != nil {
-                completion(nil, "Please check your network connection.")
-            }
-            
-            if let response = response as? HTTPURLResponse {
-                let result = self.handleNetworkResponse(response)
-                switch result {
-                case .success:
-                    guard let responseData = data else {
-                        completion(nil, NetworkResponse.noData.rawValue)
-                        return
-                    }
-                    do {
-                        print(responseData)
-                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
-                        //print(jsonData)
-                        let apiResponse = try JSONDecoder().decode(Anime.self, from: responseData)
-                        completion(apiResponse.aired, nil)
-                    }catch {
+                        let apiResponse = try JSONDecoder().decode(Top.self, from: responseData)
+                        completion(apiResponse.top, nil)
+                    } catch {
                         print(error)
                         completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }
@@ -306,6 +241,38 @@ struct NetworkManager {
                         //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
                         //print(jsonData)
                         let apiResponse = try JSONDecoder().decode(Anime.self, from: responseData)
+                        completion(apiResponse, nil)
+                    }catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getNewManga(id: Int, completion: @escaping (_ anime: Manga?,_ error: String?)->()){
+        router.request(.manga(id: id)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Manga.self, from: responseData)
                         completion(apiResponse, nil)
                     }catch {
                         print(error)
@@ -544,6 +511,38 @@ struct NetworkManager {
     
     func getCharacters(id: Int, completion: @escaping (_ anime: [Characters]?,_ error: String?)->()) {
         router.request(.characters_staff(id: id)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Characters_staff.self, from: responseData)
+                        completion(apiResponse.characters, nil)
+                    }catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getMangaCharacters(id: Int, completion: @escaping (_ anime: [Characters]?,_ error: String?)->()) {
+        router.request(.mangaCharacters(id: id)) { data, response, error in
             
             if error != nil {
                 completion(nil, "Please check your network connection.")
