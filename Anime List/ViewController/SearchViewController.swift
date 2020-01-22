@@ -11,7 +11,7 @@ import UIKit
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
-    
+    @IBOutlet weak var segmentedController: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchPlacementLabel: UILabel!
     
@@ -21,7 +21,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
-    var resultsArray: [Results] = []
+    var animeResultsArray: [Results] = []
+    var mangaResultsArray: [Results] = []
+    var characterResultsArray: [CharacterResults] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,13 +65,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getSearchedData() {
+        
         networkManager.getSearchedAnime(name: searchBar.text ?? "") { (results, error) in
             if let error = error {
                 print(error)
             }
             
             if let results = results {
-                self.resultsArray = results
+                self.animeResultsArray = results
             }
             
             DispatchQueue.main.async {
@@ -77,10 +80,44 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.activityIndicator.stopAnimating()
                 self.tableView.isHidden = false
             }
+        }
+        
+        networkManager.getSearchedManga(name: searchBar.text ?? "") { (results, error) in
+            if let error = error {
+                print(error)
+            }
             
+            if let results = results {
+                self.mangaResultsArray = results
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
+            }
+        }
+        
+        networkManager.getSearchedCharacters(name: searchBar.text ?? "") { (results, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            if let results = results {
+                self.characterResultsArray = results
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.tableView.isHidden = false
+            }
         }
     }
     
+    @IBAction func segmentedControllerAction(_ sender: Any) {
+        tableView.reloadData()
+    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == "" {
             searchPlacementLabel.isHidden = false
@@ -105,18 +142,42 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultsArray.count
+        
+        if segmentedController.selectedSegmentIndex == 0 {
+            return animeResultsArray.count
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            return mangaResultsArray.count
+        } else if segmentedController.selectedSegmentIndex == 2 {
+            return characterResultsArray.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell") as? SearchTableViewCell else { return UITableViewCell() }
         
         let results: Results
+        let characterResults: CharacterResults
         
-        results = resultsArray[indexPath.row]
-        
-        cell.label.text = results.title ?? ""
-        cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: results.image_url ?? "")
+        if segmentedController.selectedSegmentIndex == 0 {
+            results = animeResultsArray[indexPath.row]
+            
+            cell.label.text = results.title ?? ""
+            cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: results.image_url ?? "")
+            
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            results = mangaResultsArray[indexPath.row]
+            
+            cell.label.text = results.title ?? ""
+            cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: results.image_url ?? "")
+            
+        } else if segmentedController.selectedSegmentIndex == 2 {
+            characterResults = characterResultsArray[indexPath.row]
+            
+            cell.label.text = characterResults.name ?? ""
+            cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: characterResults.image_url ?? "")
+        }
         
         return cell
     }
@@ -124,18 +185,46 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
         let results: Results
+        let characterResults: CharacterResults
         
-        results = resultsArray[indexPath.row]
-        selection = results.mal_id ?? 0
-        self.performSegue(withIdentifier: "searchDetailsSegue", sender: self)
+        if segmentedController.selectedSegmentIndex == 0 {
+            
+            results = animeResultsArray[indexPath.row]
+            selection = results.mal_id ?? 0
+            self.performSegue(withIdentifier: "searchAnimeDetailsSegue", sender: self)
+            
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            
+            results = mangaResultsArray[indexPath.row]
+            selection = results.mal_id ?? 0
+            self.performSegue(withIdentifier: "searchMangaDetailsSegue", sender: self)
+            
+        } else if segmentedController.selectedSegmentIndex == 2 {
+            
+            characterResults = characterResultsArray[indexPath.row]
+            selection = characterResults.mal_id ?? 0
+            self.performSegue(withIdentifier: "searchCharacterDetailsSegue", sender: self)
+        }
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "searchDetailsSegue" {
+        if segue.identifier == "searchAnimeDetailsSegue" {
             let detailsViewController = segue.destination as? DetailsViewController
             
             detailsViewController?.selection = selection
+        }
+        
+        if segue.identifier == "searchMangaDetailsSegue" {
+            let mangaDetailsViewController = segue.destination as? MangaDetailsViewController
+            
+            mangaDetailsViewController?.selection = selection
+        }
+        
+        if segue.identifier == "searchCharacterDetailsSegue" {
+            let characterDetailsViewController = segue.destination as? CharacterDetailsViewController
+            
+            characterDetailsViewController?.selection = selection
         }
     }
 }

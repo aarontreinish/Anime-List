@@ -61,6 +61,72 @@ struct NetworkManager {
         }
     }
     
+    func getSearchedManga(name: String, completion: @escaping (_ searchedAnime: [Results]?, _ error: String?) -> ()) {
+        router.request(.searchManga(name: name)) { (data, response, error) in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        // let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        // print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(Searched.self, from: responseData)
+                        completion(apiResponse.results, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+            
+        }
+    }
+
+    func getSearchedCharacters(name: String, completion: @escaping (_ searchedAnime: [CharacterResults]?, _ error: String?) -> ()) {
+        router.request(.searchCharacter(name: name)) { (data, response, error) in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        // let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        // print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(CharacterSearch.self, from: responseData)
+                        completion(apiResponse.results, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+            
+        }
+    }
+    
     func getTopRanked(type: String, completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
         router.request(.topRanked(type: type)) { data, response, error in
             
@@ -595,6 +661,38 @@ struct NetworkManager {
                         let apiResponse = try JSONDecoder().decode(Recommendations.self, from: responseData)
                         completion(apiResponse.recommendations, nil)
                     } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+        }
+    }
+    
+    func getCharacterDetails(id: Int, completion: @escaping (_ anime: CharacterDetails?,_ error: String?)->()) {
+        router.request(.character(id: id)) { data, response, error in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        //let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        //print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(CharacterDetails.self, from: responseData)
+                        completion(apiResponse, nil)
+                    }catch {
                         print(error)
                         completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }

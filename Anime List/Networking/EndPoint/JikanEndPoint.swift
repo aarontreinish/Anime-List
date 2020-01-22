@@ -19,6 +19,8 @@ public enum JikanAPI {
     case mostPopular(type: String)
     case anime(id: Int)
     case searchAnime(name: String)
+    case searchManga(name: String)
+    case searchCharacter(name: String)
     case topRanked(type: String)
     case topUpcoming(type: String)
     case schedule(day: String)
@@ -28,6 +30,7 @@ public enum JikanAPI {
     case manga(id: Int)
     case mangaCharacters(id: Int)
     case mangaRecommendations(id: Int)
+    case character(id: Int)
 }
 
 extension JikanAPI: EndPointType {
@@ -53,6 +56,10 @@ extension JikanAPI: EndPointType {
             return "/anime/\(id)"
         case .searchAnime:
             return "/search/anime"
+        case .searchManga:
+            return "/search/manga"
+        case .searchCharacter:
+            return "/search/character"
         case .topRanked(let type):
             return "/top/\(type)/"
         case .topUpcoming(let type):
@@ -73,6 +80,8 @@ extension JikanAPI: EndPointType {
             return "/manga/\(id)/characters"
         case .mangaRecommendations(let id):
             return "/manga/\(id)/recommendations"
+        case .character(let id):
+            return "/character/\(id)/"
         }
     }
     
@@ -83,6 +92,10 @@ extension JikanAPI: EndPointType {
     var task: HTTPTask {
         switch self {
         case .searchAnime(let name):
+            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
+        case .searchManga(let name):
+            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
+        case .searchCharacter(let name):
             return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
 //        case .newMovies(let page):
 //            return .requestParameters(bodyParameters: nil,

@@ -268,4 +268,21 @@ extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionView
         return charactersCell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let characters: Characters
+        characters = mangaCharactersArray[indexPath.row]
+        selection = characters.mal_id ?? 0
+        
+        self.performSegue(withIdentifier: "mangaDetailsCharacterSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mangaDetailsCharacterSegue" {
+            let characterDetailsViewController = segue.destination as? CharacterDetailsViewController
+            
+            characterDetailsViewController?.selection = selection
+        }
+    }
 }
