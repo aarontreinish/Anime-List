@@ -8,9 +8,17 @@
 
 import UIKit
 
-class CharacterDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CharacterDetailsViewController: UIViewController {
+
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var japaneseNameLabel: UILabel!
+    @IBOutlet weak var mainImageView: CustomImageView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var charactersCollectionView: UICollectionView!
+    @IBOutlet weak var animeAppearancesCollectionView: UICollectionView!
+
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
@@ -18,14 +26,20 @@ class CharacterDetailsViewController: UIViewController, UITableViewDelegate, UIT
     
     var selection = 0
     
+    var screenWillShow = false
+    
     var characterDetailsArray: CharacterDetails?
     var voiceActorsArray: [Voice_actors] = []
+    var animeAppearancesArray: [Animeography] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.dataSource = self
-        tableView.delegate = self
+        charactersCollectionView.dataSource = self
+        charactersCollectionView.delegate = self
+        
+        animeAppearancesCollectionView.dataSource = self
+        animeAppearancesCollectionView.delegate = self
         // Do any additional setup after loading the view.
         
         getCharacterDetails()
@@ -38,8 +52,11 @@ class CharacterDetailsViewController: UIViewController, UITableViewDelegate, UIT
         
         setupActivityIndicator()
         
-        tableView.isHidden = true
-        activityIndicator.startAnimating()
+        
+        if screenWillShow == false {
+            mainView.isHidden = true
+            activityIndicator.startAnimating()
+        }
         
     }
     
@@ -64,43 +81,35 @@ class CharacterDetailsViewController: UIViewController, UITableViewDelegate, UIT
                 self?.characterDetailsArray = characterDetails
             }
             
+            self?.screenWillShow = true
+            
             self?.setUpData()
             
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                self?.setLabels()
+                self?.animeAppearancesCollectionView.reloadData()
+                self?.charactersCollectionView.reloadData()
                 self?.activityIndicator.stopAnimating()
-                self?.tableView.isHidden = false
+                self?.mainView.isHidden = false
             }
         }
+    }
+    
+    func setLabels() {
+        titleLabel.text = characterDetailsArray?.name
+        japaneseNameLabel.text = characterDetailsArray?.name_kanji
+        mainImageView.loadImageUsingCacheWithUrlString(urlString: characterDetailsArray?.image_url ?? "")
+        descriptionLabel.text = characterDetailsArray?.about
     }
     
     func setUpData() {
         for voiceActors in characterDetailsArray?.voice_actors ?? [] {
             voiceActorsArray.append(voiceActors)
         }
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "characterDetailsCell") as? CharacterDetailsTableViewCell else { return UITableViewCell() }
         
-        cell.characterImageView.loadImageUsingCacheWithUrlString(urlString: characterDetailsArray?.image_url ?? "")
-        cell.descriptionLabel.text = characterDetailsArray?.about
-        cell.japaneseNameLabel.text = characterDetailsArray?.name_kanji
-        cell.nameLabel.text = characterDetailsArray?.name
-        
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        guard let characterDetailsTableViewCell = cell as? CharacterDetailsTableViewCell else { return }
-        
-        characterDetailsTableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
+        for animeAppearances in characterDetailsArray?.animeography ?? [] {
+            animeAppearancesArray.append(animeAppearances)
+        }
     }
 }
 
@@ -131,10 +140,28 @@ extension CharacterDetailsViewController: UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return voiceActorsArray.count
+        if collectionView == animeAppearancesCollectionView {
+            return animeAppearancesArray.count
+        } else if collectionView == charactersCollectionView {
+            return voiceActorsArray.count
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == animeAppearancesCollectionView {
+            let animeAppearancesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "animeAppearancesCell", for: indexPath) as! CharacterDetailsCollectionViewCell
+            
+            let animeAppearances: Animeography
+            
+            animeAppearances = animeAppearancesArray[indexPath.row]
+            animeAppearancesCell.voiceActorImageView.loadImageUsingCacheWithUrlString(urlString: animeAppearances.image_url ?? "")
+            animeAppearancesCell.nameLabel.text = animeAppearances.name
+            
+            return animeAppearancesCell
+        }
         
         let voiceActorsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "voiceActorsCell", for: indexPath) as! CharacterDetailsCollectionViewCell
         

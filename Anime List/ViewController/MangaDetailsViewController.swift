@@ -2,15 +2,29 @@
 //  MangaDetailsViewController.swift
 //  Anime List
 //
-//  Created by Aaron Treinish on 1/17/20.
+//  Created by Aaron Treinish on 1/23/20.
 //  Copyright © 2020 Aaron Treinish. All rights reserved.
 //
 
 import UIKit
 
-class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MangaDetailsViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mainView: UIView!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var imageView: CustomImageView!
+    @IBOutlet weak var chaptersLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var volumesLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
+    @IBOutlet weak var charactersCollectionView: UICollectionView!
+    @IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
@@ -20,6 +34,7 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var mangaDetailsArray: Manga?
     var mangaCharactersArray: [Characters] = []
     var mangaRecommendationsArray: [Recommendations_results] = []
+    var mangaAdaptationsArray: [Adaptation] = []
     
     var allAuthors = ""
     var allGenres = ""
@@ -33,18 +48,15 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     var screenWillShow = false
     
-    private enum Section: Int {
-        case characters
-        case recommendations
-        
-        static var numberOfSections: Int { return 2 }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        
+        charactersCollectionView.delegate = self
+        charactersCollectionView.dataSource = self
+        
+        recommendationsCollectionView.dataSource = self
+        recommendationsCollectionView.delegate = self
         
         callFunctions()
     }
@@ -58,16 +70,9 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
         setupActivityIndicator()
         
         if screenWillShow == false {
-            tableView.isHidden = true
+            mainView.isHidden = true
             activityIndicator.startAnimating()
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        screenWillShow = false
-        
     }
     
     func setupActivityIndicator() {
@@ -82,20 +87,19 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func getMangaDetails() {
-        
-        networkManager.getNewManga(id: selection) { [weak self] (anime, error) in
+        networkManager.getNewManga(id: selection) { [weak self] (manga, error) in
             if let error = error {
                 print(error)
             }
-            if let anime = anime {
-                self?.mangaDetailsArray = anime
+            if let manga = manga {
+                self?.mangaDetailsArray = manga
             }
             
             self?.screenWillShow = true
             self?.setUpData()
             
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                self?.setLabels()
             }
         }
     }
@@ -106,15 +110,19 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
         scoreString = String(mangaDetailsArray?.score ?? 0)
         chaptersString = String(mangaDetailsArray?.chapters ?? 0)
         
-        for authors in mangaDetailsArray?.authors ?? [] {
-            allAuthorsArray.append(authors.name ?? "")
+        for studios in mangaDetailsArray?.authors ?? [] {
+            allAuthorsArray.append(studios.name ?? "")
         }
         allAuthors = allAuthorsArray.joined(separator: ", ")
         
-        for genres in self.mangaDetailsArray?.genres ?? [] {
+        for genres in mangaDetailsArray?.genres ?? [] {
             allGenresArray.append(genres.name ?? "")
         }
         allGenres = allGenresArray.joined(separator: ", ")
+        
+        for adaptations in mangaDetailsArray?.related?.adaptation ?? [] {
+            mangaAdaptationsArray.append(adaptations)
+        }
     }
     
     func getMangaCharacters() {
@@ -127,13 +135,13 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
             
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                self?.charactersCollectionView.reloadData()
             }
         }
     }
     
-    func getAnimeRecommendations() {
-        networkManager.getRecommendations(id: selection) { [weak self] (recommendations, error) in
+    func getMangaRecommendations() {
+        networkManager.getMangaRecommendations(id: selection) { [weak self] (recommendations, error) in
             if let error = error {
                 print(error)
             }
@@ -142,7 +150,7 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
             
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                self?.recommendationsCollectionView.reloadData()
             }
         }
     }
@@ -158,15 +166,36 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
         self.getMangaCharacters()
         group.leave()
         
+        group.enter()
+        self.getMangaRecommendations()
+        group.leave()
+        
+        //        DispatchQueue.main.async {
+        //            self.activityIndicator.stopAnimating()
+        //            self.mainView.isHidden = false
+        //        }
         group.notify(queue: .main) {
-            self.tableView.reloadData()
-            //self.activityIndicator.stopAnimating()
-            // self.tableView.isHidden = false
+            self.charactersCollectionView.reloadData()
+            self.recommendationsCollectionView.reloadData()
         }
+        
+    }
+    
+    func setLabels() {
+        titleLabel.text = mangaDetailsArray?.title
+        imageView.loadImageUsingCacheWithUrlString(urlString: mangaDetailsArray?.image_url ?? "")
+        descriptionLabel.text = mangaDetailsArray?.synopsis
+        chaptersLabel.text = chaptersString
+        rankLabel.text = rankString
+        authorLabel.text = allAuthors
+        volumesLabel.text = volumesString
+        typeLabel.text = mangaDetailsArray?.type
+        genreLabel.text = allGenres
+        scoreLabel.text = scoreString
     }
     
     func checkIfDataIsAllThere() {
-        if mangaDetailsArray == nil || mangaCharactersArray.isEmpty {
+        if mangaDetailsArray == nil || mangaCharactersArray.isEmpty || mangaRecommendationsArray.isEmpty {
             allGenresArray.removeAll()
             allAuthorsArray.removeAll()
             getAllData()
@@ -181,52 +210,19 @@ class MangaDetailsViewController: UIViewController, UITableViewDelegate, UITable
         group.leave()
         
         group.enter()
-        let deadlineTime = DispatchTime.now() + 2.0
+        let deadlineTime = DispatchTime.now() + 1.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             self.checkIfDataIsAllThere()
+            self.activityIndicator.stopAnimating()
+            self.mainView.isHidden = false
         }
         group.leave()
+        
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "mangaDetailsCell") as? MangaDetailsTableViewCell else { return UITableViewCell() }
-        
-        if self.allGenres != "" && self.allAuthors != "" {
-            
-            self.activityIndicator.stopAnimating()
-            self.tableView.isHidden = false
-            
-            cell.detailsImageView.loadImageUsingCacheWithUrlString(urlString: mangaDetailsArray?.image_url ?? "")
-            cell.titleLabel.text = mangaDetailsArray?.title
-            cell.descriptionLabel.text = mangaDetailsArray?.synopsis
-            cell.typeLabel.text = mangaDetailsArray?.type
-            cell.chaptersLabel.text = chaptersString
-            cell.volumesLabel.text = volumesString
-            cell.rankLabel.text = rankString
-            cell.scoreLabel.text = scoreString
-            cell.authorLabel.text = allAuthors
-            cell.genreLabel.text = allGenres
-        }
-        
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        guard let mangaDetailsTableViewCell = cell as? MangaDetailsTableViewCell else { return }
-        
-        mangaDetailsTableViewCell.setCharactersCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.section)
-        
-    }
 }
 
-extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 132.0, height: collectionView.bounds.height)
@@ -252,10 +248,30 @@ extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mangaCharactersArray.count
+        
+        if collectionView == charactersCollectionView {
+            return mangaCharactersArray.count
+        } else if collectionView == recommendationsCollectionView {
+            return mangaRecommendationsArray.count
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == recommendationsCollectionView {
+            let recommendationsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "adaptationsCell", for: indexPath) as! RecommendationsCollectionViewCell
+            
+            let recommendations: Recommendations_results
+            
+            recommendations = mangaRecommendationsArray[indexPath.row]
+            recommendationsCell.imageView.loadImageUsingCacheWithUrlString(urlString: recommendations.image_url ?? "")
+            recommendationsCell.label.text = recommendations.title
+            
+            return recommendationsCell
+        }
+        
         
         let charactersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "charactersCell", for: indexPath) as! CharactersCollectionViewCell
         
@@ -271,11 +287,24 @@ extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let characters: Characters
-        characters = mangaCharactersArray[indexPath.row]
-        selection = characters.mal_id ?? 0
+        if collectionView == charactersCollectionView {
+            let characters: Characters
+            characters = mangaCharactersArray[indexPath.row]
+            selection = characters.mal_id ?? 0
+            
+            self.performSegue(withIdentifier: "mangaDetailsCharacterSegue", sender: self)
+            
+        } else if collectionView == recommendationsCollectionView {
+            
+            let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MangaDetailsViewController") as! MangaDetailsViewController
+            
+            let recommendations: Recommendations_results
+            recommendations = mangaRecommendationsArray[indexPath.row]
+            selection = recommendations.mal_id ?? 0
+            
+            self.present(viewController, animated: true, completion: nil)
+        }
         
-        self.performSegue(withIdentifier: "mangaDetailsCharacterSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -285,4 +314,5 @@ extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionView
             characterDetailsViewController?.selection = selection
         }
     }
+    
 }

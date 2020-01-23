@@ -324,7 +324,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         case .topAiringAnime:
             topElement = topAiringArray[indexPath.row]
             selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            self.performSegue(withIdentifier: "scrollViewSegue", sender: self)
         case .topRankedAnime:
             topElement = topRankedArray[indexPath.row]
             selection = topElement.mal_id ?? 0
