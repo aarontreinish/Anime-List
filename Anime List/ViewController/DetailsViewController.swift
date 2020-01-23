@@ -292,11 +292,23 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let characters: Characters
-        characters = animeCharactersArray[indexPath.row]
-        selection = characters.mal_id ?? 0
+        if collectionView == charactersCollectionView {
+                let characters: Characters
+                characters = animeCharactersArray[indexPath.row]
+                selection = characters.mal_id ?? 0
+                
+                self.performSegue(withIdentifier: "animeDetailsCharacterSegue", sender: self)
+                
+            } else if collectionView == recommendationsCollectionView {
+                
+                let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+                
+                let recommendations: Recommendations_results
+                recommendations = animeRecommendationsArray[indexPath.row]
         
-        self.performSegue(withIdentifier: "animeDetailsCharacterSegue", sender: self)
+                viewController.selection = recommendations.mal_id ?? 0
+                self.present(viewController, animated: true, completion: nil)
+            }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

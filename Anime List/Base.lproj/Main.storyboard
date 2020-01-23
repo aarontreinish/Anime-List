@@ -116,7 +116,7 @@
         <!--Details View Controller-->
         <scene sceneID="Sze-r0-JnR">
             <objects>
-                <viewController id="4LC-6d-cLE" customClass="DetailsViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsViewController" id="4LC-6d-cLE" customClass="DetailsViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qrk-B9-6ma">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="996"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

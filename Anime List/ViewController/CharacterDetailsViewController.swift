@@ -174,4 +174,17 @@ extension CharacterDetailsViewController: UICollectionViewDelegate, UICollection
         return voiceActorsCell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if collectionView == animeAppearancesCollectionView {
+            let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+            
+            let animeAppearances: Animeography
+            animeAppearances = animeAppearancesArray[indexPath.row]
+            
+            viewController.selection = animeAppearances.mal_id ?? 0
+            self.present(viewController, animated: true, completion: nil)
+        }
+    }
 }

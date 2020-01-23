@@ -300,8 +300,8 @@ extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionView
             
             let recommendations: Recommendations_results
             recommendations = mangaRecommendationsArray[indexPath.row]
-            selection = recommendations.mal_id ?? 0
-            
+    
+            viewController.selection = recommendations.mal_id ?? 0
             self.present(viewController, animated: true, completion: nil)
         }
         
