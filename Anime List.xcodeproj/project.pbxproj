@@ -26,6 +26,13 @@
 		21596E0623CBF5C00003A77D /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0523CBF5C00003A77D /* Staff.swift */; };
 		21596E0823CBFC480003A77D /* CharactersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0723CBFC480003A77D /* CharactersCollectionViewCell.swift */; };
 		21596E0A23CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0923CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift */; };
+		2160D4F523DB61200004EE80 /* AppearancesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4F423DB61200004EE80 /* AppearancesCollectionViewCell.swift */; };
+		2160D4F723DB613C0004EE80 /* VoiceActorsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4F623DB613C0004EE80 /* VoiceActorsDetailsViewController.swift */; };
+		2160D4FA23DB629B0004EE80 /* VoiceActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4F923DB629B0004EE80 /* VoiceActors.swift */; };
+		2160D4FC23DB62C30004EE80 /* Voice_Acting_Roles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4FB23DB62C30004EE80 /* Voice_Acting_Roles.swift */; };
+		2160D4FE23DB63250004EE80 /* VoiceActorsAnime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4FD23DB63250004EE80 /* VoiceActorsAnime.swift */; };
+		2160D50023DB63590004EE80 /* Anime_Staff_Positions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4FF23DB63590004EE80 /* Anime_Staff_Positions.swift */; };
+		2160D50223DB63810004EE80 /* VoiceActorsCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D50123DB63810004EE80 /* VoiceActorsCharacters.swift */; };
 		2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EDE72399F5B8002C9202 /* AppDelegate.swift */; };
 		2160EDEA2399F5B8002C9202 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EDE92399F5B8002C9202 /* SceneDelegate.swift */; };
 		2160EDEC2399F5B8002C9202 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EDEB2399F5B8002C9202 /* ViewController.swift */; };
@@ -100,6 +107,13 @@
 		21596E0523CBF5C00003A77D /* Staff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
 		21596E0723CBFC480003A77D /* CharactersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersCollectionViewCell.swift; sourceTree = "<group>"; };
 		21596E0923CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2160D4F423DB61200004EE80 /* AppearancesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancesCollectionViewCell.swift; sourceTree = "<group>"; };
+		2160D4F623DB613C0004EE80 /* VoiceActorsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActorsDetailsViewController.swift; sourceTree = "<group>"; };
+		2160D4F923DB629B0004EE80 /* VoiceActors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActors.swift; sourceTree = "<group>"; };
+		2160D4FB23DB62C30004EE80 /* Voice_Acting_Roles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice_Acting_Roles.swift; sourceTree = "<group>"; };
+		2160D4FD23DB63250004EE80 /* VoiceActorsAnime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActorsAnime.swift; sourceTree = "<group>"; };
+		2160D4FF23DB63590004EE80 /* Anime_Staff_Positions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime_Staff_Positions.swift; sourceTree = "<group>"; };
+		2160D50123DB63810004EE80 /* VoiceActorsCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActorsCharacters.swift; sourceTree = "<group>"; };
 		2160EDE42399F5B8002C9202 /* Anime List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anime List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2160EDE72399F5B8002C9202 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2160EDE92399F5B8002C9202 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +211,18 @@
 			path = Characters_Staff;
 			sourceTree = "<group>";
 		};
+		2160D4F823DB628F0004EE80 /* VoiceActors */ = {
+			isa = PBXGroup;
+			children = (
+				2160D4F923DB629B0004EE80 /* VoiceActors.swift */,
+				2160D4FB23DB62C30004EE80 /* Voice_Acting_Roles.swift */,
+				2160D4FD23DB63250004EE80 /* VoiceActorsAnime.swift */,
+				2160D4FF23DB63590004EE80 /* Anime_Staff_Positions.swift */,
+				2160D50123DB63810004EE80 /* VoiceActorsCharacters.swift */,
+			);
+			path = VoiceActors;
+			sourceTree = "<group>";
+		};
 		2160EDDB2399F5B8002C9202 = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +272,7 @@
 		2160EDFC2399F63F002C9202 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2160D4F823DB628F0004EE80 /* VoiceActors */,
 				2140816B23D7ACB300319AA4 /* Character */,
 				21EB4D3723D247B900869419 /* Manga */,
 				21596DFE23CBF5140003A77D /* Characters_Staff */,
@@ -358,6 +385,7 @@
 				21EB4D2F23D2376A00869419 /* MangaTableViewCell.swift */,
 				21EB4D3123D2377B00869419 /* MangaCollectionViewCell.swift */,
 				2140816923D7AB7300319AA4 /* CharacterDetailsCollectionViewCell.swift */,
+				2160D4F423DB61200004EE80 /* AppearancesCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -372,6 +400,7 @@
 				2140816523D7A20300319AA4 /* CharacterDetailsViewController.swift */,
 				21E372F523DA013700447E4E /* DetailsViewController.swift */,
 				21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */,
+				2160D4F623DB613C0004EE80 /* VoiceActorsDetailsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -494,6 +523,7 @@
 				21EB4D3B23D2480C00869419 /* Serializations.swift in Sources */,
 				2160EE072399F6C8002C9202 /* EndPointType.swift in Sources */,
 				2160EE3A2399F811002C9202 /* To.swift in Sources */,
+				2160D50223DB63810004EE80 /* VoiceActorsCharacters.swift in Sources */,
 				2160EE1C2399F76E002C9202 /* TopResults.swift in Sources */,
 				2160EE202399F782002C9202 /* Results.swift in Sources */,
 				21920B1023B1588000C9A3B9 /* ScheduleViewController.swift in Sources */,
@@ -503,6 +533,7 @@
 				2160EE382399F809002C9202 /* Summary.swift in Sources */,
 				2160EE3C2399FA55002C9202 /* ImagesExtension.swift in Sources */,
 				21E372F823DA1C2000447E4E /* MangaDetailsViewController.swift in Sources */,
+				2160D4FC23DB62C30004EE80 /* Voice_Acting_Roles.swift in Sources */,
 				21596DFD23CBF4490003A77D /* Recommendations_results.swift in Sources */,
 				2197FD2523B15D170037C88B /* Day.swift in Sources */,
 				2160EE0D2399F6ED002C9202 /* HTTPTask.swift in Sources */,
@@ -517,6 +548,7 @@
 				21C3D8C0239D52ED00C0CE55 /* Section.swift in Sources */,
 				2160EE282399F7AC002C9202 /* Genres.swift in Sources */,
 				2160EE2A2399F7B4002C9202 /* Anime.swift in Sources */,
+				2160D4FE23DB63250004EE80 /* VoiceActorsAnime.swift in Sources */,
 				2160EE1E2399F77B002C9202 /* Searched.swift in Sources */,
 				2140816223D7942D00319AA4 /* CharacterAnime.swift in Sources */,
 				2197FD2323B15D100037C88B /* Schedule.swift in Sources */,
@@ -531,8 +563,11 @@
 				2160EE262399F7A3002C9202 /* From.swift in Sources */,
 				2160EE322399F7DF002C9202 /* Related.swift in Sources */,
 				2160EE0B2399F6DF002C9202 /* HTTPMethod.swift in Sources */,
+				2160D4F723DB613C0004EE80 /* VoiceActorsDetailsViewController.swift in Sources */,
 				2160EE052399F6B2002C9202 /* NetworkManager.swift in Sources */,
+				2160D50023DB63590004EE80 /* Anime_Staff_Positions.swift in Sources */,
 				2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */,
+				2160D4F523DB61200004EE80 /* AppearancesCollectionViewCell.swift in Sources */,
 				21596E0623CBF5C00003A77D /* Staff.swift in Sources */,
 				2160EE242399F79A002C9202 /* Aired.swift in Sources */,
 				2140816023D793E400319AA4 /* CharacterResults.swift in Sources */,
@@ -544,6 +579,7 @@
 				21596E0A23CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift in Sources */,
 				2160EE1A2399F763002C9202 /* Top.swift in Sources */,
 				21EB4D4123D248C100869419 /* Authors.swift in Sources */,
+				2160D4FA23DB629B0004EE80 /* VoiceActors.swift in Sources */,
 				2160EE48239C54DF002C9202 /* HomeCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

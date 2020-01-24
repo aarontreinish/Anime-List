@@ -185,6 +185,20 @@ extension CharacterDetailsViewController: UICollectionViewDelegate, UICollection
             
             viewController.selection = animeAppearances.mal_id ?? 0
             self.present(viewController, animated: true, completion: nil)
+        } else if collectionView == charactersCollectionView {
+            let voiceActors: Voice_actors
+            voiceActors = voiceActorsArray[indexPath.row]
+            selection = voiceActors.mal_id ?? 0
+            
+            self.performSegue(withIdentifier: "voiceActorsDetailsSegue", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "voiceActorsDetailsSegue" {
+            let voiceActorsDetailsViewController = segue.destination as? VoiceActorsDetailsViewController
+            
+            voiceActorsDetailsViewController?.selection = selection
         }
     }
 }
