@@ -19,7 +19,7 @@ class VoiceActorsDetailsViewController: UIViewController {
     
     var networkManager = NetworkManager()
     
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    let activityIndicator = UIActivityIndicatorView()
     
     var selection = 0
     

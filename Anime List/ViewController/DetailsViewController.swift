@@ -27,7 +27,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var charactersCollectionView: UICollectionView!
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    let activityIndicator = UIActivityIndicatorView()
     
     var selection = 0
     var networkManager = NetworkManager()

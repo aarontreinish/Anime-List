@@ -19,7 +19,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selection = 0
     
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    let activityIndicator = UIActivityIndicatorView()
     
     var animeResultsArray: [Results] = []
     var mangaResultsArray: [Results] = []

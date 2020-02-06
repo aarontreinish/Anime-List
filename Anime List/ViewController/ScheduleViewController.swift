@@ -22,7 +22,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     
     var selection = 0
     
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    let activityIndicator = UIActivityIndicatorView()
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()

@@ -69,6 +69,7 @@
 		2160EE3C2399FA55002C9202 /* ImagesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE3B2399FA55002C9202 /* ImagesExtension.swift */; };
 		2160EE42239C1A67002C9202 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */; };
 		2160EE48239C54DF002C9202 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */; };
+		218A7A5E23ECB10900A6EC80 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 218A7A5D23ECB10900A6EC80 /* WebKit.framework */; };
 		21920B1023B1588000C9A3B9 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21920B0F23B1588000C9A3B9 /* ScheduleViewController.swift */; };
 		2197FD1E23B159A30037C88B /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD1D23B159A30037C88B /* ScheduleTableViewCell.swift */; };
 		2197FD2323B15D100037C88B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2223B15D100037C88B /* Schedule.swift */; };
@@ -152,6 +153,7 @@
 		2160EE3B2399FA55002C9202 /* ImagesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesExtension.swift; sourceTree = "<group>"; };
 		2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		218A7A5D23ECB10900A6EC80 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		21920B0F23B1588000C9A3B9 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		2197FD1D23B159A30037C88B /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		2197FD2223B15D100037C88B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				218A7A5E23ECB10900A6EC80 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +231,7 @@
 			children = (
 				2160EDE62399F5B8002C9202 /* Anime List */,
 				2160EDE52399F5B8002C9202 /* Products */,
+				218A7A5C23ECB10900A6EC80 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -371,6 +375,14 @@
 				2160EE392399F811002C9202 /* To.swift */,
 			);
 			path = Anime;
+			sourceTree = "<group>";
+		};
+		218A7A5C23ECB10900A6EC80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				218A7A5D23ECB10900A6EC80 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		2197FD1F23B159AD0037C88B /* Views */ = {
@@ -727,6 +739,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S2MU333RF6;
 				INFOPLIST_FILE = "Anime List/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -745,6 +758,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S2MU333RF6;
 				INFOPLIST_FILE = "Anime List/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -20,7 +20,7 @@ class CharacterDetailsViewController: UIViewController {
     @IBOutlet weak var animeAppearancesCollectionView: UICollectionView!
 
     
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    let activityIndicator = UIActivityIndicatorView()
     
     let networkManager = NetworkManager()
     

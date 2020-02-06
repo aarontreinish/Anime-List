@@ -22,7 +22,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var viewHasShown = false
     
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+    let activityIndicator = UIActivityIndicatorView()
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()

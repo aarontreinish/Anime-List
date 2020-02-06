@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hz6-S6-yIZ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -106,7 +107,7 @@
                     <navigationItem key="navigationItem" title="Anime" largeTitleDisplayMode="always" id="IzR-Ns-6s5"/>
                     <connections>
                         <outlet property="tableView" destination="g1Q-ze-xEf" id="8sx-5C-mhU"/>
-                        <segue destination="4LC-6d-cLE" kind="presentation" identifier="detailsSegue" id="ik5-Sr-ciQ"/>
+                        <segue destination="4LC-6d-cLE" kind="show" identifier="detailsSegue" id="ik5-Sr-ciQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -118,11 +119,11 @@
             <objects>
                 <viewController storyboardIdentifier="DetailsViewController" id="4LC-6d-cLE" customClass="DetailsViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qrk-B9-6ma">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="996"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1050"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MPu-7w-sE1">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="962"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="879"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="diJ-h3-kun">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="974"/>
@@ -471,6 +472,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N7x-tI-QKc"/>
                     </view>
+                    <navigationItem key="navigationItem" id="YYp-Sc-S46"/>
                     <size key="freeformSize" width="414" height="1050"/>
                     <connections>
                         <outlet property="charactersCollectionView" destination="65H-um-Ulk" id="9Vy-sh-t0O"/>
@@ -1666,8 +1668,8 @@
         <image name="play.rectangle" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JoE-Q4-eyP"/>
+        <segue reference="nln-7V-wJj"/>
         <segue reference="8Ax-if-vFw"/>
-        <segue reference="H56-96-65v"/>
+        <segue reference="ik5-Sr-ciQ"/>
     </inferredMetricsTieBreakers>
 </document>
