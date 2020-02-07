@@ -63,6 +63,13 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
         view.addConstraint(verticalConstraint)
         
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.transform = CGAffineTransform.init(scaleX: 1.5, y: 1.5)
+            activityIndicator.color = UIColor.black
+        }
+        
     }
     
     @objc func refreshData() {

@@ -14,7 +14,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     
     @IBOutlet weak var mainImageView: CustomImageView!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var seasonLabel: UILabel!
     @IBOutlet weak var studioLabel: UILabel!
     @IBOutlet weak var episodesLabel: UILabel!
@@ -84,6 +83,13 @@ class DetailsViewController: UIViewController {
         view.addConstraint(horizontalConstraint)
         let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
         view.addConstraint(verticalConstraint)
+        
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.transform = CGAffineTransform.init(scaleX: 1.5, y: 1.5)
+            activityIndicator.color = UIColor.black
+        }
         
     }
     
@@ -181,7 +187,7 @@ class DetailsViewController: UIViewController {
     }
     
     func setLabels() {
-        titleLabel.text = animeDetailsArray?.title
+        self.navigationItem.title = animeDetailsArray?.title
         mainImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
         descriptionLabel.text = animeDetailsArray?.synopsis
         seasonLabel.text = animeDetailsArray?.premiered
@@ -293,22 +299,22 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView == charactersCollectionView {
-                let characters: Characters
-                characters = animeCharactersArray[indexPath.row]
-                selection = characters.mal_id ?? 0
-                
-                self.performSegue(withIdentifier: "animeDetailsCharacterSegue", sender: self)
-                
-            } else if collectionView == recommendationsCollectionView {
-                
-                let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
-                
-                let recommendations: Recommendations_results
-                recommendations = animeRecommendationsArray[indexPath.row]
-        
-                viewController.selection = recommendations.mal_id ?? 0
-                self.present(viewController, animated: true, completion: nil)
-            }
+            let characters: Characters
+            characters = animeCharactersArray[indexPath.row]
+            selection = characters.mal_id ?? 0
+            
+            self.performSegue(withIdentifier: "animeDetailsCharacterSegue", sender: self)
+            
+        } else if collectionView == recommendationsCollectionView {
+            
+            let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+            
+            let recommendations: Recommendations_results
+            recommendations = animeRecommendationsArray[indexPath.row]
+            
+            viewController.selection = recommendations.mal_id ?? 0
+            self.show(viewController, sender: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

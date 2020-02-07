@@ -12,7 +12,6 @@ class MangaDetailsViewController: UIViewController {
     
     @IBOutlet weak var mainView: UIView!
     
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: CustomImageView!
     @IBOutlet weak var chaptersLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
@@ -84,6 +83,13 @@ class MangaDetailsViewController: UIViewController {
         view.addConstraint(horizontalConstraint)
         let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
         view.addConstraint(verticalConstraint)
+        
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.transform = CGAffineTransform.init(scaleX: 1.5, y: 1.5)
+            activityIndicator.color = UIColor.black
+        }
         
     }
     
@@ -183,7 +189,7 @@ class MangaDetailsViewController: UIViewController {
     }
     
     func setLabels() {
-        titleLabel.text = mangaDetailsArray?.title
+        self.navigationItem.title = mangaDetailsArray?.title
         imageView.loadImageUsingCacheWithUrlString(urlString: mangaDetailsArray?.image_url ?? "")
         descriptionLabel.text = mangaDetailsArray?.synopsis
         chaptersLabel.text = chaptersString
@@ -303,7 +309,7 @@ extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionView
             recommendations = mangaRecommendationsArray[indexPath.row]
     
             viewController.selection = recommendations.mal_id ?? 0
-            self.present(viewController, animated: true, completion: nil)
+            self.show(viewController, sender: self)
         }
         
     }

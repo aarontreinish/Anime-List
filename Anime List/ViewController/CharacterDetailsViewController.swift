@@ -12,7 +12,6 @@ class CharacterDetailsViewController: UIViewController {
 
     
     @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var japaneseNameLabel: UILabel!
     @IBOutlet weak var mainImageView: CustomImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -69,6 +68,13 @@ class CharacterDetailsViewController: UIViewController {
         let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
         view.addConstraint(verticalConstraint)
         
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.transform = CGAffineTransform.init(scaleX: 1.5, y: 1.5)
+            activityIndicator.color = UIColor.black
+        }
+        
     }
     
     func getCharacterDetails() {
@@ -96,7 +102,7 @@ class CharacterDetailsViewController: UIViewController {
     }
     
     func setLabels() {
-        titleLabel.text = characterDetailsArray?.name
+        self.navigationItem.title = characterDetailsArray?.name
         japaneseNameLabel.text = characterDetailsArray?.name_kanji
         mainImageView.loadImageUsingCacheWithUrlString(urlString: characterDetailsArray?.image_url ?? "")
         descriptionLabel.text = characterDetailsArray?.about
@@ -184,7 +190,8 @@ extension CharacterDetailsViewController: UICollectionViewDelegate, UICollection
             animeAppearances = animeAppearancesArray[indexPath.row]
             
             viewController.selection = animeAppearances.mal_id ?? 0
-            self.present(viewController, animated: true, completion: nil)
+            self.show(viewController, sender: self)
+            
         } else if collectionView == charactersCollectionView {
             let voiceActors: Voice_actors
             voiceActors = voiceActorsArray[indexPath.row]
