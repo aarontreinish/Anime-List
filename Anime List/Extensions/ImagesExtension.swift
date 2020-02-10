@@ -18,6 +18,10 @@ class CustomImageView: UIImageView {
     
     func loadImageUsingCacheWithUrlString(urlString: String) {
         
+        imageCache.countLimit = 100
+        
+        imageCache.totalCostLimit = 50_000_000
+        
         // setup activityIndicator
         activityIndicator.color = .darkGray
         
