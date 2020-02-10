@@ -11,35 +11,59 @@ import UIKit
 let imageCache = NSCache<AnyObject, AnyObject>()
 
 class CustomImageView: UIImageView {
-
+    
     var imageUrlString: String?
-
+    
+    let activityIndicator = UIActivityIndicatorView()
+    
     func loadImageUsingCacheWithUrlString(urlString: String) {
-
+        
+        // setup activityIndicator
+        activityIndicator.color = .darkGray
+        
+        addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
         imageUrlString = urlString
-
+        
         guard let url = NSURL(string: urlString) else { return }
-
-        // Check cache for image
-        if let cachedImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-            self.image = cachedImage
+        
+        image = nil
+        activityIndicator.startAnimating()
+        
+        // retrieves image if already available in cache
+        if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+            
+            self.image = imageFromCache
+            activityIndicator.stopAnimating()
             return
         }
-
-        // Otherwise download images
+        
+        // image does not available in cache.. so retrieving it from url...
         URLSession.shared.dataTask(with: url as URL, completionHandler: {(data, response, error) in
-            guard let data = data, let imageToCache = UIImage(data: data) else { return }
-
+            
             if error != nil {
-                print(error?.localizedDescription ?? "Error")
+                print(error as Any)
+                DispatchQueue.main.async(execute: {
+                    self.activityIndicator.stopAnimating()
+                })
                 return
             }
-            DispatchQueue.main.async {
-                if self.imageUrlString == urlString {
-                    self.image = imageToCache
+            
+            DispatchQueue.main.async(execute: {
+                
+                if let unwrappedData = data, let imageToCache = UIImage(data: unwrappedData) {
+                    
+                    if self.imageUrlString == urlString {
+                        self.image = imageToCache
+                    }
+                    
+                    imageCache.setObject(imageToCache, forKey: url as AnyObject)
                 }
-                imageCache.setObject(imageToCache, forKey: urlString as AnyObject)
-            }
+                self.activityIndicator.stopAnimating()
+            })
         }).resume()
     }
 }
