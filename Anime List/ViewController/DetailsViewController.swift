@@ -188,6 +188,7 @@ class DetailsViewController: UIViewController {
     
     func setLabels() {
         self.navigationItem.title = animeDetailsArray?.title
+        mainImageView.layer.cornerRadius = 10
         mainImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
         descriptionLabel.text = animeDetailsArray?.synopsis
         seasonLabel.text = animeDetailsArray?.premiered
@@ -197,6 +198,7 @@ class DetailsViewController: UIViewController {
         typeLabel.text = animeDetailsArray?.type
         genreLabel.text = allGenres
         scoreLabel.text = scoreString
+        trailerWebView.layer.cornerRadius = 10
         loadYoutube(url: animeDetailsArray?.trailer_url ?? "")
     }
     

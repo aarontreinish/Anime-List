@@ -104,6 +104,7 @@ class CharacterDetailsViewController: UIViewController {
     func setLabels() {
         self.navigationItem.title = characterDetailsArray?.name
         japaneseNameLabel.text = characterDetailsArray?.name_kanji
+        mainImageView.layer.cornerRadius = 10
         mainImageView.loadImageUsingCacheWithUrlString(urlString: characterDetailsArray?.image_url ?? "")
         descriptionLabel.text = characterDetailsArray?.about
     }

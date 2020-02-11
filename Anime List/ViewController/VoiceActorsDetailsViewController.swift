@@ -224,4 +224,11 @@ class VoiceActorsDetailsHeaderView: UICollectionReusableView {
     @IBOutlet weak var japaneseNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        imageView.layer.cornerRadius = 10
+    }
+    
 }
