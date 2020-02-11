@@ -25,7 +25,7 @@ struct VoiceActors : Codable {
     let about : String?
     let voice_acting_roles : [Voice_acting_roles]?
     let anime_staff_positions : [Anime_staff_positions]?
-    let published_manga : [String]?
+    let published_manga : [Published_Manga]?
 
     enum CodingKeys: String, CodingKey {
 
@@ -66,7 +66,7 @@ struct VoiceActors : Codable {
         about = try values.decodeIfPresent(String.self, forKey: .about)
         voice_acting_roles = try values.decodeIfPresent([Voice_acting_roles].self, forKey: .voice_acting_roles)
         anime_staff_positions = try values.decodeIfPresent([Anime_staff_positions].self, forKey: .anime_staff_positions)
-        published_manga = try values.decodeIfPresent([String].self, forKey: .published_manga)
+        published_manga = try values.decodeIfPresent([Published_Manga].self, forKey: .published_manga)
     }
 
 }

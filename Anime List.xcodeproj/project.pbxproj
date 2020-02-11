@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2135379723B564D3005AE975 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135379623B564D3005AE975 /* SearchViewController.swift */; };
 		2135379923B564E5005AE975 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135379823B564E5005AE975 /* SearchTableViewCell.swift */; };
+		2137FD2523F33B5E00B984AB /* Published_Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137FD2423F33B5E00B984AB /* Published_Manga.swift */; };
+		2137FD2723F33BC300B984AB /* VoiceActorsManga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137FD2623F33BC300B984AB /* VoiceActorsManga.swift */; };
 		2140815E23D793D900319AA4 /* CharacterSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2140815D23D793D900319AA4 /* CharacterSearch.swift */; };
 		2140816023D793E400319AA4 /* CharacterResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2140815F23D793E400319AA4 /* CharacterResults.swift */; };
 		2140816223D7942D00319AA4 /* CharacterAnime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2140816123D7942D00319AA4 /* CharacterAnime.swift */; };
@@ -91,6 +93,8 @@
 /* Begin PBXFileReference section */
 		2135379623B564D3005AE975 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2135379823B564E5005AE975 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		2137FD2423F33B5E00B984AB /* Published_Manga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published_Manga.swift; sourceTree = "<group>"; };
+		2137FD2623F33BC300B984AB /* VoiceActorsManga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActorsManga.swift; sourceTree = "<group>"; };
 		2140815D23D793D900319AA4 /* CharacterSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSearch.swift; sourceTree = "<group>"; };
 		2140815F23D793E400319AA4 /* CharacterResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterResults.swift; sourceTree = "<group>"; };
 		2140816123D7942D00319AA4 /* CharacterAnime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnime.swift; sourceTree = "<group>"; };
@@ -222,6 +226,8 @@
 				2160D4FD23DB63250004EE80 /* VoiceActorsAnime.swift */,
 				2160D4FF23DB63590004EE80 /* Anime_Staff_Positions.swift */,
 				2160D50123DB63810004EE80 /* VoiceActorsCharacters.swift */,
+				2137FD2423F33B5E00B984AB /* Published_Manga.swift */,
+				2137FD2623F33BC300B984AB /* VoiceActorsManga.swift */,
 			);
 			path = VoiceActors;
 			sourceTree = "<group>";
@@ -544,6 +550,7 @@
 				2160EE132399F711002C9202 /* URLParameterEncoding.swift in Sources */,
 				2160EE382399F809002C9202 /* Summary.swift in Sources */,
 				2160EE3C2399FA55002C9202 /* ImagesExtension.swift in Sources */,
+				2137FD2723F33BC300B984AB /* VoiceActorsManga.swift in Sources */,
 				21E372F823DA1C2000447E4E /* MangaDetailsViewController.swift in Sources */,
 				2160D4FC23DB62C30004EE80 /* Voice_Acting_Roles.swift in Sources */,
 				21596DFD23CBF4490003A77D /* Recommendations_results.swift in Sources */,
@@ -589,6 +596,7 @@
 				2140816623D7A20300319AA4 /* CharacterDetailsViewController.swift in Sources */,
 				21EB4D3D23D2481A00869419 /* Alternative.swift in Sources */,
 				21596E0A23CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift in Sources */,
+				2137FD2523F33B5E00B984AB /* Published_Manga.swift in Sources */,
 				2160EE1A2399F763002C9202 /* Top.swift in Sources */,
 				21EB4D4123D248C100869419 /* Authors.swift in Sources */,
 				2160D4FA23DB629B0004EE80 /* VoiceActors.swift in Sources */,
