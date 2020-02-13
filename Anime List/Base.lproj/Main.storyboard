@@ -490,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yny-Pb-W4O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3111.594202898551" y="55.580357142857139"/>
+            <point key="canvasLocation" x="3112" y="514"/>
         </scene>
         <!--Anime-->
         <scene sceneID="ieL-qQ-CNx">
@@ -526,11 +526,12 @@
                         <segue destination="gIG-EU-44Y" kind="relationship" relationship="viewControllers" id="jk3-Ek-6Mb"/>
                         <segue destination="rPa-Kc-EMQ" kind="relationship" relationship="viewControllers" id="0bs-7T-YEY"/>
                         <segue destination="CE9-Mh-ADH" kind="relationship" relationship="viewControllers" id="X0R-lM-H54"/>
+                        <segue destination="oRn-RP-jzf" kind="relationship" relationship="viewControllers" id="sxq-Bn-M1D"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oRz-h5-WZ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="172" y="76"/>
+            <point key="canvasLocation" x="-429" y="698"/>
         </scene>
         <!--Schedule-->
         <scene sceneID="ESo-N7-0Kx">
@@ -726,6 +727,77 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDa-hV-n3X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1960.8695652173915" y="1486.6071428571429"/>
+        </scene>
+        <!--My List-->
+        <scene sceneID="L9i-Rz-f5m">
+            <objects>
+                <viewController id="zsJ-Ef-Vhk" customClass="MyListViewController" customModule="Anime_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="u2c-lL-TzH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-0s-UCs">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myListCell" rowHeight="202" id="coV-55-b2w" customClass="MyListTableViewCell" customModule="Anime_List" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="202"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="coV-55-b2w" id="Imj-Ta-vQV">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="202"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfp-F0-jY6">
+                                                    <rect key="frame" x="158" y="11" width="236" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MsK-SM-kds" customClass="CustomImageView" customModule="Anime_List" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="11" width="130" height="180"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="8al-kM-FpP"/>
+                                                        <constraint firstAttribute="height" constant="180" id="axn-c7-un7"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="MsK-SM-kds" secondAttribute="bottom" constant="11" id="6lw-d9-cdT"/>
+                                                <constraint firstItem="Hfp-F0-jY6" firstAttribute="leading" secondItem="MsK-SM-kds" secondAttribute="trailing" constant="8" id="9aU-5l-HP3"/>
+                                                <constraint firstItem="Hfp-F0-jY6" firstAttribute="top" secondItem="Imj-Ta-vQV" secondAttribute="top" constant="11" id="WP5-Zp-iHN"/>
+                                                <constraint firstItem="MsK-SM-kds" firstAttribute="top" secondItem="Imj-Ta-vQV" secondAttribute="top" constant="11" id="iHf-bo-yM8"/>
+                                                <constraint firstItem="MsK-SM-kds" firstAttribute="leading" secondItem="Imj-Ta-vQV" secondAttribute="leading" constant="20" id="jeB-K1-GeI"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hfp-F0-jY6" secondAttribute="trailing" constant="20" id="mig-W8-gtS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="mainImageView" destination="MsK-SM-kds" id="BnN-Nr-0wj"/>
+                                            <outlet property="titleLabel" destination="Hfp-F0-jY6" id="dY2-P6-FSG"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="bottom" secondItem="1jc-Aa-Sx1" secondAttribute="bottom" id="JOl-nw-0f6"/>
+                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="leading" secondItem="1jc-Aa-Sx1" secondAttribute="leading" id="MrG-sw-tcz"/>
+                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="trailing" secondItem="1jc-Aa-Sx1" secondAttribute="trailing" id="iek-xa-BwS"/>
+                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="top" secondItem="1jc-Aa-Sx1" secondAttribute="top" id="o3y-D7-o5m"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1jc-Aa-Sx1"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="My List" largeTitleDisplayMode="always" id="S0X-ra-bD9">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="ySK-GP-euh"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Pvd-0s-UCs" id="0Mr-kv-dkT"/>
+                        <segue destination="4LC-6d-cLE" kind="show" identifier="myListDetailsSegue" id="UTh-Ze-7J1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tFb-Hy-XSr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1961" y="2155"/>
         </scene>
         <!--Search-->
         <scene sceneID="mO5-Ym-F5f">
@@ -1247,7 +1319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QAk-xV-doB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3111.594202898551" y="1038.6160714285713"/>
+            <point key="canvasLocation" x="3112" y="1558"/>
         </scene>
         <!--Character Details View Controller-->
         <scene sceneID="h4u-96-k88">
@@ -1454,7 +1526,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qqm-sB-c33" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4123" y="485"/>
+            <point key="canvasLocation" x="4180" y="453"/>
         </scene>
         <!--Voice Actors Details View Controller-->
         <scene sceneID="uaP-w2-wsN">
@@ -1612,19 +1684,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVv-b2-Y0H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4937.68115942029" y="484.82142857142856"/>
+            <point key="canvasLocation" x="5164" y="453"/>
+        </scene>
+        <!--My List-->
+        <scene sceneID="28z-aE-NbA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oRn-RP-jzf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My List" image="list.bullet" catalog="system" id="GBt-rC-iYB"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PVk-RL-YCW">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zsJ-Ef-Vhk" kind="relationship" relationship="rootViewController" id="dIa-Cq-ehA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jy3-Ud-r8K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1051" y="2190"/>
         </scene>
     </scenes>
     <resources>
         <image name="book" catalog="system" width="64" height="50"/>
         <image name="calendar" catalog="system" width="64" height="52"/>
+        <image name="ellipsis" catalog="system" width="64" height="18"/>
         <image name="heart" catalog="system" width="64" height="54"/>
+        <image name="list.bullet" catalog="system" width="64" height="44"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="play.rectangle" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nln-7V-wJj"/>
         <segue reference="iGz-pM-VCU"/>
-        <segue reference="ik5-Sr-ciQ"/>
+        <segue reference="UTh-Ze-7J1"/>
     </inferredMetricsTieBreakers>
 </document>
