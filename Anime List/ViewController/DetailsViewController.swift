@@ -11,6 +11,10 @@ import WebKit
 
 class DetailsViewController: UIViewController {
     
+    let persistenceManager = PersistanceManager()
+    var savedAnime = [SavedAnime]()
+    var isAlreadySaved: Bool = false
+    
     @IBOutlet weak var mainView: UIView!
     
     @IBOutlet weak var mainImageView: CustomImageView!
@@ -57,8 +61,7 @@ class DetailsViewController: UIViewController {
         
         callFunctions()
         
-        //getAllData()
-        //fetchData()
+        getSavedAnime()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +76,8 @@ class DetailsViewController: UIViewController {
             mainView.isHidden = true
             activityIndicator.startAnimating()
         }
+        
+        checkIfAlreadySaved()
     }
     
     func setupActivityIndicator() {
@@ -233,6 +238,59 @@ class DetailsViewController: UIViewController {
         trailerWebView.load(URLRequest(url: youtubeURL))
     }
     
+    func saveAnime() {
+        let malId = Float(animeDetailsArray?.mal_id ?? 0)
+        
+        let savedAnime = SavedAnime(context: persistenceManager.context)
+        savedAnime.mal_id = malId
+        savedAnime.image_url = animeDetailsArray?.image_url
+        savedAnime.name = animeDetailsArray?.title
+        
+        persistenceManager.save()
+    }
+    
+    func deleteAnime() {
+        persistenceManager.delete(SavedAnime.self, malId: Float(selection))
+    }
+    
+    func getSavedAnime() {
+        let anime = persistenceManager.fetch(SavedAnime.self)
+        self.savedAnime = anime
+        
+        savedAnime.forEach({ print($0.name) })
+    }
+    
+    func checkIfAlreadySaved() {
+        
+        isAlreadySaved = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        if isAlreadySaved == true {
+            if #available(iOS 13.0, *) {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    
+    @IBAction func saveButtonAction(_ sender: Any) {
+        
+        if isAlreadySaved == true {
+            deleteAnime()
+            if #available(iOS 13.0, *) {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+            } else {
+                // Fallback on earlier versions
+            }
+        } else {
+            saveAnime()
+            if #available(iOS 13.0, *) {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
 }
 
 extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -463,7 +463,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N7x-tI-QKc"/>
                     </view>
-                    <navigationItem key="navigationItem" id="YYp-Sc-S46"/>
+                    <navigationItem key="navigationItem" id="YYp-Sc-S46">
+                        <barButtonItem key="rightBarButtonItem" image="heart" catalog="system" style="plain" id="Jc2-Y0-6dW">
+                            <connections>
+                                <action selector="saveButtonAction:" destination="4LC-6d-cLE" id="1XS-6A-HnW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <size key="freeformSize" width="414" height="850"/>
                     <connections>
                         <outlet property="charactersCollectionView" destination="65H-um-Ulk" id="9Vy-sh-t0O"/>
@@ -1612,12 +1618,13 @@
     <resources>
         <image name="book" catalog="system" width="64" height="50"/>
         <image name="calendar" catalog="system" width="64" height="52"/>
+        <image name="heart" catalog="system" width="64" height="54"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="play.rectangle" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nln-7V-wJj"/>
-        <segue reference="8Ax-if-vFw"/>
-        <segue reference="H56-96-65v"/>
+        <segue reference="iGz-pM-VCU"/>
+        <segue reference="ik5-Sr-ciQ"/>
     </inferredMetricsTieBreakers>
 </document>

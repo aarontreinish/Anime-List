@@ -75,6 +75,7 @@ extension UIViewController {
     open override func awakeFromNib() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .systemRed
+        navigationItem.rightBarButtonItem?.tintColor = .systemRed
         UITabBar.appearance().tintColor = .systemRed
     }
 }

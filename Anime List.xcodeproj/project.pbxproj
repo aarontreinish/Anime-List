@@ -77,6 +77,10 @@
 		2197FD2323B15D100037C88B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2223B15D100037C88B /* Schedule.swift */; };
 		2197FD2523B15D170037C88B /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2423B15D170037C88B /* Day.swift */; };
 		21C3D8C0239D52ED00C0CE55 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8BF239D52ED00C0CE55 /* Section.swift */; };
+		21D461E023F4678300E1F9B4 /* SavedList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */; };
+		21D461E623F468F600E1F9B4 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D461E523F468F600E1F9B4 /* PersistanceManager.swift */; };
+		21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */; };
+		21D4621123F46C9700E1F9B4 /* Anime+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */; };
 		21E372F623DA013700447E4E /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E372F523DA013700447E4E /* DetailsViewController.swift */; };
 		21E372F823DA1C2000447E4E /* MangaDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */; };
 		21EB4D2E23D2375100869419 /* MangaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2D23D2375100869419 /* MangaViewController.swift */; };
@@ -163,6 +167,10 @@
 		2197FD2223B15D100037C88B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		2197FD2423B15D170037C88B /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21C3D8BF239D52ED00C0CE55 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		21D461DF23F4678300E1F9B4 /* SavedList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SavedList.xcdatamodel; sourceTree = "<group>"; };
+		21D461E523F468F600E1F9B4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
+		21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Anime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Anime+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		21E372F523DA013700447E4E /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailsViewController.swift; sourceTree = "<group>"; };
 		21EB4D2D23D2375100869419 /* MangaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +272,10 @@
 				2160EDF02399F5BC002C9202 /* Assets.xcassets */,
 				2160EDF22399F5BC002C9202 /* LaunchScreen.storyboard */,
 				2160EDF52399F5BC002C9202 /* Info.plist */,
+				21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */,
+				21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */,
+				21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */,
+				21D461E523F468F600E1F9B4 /* PersistanceManager.swift */,
 			);
 			path = "Anime List";
 			sourceTree = "<group>";
@@ -526,11 +538,13 @@
 			files = (
 				2160EE302399F7D5002C9202 /* Prop.swift in Sources */,
 				2160EE0F2399F6F6002C9202 /* NetworkLogger.swift in Sources */,
+				21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */,
 				21596E0023CBF5570003A77D /* Characters_staff.swift in Sources */,
 				2197FD1E23B159A30037C88B /* ScheduleTableViewCell.swift in Sources */,
 				2160EE2E2399F7C7002C9202 /* Producers.swift in Sources */,
 				21596E0423CBF5730003A77D /* Voice_actors.swift in Sources */,
 				21EB4D3223D2377B00869419 /* MangaCollectionViewCell.swift in Sources */,
+				21D4621123F46C9700E1F9B4 /* Anime+CoreDataProperties.swift in Sources */,
 				2160EE362399F7F6002C9202 /* Studios.swift in Sources */,
 				21596E0823CBFC480003A77D /* CharactersCollectionViewCell.swift in Sources */,
 				2160EE032399F6A6002C9202 /* JikanEndPoint.swift in Sources */,
@@ -553,6 +567,7 @@
 				2137FD2723F33BC300B984AB /* VoiceActorsManga.swift in Sources */,
 				21E372F823DA1C2000447E4E /* MangaDetailsViewController.swift in Sources */,
 				2160D4FC23DB62C30004EE80 /* Voice_Acting_Roles.swift in Sources */,
+				21D461E623F468F600E1F9B4 /* PersistanceManager.swift in Sources */,
 				21596DFD23CBF4490003A77D /* Recommendations_results.swift in Sources */,
 				2197FD2523B15D170037C88B /* Day.swift in Sources */,
 				2160EE0D2399F6ED002C9202 /* HTTPTask.swift in Sources */,
@@ -587,6 +602,7 @@
 				2160D50023DB63590004EE80 /* Anime_Staff_Positions.swift in Sources */,
 				2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */,
 				2160D4F523DB61200004EE80 /* AppearancesCollectionViewCell.swift in Sources */,
+				21D461E023F4678300E1F9B4 /* SavedList.xcdatamodeld in Sources */,
 				21596E0623CBF5C00003A77D /* Staff.swift in Sources */,
 				2160EE242399F79A002C9202 /* Aired.swift in Sources */,
 				2140816023D793E400319AA4 /* CharacterResults.swift in Sources */,
@@ -800,6 +816,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				21D461DF23F4678300E1F9B4 /* SavedList.xcdatamodel */,
+			);
+			currentVersion = 21D461DF23F4678300E1F9B4 /* SavedList.xcdatamodel */;
+			path = SavedList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2160EDDC2399F5B8002C9202 /* Project object */;
 }
