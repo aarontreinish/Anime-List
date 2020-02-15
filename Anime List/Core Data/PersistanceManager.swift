@@ -62,6 +62,27 @@ final class PersistanceManager {
         }
     }
     
+    func fetchSortedDataByName<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
+        
+        let entityName = String(describing: objectType)
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        
+        let nameSort = NSSortDescriptor(key:"name", ascending: true)
+        
+        fetchRequest.sortDescriptors = [nameSort]
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [T]
+            
+            return fetchedObjects ?? [T]()
+            
+        } catch {
+            print(error)
+            return [T]()
+        }
+    }
+    
     func delete<T: NSManagedObject>(_ objectType: T.Type, malId: Float) {
         let entityName = String(describing: objectType)
         
@@ -89,6 +110,21 @@ final class PersistanceManager {
             }
         } catch {
             print(error)
+        }
+    }
+    
+    func deleteAllRecords<T: NSManagedObject>(_ objectType: T.Type) {
+        
+        let entityName = String(describing: objectType)
+
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print ("There was an error")
         }
     }
     

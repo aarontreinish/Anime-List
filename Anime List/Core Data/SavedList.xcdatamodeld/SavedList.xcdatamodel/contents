@@ -5,7 +5,13 @@
         <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="SavedManga" representedClassName=".SavedManga" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="SavedAnime" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="SavedManga" positionX="-63" positionY="9" width="128" height="88"/>
     </elements>
 </model>

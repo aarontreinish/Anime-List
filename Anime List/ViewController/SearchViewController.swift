@@ -125,6 +125,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func segmentedControllerAction(_ sender: Any) {
         tableView.reloadData()
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == "" {
             searchPlacementLabel.isHidden = false

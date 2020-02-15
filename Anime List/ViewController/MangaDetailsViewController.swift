@@ -10,6 +10,10 @@ import UIKit
 
 class MangaDetailsViewController: UIViewController {
     
+    let persistenceManager = PersistanceManager()
+    var savedManga = [SavedManga]()
+    var isAlreadySaved: Bool = false
+    
     @IBOutlet weak var mainView: UIView!
     
     @IBOutlet weak var imageView: CustomImageView!
@@ -73,6 +77,8 @@ class MangaDetailsViewController: UIViewController {
             mainView.isHidden = true
             activityIndicator.startAnimating()
         }
+        
+        checkIfAlreadySaved()
     }
     
     func setupActivityIndicator() {
@@ -227,6 +233,58 @@ class MangaDetailsViewController: UIViewController {
         
     }
     
+    func saveManga() {
+           let malId = Float(mangaDetailsArray?.mal_id ?? 0)
+           
+           let savedManga = SavedManga(context: persistenceManager.context)
+           savedManga.mal_id = malId
+           savedManga.image_url = mangaDetailsArray?.image_url
+           savedManga.name = mangaDetailsArray?.title
+           
+           persistenceManager.save()
+       }
+       
+       func deleteManga() {
+           persistenceManager.delete(SavedManga.self, malId: Float(selection))
+       }
+       
+       func getSavedManga() {
+           let savedManga = persistenceManager.fetch(SavedManga.self)
+           self.savedManga = savedManga
+           
+       }
+       
+       func checkIfAlreadySaved() {
+           
+           isAlreadySaved = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
+           
+           if isAlreadySaved == true {
+               if #available(iOS 13.0, *) {
+                   navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+               } else {
+                   // Fallback on earlier versions
+               }
+           }
+       }
+    
+    @IBAction func saveButtonAction(_ sender: Any) {
+        
+        if isAlreadySaved == true {
+            deleteManga()
+            if #available(iOS 13.0, *) {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+            } else {
+                // Fallback on earlier versions
+            }
+        } else {
+            saveManga()
+            if #available(iOS 13.0, *) {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
 }
 
 extension MangaDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {

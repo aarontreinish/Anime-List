@@ -737,7 +737,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-0s-UCs">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="119" width="414" height="694"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myListCell" rowHeight="202" id="coV-55-b2w" customClass="MyListTableViewCell" customModule="Anime_List" customModuleProvider="target">
@@ -777,27 +777,46 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="u8j-6E-1zB">
+                                <rect key="frame" x="0.0" y="88" width="414" height="32"/>
+                                <segments>
+                                    <segment title="Anime"/>
+                                    <segment title="Manga"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControllerAction:" destination="zsJ-Ef-Vhk" eventType="valueChanged" id="g0m-if-5ai"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Pvd-0s-UCs" firstAttribute="bottom" secondItem="1jc-Aa-Sx1" secondAttribute="bottom" id="JOl-nw-0f6"/>
                             <constraint firstItem="Pvd-0s-UCs" firstAttribute="leading" secondItem="1jc-Aa-Sx1" secondAttribute="leading" id="MrG-sw-tcz"/>
+                            <constraint firstItem="u8j-6E-1zB" firstAttribute="top" secondItem="1jc-Aa-Sx1" secondAttribute="top" id="UDb-Xd-Vc6"/>
+                            <constraint firstItem="u8j-6E-1zB" firstAttribute="trailing" secondItem="1jc-Aa-Sx1" secondAttribute="trailing" id="Who-g2-b5T"/>
+                            <constraint firstItem="u8j-6E-1zB" firstAttribute="leading" secondItem="1jc-Aa-Sx1" secondAttribute="leading" id="dzw-H9-NIf"/>
                             <constraint firstItem="Pvd-0s-UCs" firstAttribute="trailing" secondItem="1jc-Aa-Sx1" secondAttribute="trailing" id="iek-xa-BwS"/>
-                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="top" secondItem="1jc-Aa-Sx1" secondAttribute="top" id="o3y-D7-o5m"/>
+                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="top" secondItem="u8j-6E-1zB" secondAttribute="bottom" id="lWc-G5-dxT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1jc-Aa-Sx1"/>
                     </view>
                     <navigationItem key="navigationItem" title="My List" largeTitleDisplayMode="always" id="S0X-ra-bD9">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="ySK-GP-euh"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="ySK-GP-euh">
+                            <connections>
+                                <action selector="ellipseButtonAction:" destination="zsJ-Ef-Vhk" id="fOW-24-wYC"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="segmentedController" destination="u8j-6E-1zB" id="GyY-6L-vdx"/>
                         <outlet property="tableView" destination="Pvd-0s-UCs" id="0Mr-kv-dkT"/>
                         <segue destination="4LC-6d-cLE" kind="show" identifier="myListDetailsSegue" id="UTh-Ze-7J1"/>
+                        <segue destination="pDi-OV-JIg" kind="show" identifier="myListMangaDetailsSegue" id="dx6-6u-wXP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tFb-Hy-XSr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1961" y="2155"/>
+            <point key="canvasLocation" x="1960.8695652173915" y="2154.9107142857142"/>
         </scene>
         <!--Search-->
         <scene sceneID="mO5-Ym-F5f">
@@ -1299,7 +1318,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LLs-5Q-K4Q"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ZcR-68-VwA"/>
+                    <navigationItem key="navigationItem" id="ZcR-68-VwA">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="heart" catalog="system" id="LDf-b2-DIz">
+                            <connections>
+                                <action selector="saveButtonAction:" destination="pDi-OV-JIg" id="Fe7-DT-LQo"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <size key="freeformSize" width="414" height="850"/>
                     <connections>
                         <outlet property="authorLabel" destination="IRO-FW-Kub" id="MYl-Jd-Ft5"/>
@@ -1716,8 +1741,8 @@
         <image name="play.rectangle" catalog="system" width="64" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nln-7V-wJj"/>
-        <segue reference="iGz-pM-VCU"/>
+        <segue reference="JoE-Q4-eyP"/>
+        <segue reference="dx6-6u-wXP"/>
         <segue reference="UTh-Ze-7J1"/>
     </inferredMetricsTieBreakers>
 </document>

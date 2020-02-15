@@ -29,6 +29,8 @@
 		21596E0823CBFC480003A77D /* CharactersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0723CBFC480003A77D /* CharactersCollectionViewCell.swift */; };
 		21596E0A23CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0923CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift */; };
 		215FB8D723F4F6E4003178AF /* MyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215FB8D623F4F6E4003178AF /* MyListTableViewCell.swift */; };
+		215FB8DA23F87CF6003178AF /* SavedManga+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215FB8D823F87CF6003178AF /* SavedManga+CoreDataClass.swift */; };
+		215FB8DB23F87CF6003178AF /* SavedManga+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215FB8D923F87CF6003178AF /* SavedManga+CoreDataProperties.swift */; };
 		2160D4F523DB61200004EE80 /* AppearancesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4F423DB61200004EE80 /* AppearancesCollectionViewCell.swift */; };
 		2160D4F723DB613C0004EE80 /* VoiceActorsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4F623DB613C0004EE80 /* VoiceActorsDetailsViewController.swift */; };
 		2160D4FA23DB629B0004EE80 /* VoiceActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160D4F923DB629B0004EE80 /* VoiceActors.swift */; };
@@ -119,6 +121,8 @@
 		21596E0723CBFC480003A77D /* CharactersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersCollectionViewCell.swift; sourceTree = "<group>"; };
 		21596E0923CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		215FB8D623F4F6E4003178AF /* MyListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListTableViewCell.swift; sourceTree = "<group>"; };
+		215FB8D823F87CF6003178AF /* SavedManga+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedManga+CoreDataClass.swift"; sourceTree = "<group>"; };
+		215FB8D923F87CF6003178AF /* SavedManga+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedManga+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2160D4F423DB61200004EE80 /* AppearancesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancesCollectionViewCell.swift; sourceTree = "<group>"; };
 		2160D4F623DB613C0004EE80 /* VoiceActorsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActorsDetailsViewController.swift; sourceTree = "<group>"; };
 		2160D4F923DB629B0004EE80 /* VoiceActors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActors.swift; sourceTree = "<group>"; };
@@ -172,8 +176,8 @@
 		21C3D8BF239D52ED00C0CE55 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		21D461DF23F4678300E1F9B4 /* SavedList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SavedList.xcdatamodel; sourceTree = "<group>"; };
 		21D461E523F468F600E1F9B4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
-		21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Anime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Anime+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Anime+CoreDataClass.swift"; path = "Anime List/Core Data/Anime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Anime+CoreDataProperties.swift"; path = "Anime List/Core Data/Anime+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		21D4621223F4F3C400E1F9B4 /* MyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListViewController.swift; sourceTree = "<group>"; };
 		21E372F523DA013700447E4E /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailsViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +234,19 @@
 			path = Characters_Staff;
 			sourceTree = "<group>";
 		};
+		215FB8DC23F87D07003178AF /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */,
+				21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */,
+				215FB8D823F87CF6003178AF /* SavedManga+CoreDataClass.swift */,
+				215FB8D923F87CF6003178AF /* SavedManga+CoreDataProperties.swift */,
+				21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */,
+				21D461E523F468F600E1F9B4 /* PersistanceManager.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		2160D4F823DB628F0004EE80 /* VoiceActors */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,10 +293,7 @@
 				2160EDF02399F5BC002C9202 /* Assets.xcassets */,
 				2160EDF22399F5BC002C9202 /* LaunchScreen.storyboard */,
 				2160EDF52399F5BC002C9202 /* Info.plist */,
-				21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */,
-				21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */,
-				21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */,
-				21D461E523F468F600E1F9B4 /* PersistanceManager.swift */,
+				215FB8DC23F87D07003178AF /* Core Data */,
 			);
 			path = "Anime List";
 			sourceTree = "<group>";
@@ -606,6 +620,7 @@
 				2160EE322399F7DF002C9202 /* Related.swift in Sources */,
 				2160EE0B2399F6DF002C9202 /* HTTPMethod.swift in Sources */,
 				2160D4F723DB613C0004EE80 /* VoiceActorsDetailsViewController.swift in Sources */,
+				215FB8DA23F87CF6003178AF /* SavedManga+CoreDataClass.swift in Sources */,
 				2160EE052399F6B2002C9202 /* NetworkManager.swift in Sources */,
 				2160D50023DB63590004EE80 /* Anime_Staff_Positions.swift in Sources */,
 				2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */,
@@ -616,6 +631,7 @@
 				2140816023D793E400319AA4 /* CharacterResults.swift in Sources */,
 				2160EDEA2399F5B8002C9202 /* SceneDelegate.swift in Sources */,
 				21E372F623DA013700447E4E /* DetailsViewController.swift in Sources */,
+				215FB8DB23F87CF6003178AF /* SavedManga+CoreDataProperties.swift in Sources */,
 				2160EE42239C1A67002C9202 /* HomeTableViewCell.swift in Sources */,
 				2140816623D7A20300319AA4 /* CharacterDetailsViewController.swift in Sources */,
 				21EB4D3D23D2481A00869419 /* Alternative.swift in Sources */,
