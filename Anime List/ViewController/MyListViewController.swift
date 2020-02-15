@@ -38,6 +38,12 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         
         tableView.refreshControl = refresher
+        
+        if #available(iOS 13.0, *) {
+            segmentedController.selectedSegmentTintColor = .systemRed
+        } else {
+            segmentedController.tintColor = .systemRed
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,9 +114,9 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func ellipseButtonAction(_ sender: Any) {
-
+        
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-            
+        
         let deleteAllAction = UIAlertAction(title: "Delete All", style: .default) { (action) in
             self.deleteAll()
         }
@@ -118,13 +124,13 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let orderByNameAction = UIAlertAction(title: "Order by name", style: .default) { (action) in
             self.sortByNameAscending()
         }
-            
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-            
+        
         optionMenu.addAction(deleteAllAction)
         optionMenu.addAction(orderByNameAction)
         optionMenu.addAction(cancelAction)
-            
+        
         self.present(optionMenu, animated: true, completion: nil)
     }
     
@@ -157,12 +163,21 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            let anime = savedAnime[indexPath.row]
-            persistenceManager.context.delete(anime)
-            savedAnime.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-
-            persistenceManager.save()
+            if segmentedController.selectedSegmentIndex == 0 {
+                let anime = savedAnime[indexPath.row]
+                persistenceManager.context.delete(anime)
+                savedAnime.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                persistenceManager.save()
+            } else if segmentedController.selectedSegmentIndex == 1 {
+                let manga = savedManga[indexPath.row]
+                persistenceManager.context.delete(manga)
+                savedManga.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                persistenceManager.save()
+            }
         }
     }
     

@@ -43,6 +43,12 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
         
+        if #available(iOS 13.0, *) {
+            segmentedControl.selectedSegmentTintColor = .systemRed
+        } else {
+            segmentedControl.tintColor = .systemRed
+        }
+        
         getMondayData()
     }
     
