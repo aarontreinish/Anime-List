@@ -309,6 +309,18 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         day = scheduleArray[indexPath.row]
         
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        let updatedAtStr = day.airing_start ?? ""
+        let updatedAt = dateFormatter.date(from: updatedAtStr)
+        
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        let dateString = dateFormatter.string(from: updatedAt ?? Date())
+        
+        cell.dateLabel.text = "Started airing: \n\(dateString)"
         cell.titleLabel.text = day.title ?? ""
         cell.scheduleImageView.loadImageUsingCacheWithUrlString(urlString: day.image_url ?? "")
         

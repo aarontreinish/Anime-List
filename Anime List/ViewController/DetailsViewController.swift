@@ -257,7 +257,6 @@ class DetailsViewController: UIViewController {
         let anime = persistenceManager.fetch(SavedAnime.self)
         self.savedAnime = anime
         
-        savedAnime.forEach({ print($0.name) })
     }
     
     func checkIfAlreadySaved() {

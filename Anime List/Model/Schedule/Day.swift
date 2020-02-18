@@ -15,7 +15,7 @@ struct Day: Codable {
     let image_url: String?
 //    let synopsis: String?
 //    let type: String?
-//    let airing_start: String?
+    let airing_start: String?
 //    let episodes: String?
 //    let members: Int?
 //    let genres: [Genres]?

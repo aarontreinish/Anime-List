@@ -13,6 +13,7 @@ class ScheduleTableViewCell: UITableViewCell {
     @IBOutlet weak var scheduleImageView: CustomImageView!
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

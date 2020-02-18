@@ -33,6 +33,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         searchBar.delegate = self
         
+        if #available(iOS 13.0, *) {
+            segmentedController.selectedSegmentTintColor = .systemRed
+        } else {
+            segmentedController.tintColor = .systemRed
+        }
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
