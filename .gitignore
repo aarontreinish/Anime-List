@@ -1,6 +1,23 @@
 
-# Created by https://www.gitignore.io/api/swift,xcode,macos
-# Edit at https://www.gitignore.io/?templates=swift,xcode,macos
+# Created by https://www.gitignore.io/api/xcode,macos,swift,firebase,cocoapods
+# Edit at https://www.gitignore.io/?templates=xcode,macos,swift,firebase,cocoapods
+
+### CocoaPods ###
+## CocoaPods GitIgnore Template
+
+# CocoaPods - Only use to conserve bandwidth / Save time on Pushing
+#           - Also handy if you have a large number of dependant pods
+#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
+Pods/
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
 
 ### macOS ###
 # General
@@ -129,4 +146,4 @@ iOSInjectionProject/
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.gitignore.io/api/swift,xcode,macos
+# End of https://www.gitignore.io/api/xcode,macos,swift,firebase,cocoapods
