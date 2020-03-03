@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -18,12 +19,18 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var topFavoritesArray: [TopElement] = []
     var mostPopularArray: [TopElement] = []
     
+    var initialDataTopRanked: [TopElement] = []
+    var initialDataFavorites: [TopElement] = []
+    var initialDataMostPopular: [TopElement] = []
+    
     var selection = 0
     
     let mangaMalIdCache = Bundle.main.decode(MalIdCache.self, from: "manga_cache.json")
     var nsfwMangaArray: [Int] = []
     
     var viewHasShown = false
+    
+    let initialDataConfig = RemoteConfig.remoteConfig().configValue(forKey: "initialMangaData").stringValue
     
     let activityIndicator = UIActivityIndicatorView()
     
@@ -60,7 +67,34 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setupRemoteConfigDefaults()
+        fetchRemoteConfig()
+        
         setupActivityIndicator()
+    }
+    
+    func setupRemoteConfigDefaults() {
+        let defaultValues = [
+            "initialMangaData": "" as NSObject]
+        
+        RemoteConfig.remoteConfig().setDefaults(defaultValues)
+    }
+    
+    func fetchRemoteConfig() {
+        RemoteConfig.remoteConfig().fetch(withExpirationDuration: 0) { (status, error) in
+            if status == .success {
+                print("Config fetched")
+                
+                RemoteConfig.remoteConfig().activate { (error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
+            } else {
+                print("Config not fetched")
+                print(error?.localizedDescription)
+            }
+        }
     }
     
     func setUpData() {
@@ -75,6 +109,19 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 topRankedArray.remove(at: index)
             }
         }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in topRankedArray.enumerated() {
+                initialDataTopRanked.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
+            }
+        }
     }
     
     func filterTopFavoritesData() {
@@ -83,12 +130,38 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 topFavoritesArray.remove(at: index)
             }
         }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in topFavoritesArray.enumerated() {
+                initialDataFavorites.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
+            }
+        }
     }
     
     func filterMostPopularData() {
         for (index, malId) in mostPopularArray.enumerated().reversed() {
             if nsfwMangaArray.contains(malId.mal_id ?? 0) {
                 mostPopularArray.remove(at: index)
+            }
+        }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in mostPopularArray.enumerated() {
+                initialDataMostPopular.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
             }
         }
     }
@@ -260,15 +333,28 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
 extension MangaViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        switch Section(rawValue: section) {
-        case .topRankedManga:
-            return topRankedArray.count
-        case .mostPopularManga:
-            return mostPopularArray.count
-        case .topFavoriteManga:
-            return topFavoritesArray.count
-        case .none:
-            return 1
+        if initialDataConfig == "0" {
+            switch Section(rawValue: section) {
+            case .topRankedManga:
+                return initialDataTopRanked.count
+            case .mostPopularManga:
+                return initialDataMostPopular.count
+            case .topFavoriteManga:
+                return initialDataFavorites.count
+            case .none:
+                return 1
+            }
+        } else {
+            switch Section(rawValue: section) {
+            case .topRankedManga:
+                return topRankedArray.count
+            case .mostPopularManga:
+                return mostPopularArray.count
+            case .topFavoriteManga:
+                return topFavoritesArray.count
+            case .none:
+                return 1
+            }
         }
     }
     
@@ -300,21 +386,40 @@ extension MangaViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         if topRankedArray.count != 0 && mostPopularArray.count != 0 && topFavoritesArray.count != 0 {
             
-            switch Section(rawValue: collectionView.tag) {
-            case .topRankedManga:
-                topElement = topRankedArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .mostPopularManga:
-                topElement = mostPopularArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .topFavoriteManga:
-                topElement = topFavoritesArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .none:
-                cell.titleLabel.text = "No Manga Available"
+            if initialDataConfig == "0" {
+                switch Section(rawValue: collectionView.tag) {
+                case .topRankedManga:
+                    topElement = initialDataTopRanked[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .mostPopularManga:
+                    topElement = initialDataMostPopular[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .topFavoriteManga:
+                    topElement = initialDataFavorites[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .none:
+                    cell.titleLabel.text = "No Manga Available"
+                }
+            } else {
+                switch Section(rawValue: collectionView.tag) {
+                case .topRankedManga:
+                    topElement = topRankedArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .mostPopularManga:
+                    topElement = mostPopularArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .topFavoriteManga:
+                    topElement = topFavoritesArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .none:
+                    cell.titleLabel.text = "No Manga Available"
+                }
             }
         }
         
@@ -329,21 +434,40 @@ extension MangaViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         let topElement: TopElement
         
-        switch Section(rawValue: collectionView.tag) {
-        case .topRankedManga:
-            topElement = topRankedArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
-        case .mostPopularManga:
-            topElement = mostPopularArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
-        case .topFavoriteManga:
-            topElement = topFavoritesArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
-        case .none:
-            selection = 0
+        if initialDataConfig == "0" {
+            switch Section(rawValue: collectionView.tag) {
+            case .topRankedManga:
+                topElement = initialDataTopRanked[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+            case .mostPopularManga:
+                topElement = initialDataMostPopular[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+            case .topFavoriteManga:
+                topElement = initialDataFavorites[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+            case .none:
+                selection = 0
+            }
+        } else {
+            switch Section(rawValue: collectionView.tag) {
+            case .topRankedManga:
+                topElement = topRankedArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+            case .mostPopularManga:
+                topElement = mostPopularArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+            case .topFavoriteManga:
+                topElement = topFavoritesArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "mangaDetailsSegue", sender: self)
+            case .none:
+                selection = 0
+            }
         }
     }
     

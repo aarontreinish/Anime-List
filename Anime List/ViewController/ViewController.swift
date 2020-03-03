@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,12 +21,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var topUpcomingArray: [TopElement] = []
     var mostPopularArray: [TopElement] = []
     
+    var initialDataTopAiring: [TopElement] = []
+    var initialDataTopRanked: [TopElement] = []
+    var initialDataTopUpcoming: [TopElement] = []
+    var initialDataMostPopular: [TopElement] = []
+    
     var selection = 0
     
     let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
     var nsfwAnimeArray: [Int] = []
     
     var viewHasShown = false
+    
+    let initialDataConfig = RemoteConfig.remoteConfig().configValue(forKey: "initialAnimeData").stringValue
     
     let activityIndicator = UIActivityIndicatorView()
     
@@ -67,7 +75,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setupRemoteConfigDefaults()
+        fetchRemoteConfig()
+        
         setupActivityIndicator()
+    }
+    
+    func setupRemoteConfigDefaults() {
+        let defaultValues = [
+            "initialAnimeData": "" as NSObject]
+        
+        RemoteConfig.remoteConfig().setDefaults(defaultValues)
+    }
+    
+    func fetchRemoteConfig() {
+        RemoteConfig.remoteConfig().fetch(withExpirationDuration: 0) { (status, error) in
+            if status == .success {
+                print("Config fetched")
+                
+                RemoteConfig.remoteConfig().activate { (error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
+            } else {
+                print("Config not fetched")
+                print(error?.localizedDescription)
+            }
+        }
     }
     
     func setupActivityIndicator() {
@@ -100,12 +135,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 topAiringArray.remove(at: index)
             }
         }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in topAiringArray.enumerated() {
+                initialDataTopAiring.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
+            }
+        }
     }
     
     func filterTopRankedData() {
         for (index, malId) in topRankedArray.enumerated().reversed() {
             if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
                 topRankedArray.remove(at: index)
+            }
+        }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in topRankedArray.enumerated() {
+                initialDataTopRanked.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
             }
         }
     }
@@ -116,12 +177,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 topUpcomingArray.remove(at: index)
             }
         }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in topUpcomingArray.enumerated() {
+                initialDataTopUpcoming.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
+            }
+        }
     }
     
     func filterMostPopularData() {
         for (index, malId) in mostPopularArray.enumerated().reversed() {
             if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
                 mostPopularArray.remove(at: index)
+            }
+        }
+        
+        var counter = 0
+        
+        if initialDataConfig == "0" {
+            for (_, objects) in mostPopularArray.enumerated() {
+                initialDataMostPopular.append(objects)
+                counter += 1
+                
+                if counter == 5 {
+                    break
+                }
             }
         }
     }
@@ -299,17 +386,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        switch Section(rawValue: section) {
-        case .topAiringAnime:
-            return topAiringArray.count
-        case .topRankedAnime:
-            return topRankedArray.count
-        case .mostPopularAnime:
-            return mostPopularArray.count
-        case .topUpcomingAnime:
-            return topUpcomingArray.count
-        case .none:
-            return 1
+        if initialDataConfig == "0" {
+            switch Section(rawValue: section) {
+            case .topAiringAnime:
+                return initialDataTopAiring.count
+            case .topRankedAnime:
+                return initialDataTopRanked.count
+            case .mostPopularAnime:
+                return initialDataMostPopular.count
+            case .topUpcomingAnime:
+                return initialDataTopUpcoming.count
+            case .none:
+                return 1
+            }
+        } else {
+            switch Section(rawValue: section) {
+            case .topAiringAnime:
+                return topAiringArray.count
+            case .topRankedAnime:
+                return topRankedArray.count
+            case .mostPopularAnime:
+                return mostPopularArray.count
+            case .topUpcomingAnime:
+                return topUpcomingArray.count
+            case .none:
+                return 1
+            }
         }
     }
     
@@ -341,26 +443,50 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         if topAiringArray.count != 0 && topRankedArray.count != 0 && mostPopularArray.count != 0 && topUpcomingArray.count != 0 {
             
-            switch Section(rawValue: collectionView.tag) {
-            case .topAiringAnime:
-                topElement = topAiringArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .topRankedAnime:
-                topElement = topRankedArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .mostPopularAnime:
-                topElement = mostPopularArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .topUpcomingAnime:
-                topElement = topUpcomingArray[indexPath.row]
-                cell.titleLabel.text = topElement.title
-                cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
-            case .none:
-                cell.titleLabel.text = "No Anime Available"
+            if initialDataConfig == "0" {
+                switch Section(rawValue: collectionView.tag) {
+                case .topAiringAnime:
+                    topElement = initialDataTopAiring[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .topRankedAnime:
+                    topElement = initialDataTopRanked[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .mostPopularAnime:
+                    topElement = initialDataMostPopular[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .topUpcomingAnime:
+                    topElement = initialDataTopUpcoming[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .none:
+                    cell.titleLabel.text = "No Anime Available"
+                }
+            } else {
+                switch Section(rawValue: collectionView.tag) {
+                case .topAiringAnime:
+                    topElement = topAiringArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .topRankedAnime:
+                    topElement = topRankedArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .mostPopularAnime:
+                    topElement = mostPopularArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .topUpcomingAnime:
+                    topElement = topUpcomingArray[indexPath.row]
+                    cell.titleLabel.text = topElement.title
+                    cell.imageView.loadImageUsingCacheWithUrlString(urlString: topElement.image_url ?? "")
+                case .none:
+                    cell.titleLabel.text = "No Anime Available"
+                }
             }
+            
         }
         
         return cell
@@ -374,25 +500,48 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         let topElement: TopElement
         
-        switch Section(rawValue: collectionView.tag) {
-        case .topAiringAnime:
-            topElement = topAiringArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .topRankedAnime:
-            topElement = topRankedArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .mostPopularAnime:
-            topElement = mostPopularArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .topUpcomingAnime:
-            topElement = topUpcomingArray[indexPath.row]
-            selection = topElement.mal_id ?? 0
-            self.performSegue(withIdentifier: "detailsSegue", sender: self)
-        case .none:
-            selection = 0
+        if initialDataConfig == "0" {
+            switch Section(rawValue: collectionView.tag) {
+            case .topAiringAnime:
+                topElement = initialDataTopAiring[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .topRankedAnime:
+                topElement = initialDataTopRanked[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .mostPopularAnime:
+                topElement = initialDataMostPopular[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .topUpcomingAnime:
+                topElement = initialDataTopUpcoming[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .none:
+                selection = 0
+            }
+        } else {
+            switch Section(rawValue: collectionView.tag) {
+            case .topAiringAnime:
+                topElement = topAiringArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .topRankedAnime:
+                topElement = topRankedArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .mostPopularAnime:
+                topElement = mostPopularArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .topUpcomingAnime:
+                topElement = topUpcomingArray[indexPath.row]
+                selection = topElement.mal_id ?? 0
+                self.performSegue(withIdentifier: "detailsSegue", sender: self)
+            case .none:
+                selection = 0
+            }
         }
     }
     
