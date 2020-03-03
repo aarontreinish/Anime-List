@@ -19,6 +19,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selection = 0
     
+    let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
+    let mangaMalIdCache = Bundle.main.decode(MalIdCache.self, from: "manga_cache.json")
+    var nsfwAnimeArray: [Int] = []
+    var nsfwMangaArray: [Int] = []
+    
     let activityIndicator = UIActivityIndicatorView()
     
     var animeResultsArray: [Results] = []
@@ -46,6 +51,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addGestureRecognizer(tap)
         
         tableView.isHidden = true
+        
+        setUpData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +64,32 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func setUpData() {
+        for nsfw in animeMalIdCache.nsfw ?? [] {
+            nsfwAnimeArray.append(nsfw)
+        }
+        
+        for nsfw in mangaMalIdCache.nsfw ?? [] {
+            nsfwMangaArray.append(nsfw)
+        }
+    }
+    
+    func filterAnimeData() {
+        for (index, malId) in animeResultsArray.enumerated().reversed() {
+            if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
+                animeResultsArray.remove(at: index)
+            }
+        }
+    }
+    
+    func filterMangaData() {
+        for (index, malId) in mangaResultsArray.enumerated().reversed() {
+            if nsfwMangaArray.contains(malId.mal_id ?? 0) {
+                mangaResultsArray.remove(at: index)
+            }
+        }
     }
 
     func setupActivityIndicator() {
@@ -79,51 +112,53 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func getSearchedData() {
         
-        networkManager.getSearchedAnime(name: searchBar.text ?? "") { (results, error) in
+        networkManager.getSearchedAnime(name: searchBar.text ?? "") { [weak self] (results, error) in
             if let error = error {
                 print(error)
             }
             
             if let results = results {
-                self.animeResultsArray = results
+                self?.animeResultsArray = results
+                self?.filterAnimeData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
         
-        networkManager.getSearchedManga(name: searchBar.text ?? "") { (results, error) in
+        networkManager.getSearchedManga(name: searchBar.text ?? "") { [weak self] (results, error) in
             if let error = error {
                 print(error)
             }
             
             if let results = results {
-                self.mangaResultsArray = results
+                self?.mangaResultsArray = results
+                self?.filterMangaData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
         
-        networkManager.getSearchedCharacters(name: searchBar.text ?? "") { (results, error) in
+        networkManager.getSearchedCharacters(name: searchBar.text ?? "") { [weak self] (results, error) in
             if let error = error {
                 print(error)
             }
             
             if let results = results {
-                self.characterResultsArray = results
+                self?.characterResultsArray = results
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }

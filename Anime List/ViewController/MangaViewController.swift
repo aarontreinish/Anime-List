@@ -20,6 +20,9 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var selection = 0
     
+    let mangaMalIdCache = Bundle.main.decode(MalIdCache.self, from: "manga_cache.json")
+    var nsfwMangaArray: [Int] = []
+    
     var viewHasShown = false
     
     let activityIndicator = UIActivityIndicatorView()
@@ -58,6 +61,36 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewWillAppear(animated)
         
         setupActivityIndicator()
+    }
+    
+    func setUpData() {
+        for nsfw in mangaMalIdCache.nsfw ?? [] {
+            nsfwMangaArray.append(nsfw)
+        }
+    }
+    
+    func filterTopRankedData() {
+        for (index, malId) in topRankedArray.enumerated().reversed() {
+            if nsfwMangaArray.contains(malId.mal_id ?? 0) {
+                topRankedArray.remove(at: index)
+            }
+        }
+    }
+    
+    func filterTopFavoritesData() {
+        for (index, malId) in topFavoritesArray.enumerated().reversed() {
+            if nsfwMangaArray.contains(malId.mal_id ?? 0) {
+                topFavoritesArray.remove(at: index)
+            }
+        }
+    }
+    
+    func filterMostPopularData() {
+        for (index, malId) in mostPopularArray.enumerated().reversed() {
+            if nsfwMangaArray.contains(malId.mal_id ?? 0) {
+                mostPopularArray.remove(at: index)
+            }
+        }
     }
     
     func setupActivityIndicator() {
@@ -101,6 +134,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 if let topRanked = topRanked {
                     self?.topRankedArray = topRanked
+                    self?.filterTopRankedData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -120,6 +154,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 if let mostPopular = mostPopular {
                     self?.mostPopularArray = mostPopular
+                    self?.filterMostPopularData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -139,6 +174,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 if let topUpcoming = topUpcoming {
                     self?.topFavoritesArray = topUpcoming
+                    self?.filterTopFavoritesData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()

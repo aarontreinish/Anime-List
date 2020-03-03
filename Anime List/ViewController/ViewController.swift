@@ -22,6 +22,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var selection = 0
     
+    let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
+    var nsfwAnimeArray: [Int] = []
+    
     var viewHasShown = false
     
     let activityIndicator = UIActivityIndicatorView()
@@ -56,6 +59,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         activityIndicator.startAnimating()
         
+        setUpData()
+        
         callFunctions()
     }
     
@@ -81,6 +86,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             activityIndicator.color = UIColor.black
         }
         
+    }
+    
+    func setUpData() {
+        for nsfw in animeMalIdCache.nsfw ?? [] {
+            nsfwAnimeArray.append(nsfw)
+        }
+    }
+    
+    func filterTopAiringData() {
+        for (index, malId) in topAiringArray.enumerated().reversed() {
+            if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
+                topAiringArray.remove(at: index)
+            }
+        }
+    }
+    
+    func filterTopRankedData() {
+        for (index, malId) in topRankedArray.enumerated().reversed() {
+            if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
+                topRankedArray.remove(at: index)
+            }
+        }
+    }
+    
+    func filterTopUpcomingData() {
+        for (index, malId) in topUpcomingArray.enumerated().reversed() {
+            if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
+                topUpcomingArray.remove(at: index)
+            }
+        }
+    }
+    
+    func filterMostPopularData() {
+        for (index, malId) in mostPopularArray.enumerated().reversed() {
+            if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
+                mostPopularArray.remove(at: index)
+            }
+        }
     }
     
     func callFunctions() {
@@ -121,6 +164,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let topRanked = topRanked {
                     self?.topRankedArray = topRanked
+                    self?.filterTopRankedData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -141,6 +185,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let mostPopular = mostPopular {
                     self?.mostPopularArray = mostPopular
+                    self?.filterMostPopularData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -160,6 +205,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let topAiring = topAiring {
                     self?.topAiringArray = topAiring
+                    self?.filterTopAiringData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -179,6 +225,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let topUpcoming = topUpcoming {
                     self?.topUpcomingArray = topUpcoming
+                    self?.filterTopUpcomingData()
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()

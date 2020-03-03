@@ -20,6 +20,9 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     
     var networkManager = NetworkManager()
     
+    let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
+    var nsfwAnimeArray: [Int] = []
+    
     var selection = 0
     
     let activityIndicator = UIActivityIndicatorView()
@@ -58,6 +61,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         setupActivityIndicator()
         
         navigationItem.largeTitleDisplayMode = .always
+    }
+    
+    func setUpData() {
+        for nsfw in animeMalIdCache.nsfw ?? [] {
+            nsfwAnimeArray.append(nsfw)
+        }
+    }
+    
+    func filterScheduleData() {
+        for (index, malId) in scheduleArray.enumerated().reversed() {
+            if nsfwAnimeArray.contains(malId.mal_id ?? 0) {
+                scheduleArray.remove(at: index)
+            }
+        }
     }
     
     func setupActivityIndicator() {
@@ -115,19 +132,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getMondaySchedule(day: dayString) { (day, error) in
+        networkManager.getMondaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
@@ -137,19 +155,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getTuesdaySchedule(day: dayString) { (day, error) in
+        networkManager.getTuesdaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
@@ -159,19 +178,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getWednesdaySchedule(day: dayString) { (day, error) in
+        networkManager.getWednesdaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
@@ -181,19 +201,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getThursdaySchedule(day: dayString) { (day, error) in
+        networkManager.getThursdaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
@@ -203,19 +224,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getFridaySchedule(day: dayString) { (day, error) in
+        networkManager.getFridaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
@@ -225,19 +247,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getSaturdaySchedule(day: dayString) { (day, error) in
+        networkManager.getSaturdaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
@@ -247,19 +270,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         
         activityIndicator.startAnimating()
 
-        networkManager.getSundaySchedule(day: dayString) { (day, error) in
+        networkManager.getSundaySchedule(day: dayString) { [weak self] (day, error) in
             if let error = error {
                 print(error)
             }
             
             if let day = day {
-                self.scheduleArray = day
+                self?.scheduleArray = day
+                self?.filterScheduleData()
             }
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.tableView.isHidden = false
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }
