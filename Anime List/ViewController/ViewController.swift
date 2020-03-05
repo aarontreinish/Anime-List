@@ -23,11 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var selection = 0
     
-    let ref = Database.database().reference(withPath: "anime-reference")
-
-    let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
     var nsfwAnimeArray: [Int] = []
-    var nsfwAnimeDictionary: [Int: AnyObject] = [:]
     
     var viewHasShown = false
     
@@ -63,7 +59,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         activityIndicator.startAnimating()
         
-        setUpData()
+        fetchFirebaseData()
         
         callFunctions()
     }
@@ -92,7 +88,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    func setUpData() {
+    func fetchFirebaseData() {
         
         Database.database().reference().child("AnimeCache").child("nsfw").observeSingleEvent(of: .value) { [weak self] (snapshot) in
             if !snapshot.exists() {

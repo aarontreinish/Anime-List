@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,7 +21,6 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var selection = 0
     
-    let mangaMalIdCache = Bundle.main.decode(MalIdCache.self, from: "manga_cache.json")
     var nsfwMangaArray: [Int] = []
     
     var viewHasShown = false
@@ -54,6 +54,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         activityIndicator.startAnimating()
         
+        fetchFirebaseData()
         callFunctions()
     }
     
@@ -63,9 +64,17 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         setupActivityIndicator()
     }
     
-    func setUpData() {
-        for nsfw in mangaMalIdCache.nsfw ?? [] {
-            nsfwMangaArray.append(nsfw)
+    func fetchFirebaseData() {
+        
+        Database.database().reference().child("MangaCache").child("nsfw").observeSingleEvent(of: .value) { [weak self] (snapshot) in
+            if !snapshot.exists() {
+                return
+                
+            } else {
+                let mangaNfwCache = snapshot.value
+                
+                self?.nsfwMangaArray = mangaNfwCache as! [Int]
+            }
         }
     }
     
