@@ -8,5 +8,6 @@ target 'Anime List' do
   # Pods for Anime List
 	pod 'Firebase/Analytics'
 	pod 'Firebase/RemoteConfig'
+	pod 'Firebase/Database'
 
 end
