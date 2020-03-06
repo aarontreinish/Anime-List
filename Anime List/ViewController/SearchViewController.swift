@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -19,8 +20,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selection = 0
     
-    let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
-    let mangaMalIdCache = Bundle.main.decode(MalIdCache.self, from: "manga_cache.json")
     var nsfwAnimeArray: [Int] = []
     var nsfwMangaArray: [Int] = []
     
@@ -52,7 +51,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.isHidden = true
         
-        setUpData()
+        fetchFirebaseData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,13 +65,29 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.endEditing(true)
     }
     
-    func setUpData() {
-        for nsfw in animeMalIdCache.nsfw ?? [] {
-            nsfwAnimeArray.append(nsfw)
+    func fetchFirebaseData() {
+        
+        Database.database().reference().child("AnimeCache").child("nsfw").observeSingleEvent(of: .value) { [weak self] (snapshot) in
+            if !snapshot.exists() {
+                return
+                
+            } else {
+                let animeNfwCache = snapshot.value
+                
+                self?.nsfwAnimeArray = animeNfwCache as! [Int]
+                
+            }
         }
         
-        for nsfw in mangaMalIdCache.nsfw ?? [] {
-            nsfwMangaArray.append(nsfw)
+        Database.database().reference().child("MangaCache").child("nsfw").observeSingleEvent(of: .value) { [weak self] (snapshot) in
+            if !snapshot.exists() {
+                return
+                
+            } else {
+                let mangaNfwCache = snapshot.value
+                
+                self?.nsfwMangaArray = mangaNfwCache as! [Int]
+            }
         }
     }
     
