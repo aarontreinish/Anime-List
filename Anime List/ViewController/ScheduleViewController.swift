@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ScheduleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,7 +21,6 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     
     var networkManager = NetworkManager()
     
-    let animeMalIdCache = Bundle.main.decode(MalIdCache.self, from: "anime_cache.json")
     var nsfwAnimeArray: [Int] = []
     
     var selection = 0
@@ -52,6 +52,8 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
             segmentedControl.tintColor = .systemRed
         }
         
+        fetchFirebaseData()
+        
         getMondayData()
     }
     
@@ -63,10 +65,20 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         navigationItem.largeTitleDisplayMode = .always
     }
     
-    func setUpData() {
-        for nsfw in animeMalIdCache.nsfw ?? [] {
-            nsfwAnimeArray.append(nsfw)
+    func fetchFirebaseData() {
+        
+        Database.database().reference().child("AnimeCache").child("nsfw").observeSingleEvent(of: .value) { [weak self] (snapshot) in
+            if !snapshot.exists() {
+                return
+                
+            } else {
+                let animeNfwCache = snapshot.value
+                
+                self?.nsfwAnimeArray = animeNfwCache as! [Int]
+                
+            }
         }
+
     }
     
     func filterScheduleData() {

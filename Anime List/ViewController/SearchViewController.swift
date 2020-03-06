@@ -20,6 +20,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selection = 0
     
+    var bannedSearchWords = ["Loli", "Lolita", "Lolicon", "Roricon", "Shotacon", "Shota", "Yaoi", "Ecchi", "Hentai", "loli", "lolita", "lolicon", "roricon", "shotacon", "shota", "yaoi", "ecchi", "hentai"]
+    
     var nsfwAnimeArray: [Int] = []
     var nsfwMangaArray: [Int] = []
     
@@ -63,6 +65,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func containsSwearWord(text: String, bannedWords: [String]) -> Bool {
+        return bannedWords
+            .reduce(false) { $0 || text.contains($1.self) }
     }
     
     func fetchFirebaseData() {
@@ -196,6 +203,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if searchBar.text == "" {
             tableView.isHidden = true
+        } else if containsSwearWord(text: searchBar.text ?? "", bannedWords: bannedSearchWords) == true {
+            
+            let alert = UIAlertController(title: "You are not allowed to search for this type of content.", message: "This type of content is prohibited on the app store and will not be shown.", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler: nil))
+
+            self.present(alert, animated: true)
+            
         } else {
             searchPlacementLabel.isHidden = true
             self.activityIndicator.startAnimating()
