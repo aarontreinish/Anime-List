@@ -100,11 +100,6 @@ extension JikanAPI: EndPointType {
             return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
         case .searchCharacter(let name):
             return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
-//        case .newMovies(let page):
-//            return .requestParameters(bodyParameters: nil,
-//                                      bodyEncoding: .urlEncoding,
-//                                      urlParameters: ["page":page,
-//                                                      "api_key":NetworkManager.MovieAPIKey])
 //        case .anime(let id):
 //            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["":id])
         default:

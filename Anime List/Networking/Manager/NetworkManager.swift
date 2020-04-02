@@ -767,7 +767,7 @@ struct NetworkManager {
         }
     }
     
-    fileprivate func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<String>{
+    fileprivate func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<String> {
         print(response.statusCode)
         switch response.statusCode {
         case 200...299: return .success

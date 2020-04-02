@@ -99,24 +99,6 @@ class MangaDetailsViewController: UIViewController {
         
     }
     
-    func getMangaDetails() {
-        networkManager.getNewManga(id: selection) { [weak self] (manga, error) in
-            if let error = error {
-                print(error)
-            }
-            if let manga = manga {
-                self?.mangaDetailsArray = manga
-            }
-            
-            self?.screenWillShow = true
-            self?.setUpData()
-            
-            DispatchQueue.main.async {
-                self?.setLabels()
-            }
-        }
-    }
-    
     func setUpData() {
         volumesString = String(mangaDetailsArray?.volumes ?? 0)
         rankString = String(mangaDetailsArray?.rank ?? 0)
@@ -138,60 +120,68 @@ class MangaDetailsViewController: UIViewController {
         }
     }
     
-    func getMangaCharacters() {
-        networkManager.getMangaCharacters(id: selection) { [weak self] (characters, error) in
-            if let error = error {
-                print(error)
-            }
-            if let characters = characters {
-                self?.mangaCharactersArray = characters
-            }
-            
-            DispatchQueue.main.async {
-                self?.charactersCollectionView.reloadData()
-            }
-        }
-    }
-    
-    func getMangaRecommendations() {
-        networkManager.getMangaRecommendations(id: selection) { [weak self] (recommendations, error) in
-            if let error = error {
-                print(error)
-            }
-            if let recommendations = recommendations {
-                self?.mangaRecommendationsArray = recommendations
-            }
-            
-            DispatchQueue.main.async {
-                self?.recommendationsCollectionView.reloadData()
-            }
-        }
-    }
-    
     func getAllData() {
         let group = DispatchGroup()
         
-        group.enter()
-        self.getMangaDetails()
-        group.leave()
+        if mangaDetailsArray == nil {
+            group.enter()
+            networkManager.getNewManga(id: selection) { [weak self] (manga, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let manga = manga {
+                    self?.mangaDetailsArray = manga
+                    self?.screenWillShow = true
+                    self?.setUpData()
+                    
+                    DispatchQueue.main.async {
+                        self?.setLabels()
+                    }
+                    group.leave()
+                }
+            }
+        }
         
-        group.enter()
-        self.getMangaCharacters()
-        group.leave()
+        if mangaCharactersArray.isEmpty {
+            group.enter()
+            networkManager.getMangaCharacters(id: selection) { [weak self] (characters, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let characters = characters {
+                    self?.mangaCharactersArray = characters
+                    
+                    DispatchQueue.main.async {
+                        self?.charactersCollectionView.reloadData()
+                    }
+                    group.leave()
+                }
+            }
+        }
         
-        group.enter()
-        self.getMangaRecommendations()
-        group.leave()
-        
-        //        DispatchQueue.main.async {
-        //            self.activityIndicator.stopAnimating()
-        //            self.mainView.isHidden = false
-        //        }
+        if mangaRecommendationsArray.isEmpty {
+            group.enter()
+            networkManager.getMangaRecommendations(id: selection) { [weak self] (recommendations, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let recommendations = recommendations {
+                    self?.mangaRecommendationsArray = recommendations
+                    
+                    DispatchQueue.main.async {
+                        self?.recommendationsCollectionView.reloadData()
+                    }
+                    group.leave()
+                }
+            }
+        }
+
         group.notify(queue: .main) {
             self.charactersCollectionView.reloadData()
             self.recommendationsCollectionView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.mainView.isHidden = false
         }
-        
     }
     
     func setLabels() {
@@ -223,11 +213,9 @@ class MangaDetailsViewController: UIViewController {
         group.leave()
         
         group.enter()
-        let deadlineTime = DispatchTime.now() + 1.0
+        let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             self.checkIfDataIsAllThere()
-            self.activityIndicator.stopAnimating()
-            self.mainView.isHidden = false
         }
         group.leave()
         

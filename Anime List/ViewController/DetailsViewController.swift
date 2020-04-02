@@ -98,25 +98,6 @@ class DetailsViewController: UIViewController {
         
     }
     
-    func getAnimeDetails() {
-        networkManager.getNewAnime(id: selection) { [weak self] (anime, error) in
-            if let error = error {
-                print(error)
-            }
-            if let anime = anime {
-                self?.animeDetailsArray = anime
-            }
-            
-            self?.setUpData()
-            
-            self?.screenWillShow = true
-            
-            DispatchQueue.main.async {
-                self?.setLabels()
-            }
-        }
-    }
-    
     func setUpData() {
         episodesString = String(animeDetailsArray?.episodes ?? 0)
         rankString = String(animeDetailsArray?.rank ?? 0)
@@ -133,62 +114,71 @@ class DetailsViewController: UIViewController {
         allGenres = allGenresArray.joined(separator: ", ")
     }
     
-    func getAnimeCharacters() {
-        networkManager.getCharacters(id: selection) { [weak self] (characters, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let characters = characters {
-                self?.animeCharactersArray = characters
-            }
-            
-            DispatchQueue.main.async {
-                self?.charactersCollectionView.reloadData()
-            }
-        }
-    }
-    
-    func getAnimeRecommendations() {
-        networkManager.getRecommendations(id: selection) { [weak self] (recommendations, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let recommendations = recommendations {
-                self?.animeRecommendationsArray = recommendations
-            }
-            
-            DispatchQueue.main.async {
-                self?.recommendationsCollectionView.reloadData()
-            }
-        }
-    }
-    
     func getAllData() {
         let group = DispatchGroup()
         
-        group.enter()
-        self.getAnimeDetails()
-        group.leave()
-        
-        group.enter()
-        self.getAnimeCharacters()
-        group.leave()
-        
-        group.enter()
-        self.getAnimeRecommendations()
-        group.leave()
-        
-//        DispatchQueue.main.async {
-//            self.activityIndicator.stopAnimating()
-//            self.mainView.isHidden = false
-//        }
-        group.notify(queue: .main) {
-            self.charactersCollectionView.reloadData()
-            self.recommendationsCollectionView.reloadData()
+        if animeDetailsArray == nil {
+            group.enter()
+            networkManager.getNewAnime(id: selection) { [weak self] (anime, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let anime = anime {
+                    self?.animeDetailsArray = anime
+                    
+                    self?.setUpData()
+                    
+                    self?.screenWillShow = true
+                    
+                    DispatchQueue.main.async {
+                        self?.setLabels()
+                    }
+                    group.leave()
+                }
+            }
         }
         
+        if animeCharactersArray.isEmpty {
+            group.enter()
+            networkManager.getCharacters(id: selection) { [weak self] (characters, error) in
+                if let error = error {
+                    print(error)
+                }
+                
+                if let characters = characters {
+                    self?.animeCharactersArray = characters
+                    DispatchQueue.main.async {
+                        self?.charactersCollectionView.reloadData()
+                    }
+                    group.leave()
+                }
+            }
+        }
+        
+        if animeRecommendationsArray.isEmpty {
+            group.enter()
+            networkManager.getRecommendations(id: selection) { [weak self] (recommendations, error) in
+                if let error = error {
+                    print(error)
+                }
+                
+                if let recommendations = recommendations {
+                    self?.animeRecommendationsArray = recommendations
+                    
+                    DispatchQueue.main.async {
+                        self?.recommendationsCollectionView.reloadData()
+                    }
+                    group.leave()
+                }
+            }
+        }
+        
+        group.notify(queue: .main) {
+            self.recommendationsCollectionView.reloadData()
+            self.charactersCollectionView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.mainView.isHidden = false
+        }
     }
     
     func setLabels() {
@@ -223,11 +213,9 @@ class DetailsViewController: UIViewController {
         group.leave()
         
         group.enter()
-        let deadlineTime = DispatchTime.now() + 1.0
+        let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             self.checkIfDataIsAllThere()
-            self.activityIndicator.stopAnimating()
-            self.mainView.isHidden = false
         }
         group.leave()
         

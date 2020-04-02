@@ -214,7 +214,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         group.leave()
         
         group.enter()
-        let deadlineTime = DispatchTime.now() + 1.0
+        let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             self.checkIfDataIsAllThere()
         }
