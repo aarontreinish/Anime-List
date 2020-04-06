@@ -6,7 +6,7 @@ target 'Anime List' do
   use_frameworks!
 
   # Pods for Anime List
-  pod 'Firebase/CoreOnly', '6.15.0'
+  pod 'Firebase/CoreOnly'
 	pod 'Firebase/Analytics'
 	pod 'Firebase/Database'
 
