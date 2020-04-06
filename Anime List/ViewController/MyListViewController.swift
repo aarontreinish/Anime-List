@@ -97,16 +97,39 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func deleteAll() {
         if segmentedController.selectedSegmentIndex == 0 {
-            persistenceManager.deleteAllRecords(SavedAnime.self)
+            let alertController = UIAlertController(title: "Are you sure you want to delete all of your favorited Anime?", message: "", preferredStyle: .alert)
+
+            let action1 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            let action2 = UIAlertAction(title: "YES", style: .destructive) { (action:UIAlertAction) in
+                self.persistenceManager.deleteAllRecords(SavedAnime.self)
+                
+                self.savedAnime.removeAll()
+                
+                self.tableView.reloadData()
+            }
+
+            alertController.addAction(action1)
+            alertController.addAction(action2)
+            self.present(alertController, animated: true, completion: nil)
             
-            savedAnime.removeAll()
         } else if segmentedController.selectedSegmentIndex == 1 {
-            persistenceManager.deleteAllRecords(SavedManga.self)
-            
-            savedManga.removeAll()
+            let alertController = UIAlertController(title: "Are you sure you want to delete all of your favorited Manga?", message: "", preferredStyle: .alert)
+
+            let action1 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            let action2 = UIAlertAction(title: "YES", style: .destructive) { (action:UIAlertAction) in
+                self.persistenceManager.deleteAllRecords(SavedAnime.self)
+                
+                self.savedAnime.removeAll()
+                
+                self.tableView.reloadData()
+            }
+
+            alertController.addAction(action1)
+            alertController.addAction(action2)
+            self.present(alertController, animated: true, completion: nil)
         }
-        
-        tableView.reloadData()
     }
     
     @IBAction func segmentedControllerAction(_ sender: Any) {
