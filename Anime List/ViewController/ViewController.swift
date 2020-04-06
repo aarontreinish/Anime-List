@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import StoreKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -62,12 +63,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         fetchFirebaseData()
         
         callFunctions()
+        
+        askForReview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupActivityIndicator()
+    }
+    
+    func askForReview() {
+        let manager = InAppReviewManager()
+        if manager.shouldAskForReview() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                SKStoreReviewController.requestReview()
+            }
+        }
     }
     
     func setupActivityIndicator() {
