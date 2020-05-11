@@ -30,15 +30,15 @@ class InAppReviewManager {
             storage.set(NSDate(), forKey: .dayOfFirstAction)
         }
 
-        // Calculate if there have been three days since the first action 604800
-        let threeWeeksInSeconds: TimeInterval = 259200.0
-        let threeWeeksAgo = Date(timeIntervalSinceNow: -threeWeeksInSeconds)
+        // Calculate if there have been three days since the first action
+        let threeDaysInSeconds: TimeInterval = 259200.0
+        let threeDaysAgo = Date(timeIntervalSinceNow: -threeDaysInSeconds)
 
         guard let dateOfFirstAction = dateOfFirstActionObj as? Date else {
             return false
         }
 
-        let comparisonResult = dateOfFirstAction.compare(threeWeeksAgo)
+        let comparisonResult = dateOfFirstAction.compare(threeDaysAgo)
 
         // Check if user has reviewed this version
         let bundleVersionKey = kCFBundleVersionKey as String
