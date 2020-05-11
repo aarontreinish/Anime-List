@@ -14,6 +14,7 @@ class DetailsViewController: UIViewController {
     let persistenceManager = PersistanceManager()
     var savedAnime = [SavedAnime]()
     var isAlreadySaved: Bool = false
+    var didSave: Bool = false
     
     @IBOutlet weak var mainView: UIView!
     
@@ -254,6 +255,7 @@ class DetailsViewController: UIViewController {
         if isAlreadySaved == true {
             if #available(iOS 13.0, *) {
                 navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+                didSave = true
             } else {
                 // Fallback on earlier versions
             }
@@ -262,21 +264,40 @@ class DetailsViewController: UIViewController {
     
     @IBAction func saveButtonAction(_ sender: Any) {
         
-        if isAlreadySaved == true {
+        if didSave == true {
             deleteAnime()
+            didSave = false
             if #available(iOS 13.0, *) {
                 navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
             } else {
                 // Fallback on earlier versions
             }
-        } else {
+        } else if didSave == false {
             saveAnime()
+            didSave = true
             if #available(iOS 13.0, *) {
                 navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
             } else {
                 // Fallback on earlier versions
             }
         }
+        
+//
+//        if isAlreadySaved == true {
+//            deleteAnime()
+//            if #available(iOS 13.0, *) {
+//                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//        } else {
+//            saveAnime()
+//            if #available(iOS 13.0, *) {
+//                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+//            } else {
+//                // Fallback on earlier versions
+//            }
+//        }
     }
 }
 

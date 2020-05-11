@@ -13,6 +13,7 @@ class MangaDetailsViewController: UIViewController {
     let persistenceManager = PersistanceManager()
     var savedManga = [SavedManga]()
     var isAlreadySaved: Bool = false
+    var didSave: Bool = false
     
     @IBOutlet weak var mainView: UIView!
     
@@ -249,6 +250,7 @@ class MangaDetailsViewController: UIViewController {
            if isAlreadySaved == true {
                if #available(iOS 13.0, *) {
                    navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+                didSave = true
                } else {
                    // Fallback on earlier versions
                }
@@ -257,15 +259,17 @@ class MangaDetailsViewController: UIViewController {
     
     @IBAction func saveButtonAction(_ sender: Any) {
         
-        if isAlreadySaved == true {
+        if didSave == true {
             deleteManga()
+            didSave = false
             if #available(iOS 13.0, *) {
                 navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
             } else {
                 // Fallback on earlier versions
             }
-        } else {
+        } else if didSave == false {
             saveManga()
+            didSave = true
             if #available(iOS 13.0, *) {
                 navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
             } else {
