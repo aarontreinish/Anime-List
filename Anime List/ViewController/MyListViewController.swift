@@ -23,6 +23,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var segmentedController: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var totalLabel: UILabel!
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -119,9 +120,9 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let action1 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
             let action2 = UIAlertAction(title: "YES", style: .destructive) { (action:UIAlertAction) in
-                self.persistenceManager.deleteAllRecords(SavedAnime.self)
+                self.persistenceManager.deleteAllRecords(SavedManga.self)
                 
-                self.savedAnime.removeAll()
+                self.savedManga.removeAll()
                 
                 self.tableView.reloadData()
             }
@@ -140,7 +141,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
-        let deleteAllAction = UIAlertAction(title: "Delete All", style: .default) { (action) in
+        let deleteAllAction = UIAlertAction(title: "Delete All", style: .destructive) { (action) in
             self.deleteAll()
         }
         
@@ -155,6 +156,17 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 25))
+        
+        if segmentedController.selectedSegmentIndex == 0 {
+            totalLabel.text = "Total: \(savedAnime.count)"
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            totalLabel.text = "Total: \(savedManga.count)"
+        }
+        return footerView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

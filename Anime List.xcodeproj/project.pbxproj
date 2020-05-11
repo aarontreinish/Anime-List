@@ -304,6 +304,7 @@
 		2160EDE62399F5B8002C9202 /* Anime List */ = {
 			isa = PBXGroup;
 			children = (
+				215FB8DC23F87D07003178AF /* Core Data */,
 				2141CC75243AB4CE00008E40 /* Store Review */,
 				21C3D8BE239D52D400C0CE55 /* Enums */,
 				2160EDFD2399F64A002C9202 /* Extensions */,
@@ -318,7 +319,6 @@
 				2160EDF22399F5BC002C9202 /* LaunchScreen.storyboard */,
 				2160EDF52399F5BC002C9202 /* Info.plist */,
 				21372DCF240DFC0D00D13247 /* GoogleService-Info.plist */,
-				215FB8DC23F87D07003178AF /* Core Data */,
 			);
 			path = "Anime List";
 			sourceTree = "<group>";
