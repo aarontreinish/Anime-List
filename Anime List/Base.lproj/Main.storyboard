@@ -761,15 +761,20 @@
                                     <rect key="frame" x="0.0" y="258" width="414" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4W4-K4-RT7">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4W4-K4-RT7">
                                             <rect key="frame" x="8" y="4" width="398" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstItem="4W4-K4-RT7" firstAttribute="top" secondItem="XsL-Zl-EuD" secondAttribute="top" constant="4" id="3w4-Qm-Iqh"/>
+                                        <constraint firstAttribute="trailing" secondItem="4W4-K4-RT7" secondAttribute="trailing" constant="8" id="F4t-9U-mOn"/>
+                                        <constraint firstItem="4W4-K4-RT7" firstAttribute="leading" secondItem="XsL-Zl-EuD" secondAttribute="leading" constant="8" id="huf-UM-pFa"/>
+                                        <constraint firstAttribute="bottom" secondItem="4W4-K4-RT7" secondAttribute="bottom" constant="4" id="nSh-vI-aQR"/>
+                                    </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myListCell" rowHeight="202" id="coV-55-b2w" customClass="MyListTableViewCell" customModule="Anime_Reference" customModuleProvider="target">
