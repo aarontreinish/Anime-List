@@ -155,7 +155,13 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         optionMenu.addAction(orderByNameAction)
         optionMenu.addAction(cancelAction)
         
-        self.present(optionMenu, animated: true, completion: nil)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+
+            self.present(optionMenu, animated: true, completion: nil)
+        } else {
+            self.present(optionMenu, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
