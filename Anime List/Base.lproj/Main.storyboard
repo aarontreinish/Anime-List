@@ -108,6 +108,7 @@
                     <connections>
                         <outlet property="tableView" destination="g1Q-ze-xEf" id="8sx-5C-mhU"/>
                         <segue destination="4LC-6d-cLE" kind="show" identifier="detailsSegue" id="ik5-Sr-ciQ"/>
+                        <segue destination="B01-mt-BoB" kind="show" identifier="seeAllAnimeSegue" id="FPc-L3-yK3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -730,6 +731,7 @@
                     <connections>
                         <outlet property="tableView" destination="w7E-zw-aMf" id="7Nu-UD-jID"/>
                         <segue destination="pDi-OV-JIg" kind="show" identifier="mangaDetailsSegue" id="8Ax-if-vFw"/>
+                        <segue destination="B01-mt-BoB" kind="show" identifier="seeAllMangaSegue" id="Bt6-fW-BRO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDa-hV-n3X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -954,6 +956,88 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jME-Fs-aXt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1960.8695652173915" y="-609.375"/>
+        </scene>
+        <!--See All View Controller-->
+        <scene sceneID="hYV-R6-ja7">
+            <objects>
+                <viewController id="B01-mt-BoB" customClass="SeeAllViewController" customModule="Anime_Reference" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fKb-Ce-mLe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eBt-DV-yxB">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="seeAllCell" rowHeight="202" id="KPJ-c1-U3s" customClass="SeeAllTableViewCell" customModule="Anime_Reference" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="202"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KPJ-c1-U3s" id="lLW-wc-iOl">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="202"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6CK-O7-eBd" customClass="CustomImageView" customModule="Anime_Reference" customModuleProvider="target">
+                                                    <rect key="frame" x="46" y="11" width="130" height="180"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="JWz-gX-6RC"/>
+                                                        <constraint firstAttribute="height" constant="180" id="kfO-eV-7Ql"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caX-4I-GCA">
+                                                    <rect key="frame" x="8" y="90.5" width="30" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="Rsx-a9-m1z"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQx-oJ-bIH">
+                                                    <rect key="frame" x="184" y="11" width="210" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="caX-4I-GCA" firstAttribute="leading" secondItem="lLW-wc-iOl" secondAttribute="leading" constant="8" id="LR1-2H-bRd"/>
+                                                <constraint firstItem="6CK-O7-eBd" firstAttribute="top" secondItem="lLW-wc-iOl" secondAttribute="top" constant="11" id="Pat-V0-7nG"/>
+                                                <constraint firstItem="mQx-oJ-bIH" firstAttribute="top" secondItem="lLW-wc-iOl" secondAttribute="top" constant="11" id="Uds-jM-dji"/>
+                                                <constraint firstItem="caX-4I-GCA" firstAttribute="centerY" secondItem="lLW-wc-iOl" secondAttribute="centerY" id="YX7-cl-toQ"/>
+                                                <constraint firstItem="6CK-O7-eBd" firstAttribute="leading" secondItem="caX-4I-GCA" secondAttribute="trailing" constant="8" id="mUb-9m-dJG"/>
+                                                <constraint firstItem="mQx-oJ-bIH" firstAttribute="leading" secondItem="6CK-O7-eBd" secondAttribute="trailing" constant="8" id="mXE-mg-HxV"/>
+                                                <constraint firstAttribute="bottom" secondItem="6CK-O7-eBd" secondAttribute="bottom" constant="11" id="sbd-P4-2jV"/>
+                                                <constraint firstAttribute="trailing" secondItem="mQx-oJ-bIH" secondAttribute="trailing" constant="20" id="zT1-mI-dcJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="mainImageView" destination="6CK-O7-eBd" id="IUs-F2-32i"/>
+                                            <outlet property="numberLabel" destination="caX-4I-GCA" id="uGI-ev-HsF"/>
+                                            <outlet property="titleLabel" destination="mQx-oJ-bIH" id="1Mc-Hq-x95"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="bZ6-gH-KEY" firstAttribute="trailing" secondItem="eBt-DV-yxB" secondAttribute="trailing" id="3Wr-pa-Rkk"/>
+                            <constraint firstItem="eBt-DV-yxB" firstAttribute="leading" secondItem="bZ6-gH-KEY" secondAttribute="leading" id="Gkx-Q7-t0H"/>
+                            <constraint firstItem="eBt-DV-yxB" firstAttribute="top" secondItem="bZ6-gH-KEY" secondAttribute="top" id="O17-Kw-e1p"/>
+                            <constraint firstItem="bZ6-gH-KEY" firstAttribute="bottom" secondItem="eBt-DV-yxB" secondAttribute="bottom" id="lik-TP-Lx9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bZ6-gH-KEY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="fkv-zH-I69"/>
+                    <connections>
+                        <outlet property="tableView" destination="eBt-DV-yxB" id="UxT-5m-xry"/>
+                        <segue destination="4LC-6d-cLE" kind="show" identifier="seeAllAnimeDetailsSegue" id="32w-z7-Qqk"/>
+                        <segue destination="pDi-OV-JIg" kind="show" identifier="seeAllMangaDetailsSegue" id="Pd9-Jx-8sE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TAf-eQ-by9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3111.594202898551" y="-479.46428571428567"/>
         </scene>
         <!--Schedule-->
         <scene sceneID="sUI-bl-Tqf">
@@ -1763,8 +1847,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="b3B-UI-Ify"/>
-        <segue reference="dx6-6u-wXP"/>
-        <segue reference="UTh-Ze-7J1"/>
+        <segue reference="Pd9-Jx-8sE"/>
+        <segue reference="Bt6-fW-BRO"/>
+        <segue reference="32w-z7-Qqk"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="book" catalog="system" width="128" height="101"/>

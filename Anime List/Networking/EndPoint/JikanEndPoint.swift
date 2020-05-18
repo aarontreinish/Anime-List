@@ -32,6 +32,7 @@ public enum JikanAPI {
     case mangaRecommendations(id: Int)
     case character(id: Int)
     case person(id: Int)
+    case topPagination(page: Int, type: String, subtype: String)
 }
 
 extension JikanAPI: EndPointType {
@@ -85,6 +86,8 @@ extension JikanAPI: EndPointType {
             return "/character/\(id)"
         case .person(let id):
             return "/person/\(id)"
+        case .topPagination(let page, let type, let subtype):
+            return "/top/\(type)/\(page)/\(subtype)"
         }
     }
     

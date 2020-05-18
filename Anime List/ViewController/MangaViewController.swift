@@ -25,6 +25,10 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var viewHasShown = false
     
+    var seeAllNavTitle = ""
+    var seeAllInitialData: [TopElement] = []
+    var seeAllSubtype = ""
+    
     let activityIndicator = UIActivityIndicatorView()
     
     lazy var refresher: UIRefreshControl = {
@@ -221,21 +225,56 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         group.leave()
     }
     
+    @objc func topRankedSeeAllButtonPressed() {
+        seeAllNavTitle = "Top Ranked Manga"
+        seeAllInitialData = topRankedArray
+        seeAllSubtype = "ranked"
+        performSegue(withIdentifier: "seeAllMangaSegue", sender: self)
+    }
+    
+    @objc func mostPopularSeeAllButtonPressed() {
+        seeAllNavTitle = "Most Popular Manga"
+        seeAllInitialData = mostPopularArray
+        seeAllSubtype = "bypopularity"
+        performSegue(withIdentifier: "seeAllMangaSegue", sender: self)
+    }
+    
+    @objc func favoriteSeeAllButtonPressed() {
+        seeAllNavTitle = "Favorite Manga"
+        seeAllInitialData = mostPopularArray
+        seeAllSubtype = "favorite"
+        performSegue(withIdentifier: "seeAllMangaSegue", sender: self)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UILabelPadding.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
+        
+        let view = UIView()
+        
+        let label = UILabel()
+        label.frame = CGRect(x: 10, y: 0, width: 250, height: 20)
+        
+        let button = UIButton(type: .system)
+        button.frame = CGRect(x: (tableView.frame.width - 120), y: 0, width: 150, height: 20)
+        button.setTitle("See all", for: .normal)
         
         switch Section(rawValue: section) {
         case .topRankedManga:
-            headerView.text = "Top Ranked Manga"
+            label.text = "Top Ranked Manga"
+            button.addTarget(self, action: #selector(topRankedSeeAllButtonPressed), for: .touchUpInside)
         case .mostPopularManga:
-            headerView.text = "Most Popular Manga"
+            label.text = "Most Popular Manga"
+            button.addTarget(self, action: #selector(mostPopularSeeAllButtonPressed), for: .touchUpInside)
         case .topFavoriteManga:
-            headerView.text = "Favorite Manga"
+            label.text = "Favorite Manga"
+            button.addTarget(self, action: #selector(favoriteSeeAllButtonPressed), for: .touchUpInside)
         case .none:
-            headerView.text = "No Manga available"
+            label.text = "No Manga available"
         }
         
-        return headerView
+        view.addSubview(label)
+        view.addSubview(button)
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -361,6 +400,14 @@ extension MangaViewController: UICollectionViewDelegate, UICollectionViewDataSou
             let mangaDetailsViewController = segue.destination as? MangaDetailsViewController
             
             mangaDetailsViewController?.selection = selection
+        } else if segue.identifier == "seeAllMangaSegue" {
+            let seeAllViewController = segue.destination as? SeeAllViewController
+            
+            seeAllViewController?.navTitle = seeAllNavTitle
+            seeAllViewController?.initialData = seeAllInitialData
+            seeAllViewController?.subtype = seeAllSubtype
+            seeAllViewController?.type = "manga"
+            seeAllViewController?.isAnime = false
         }
     }
     

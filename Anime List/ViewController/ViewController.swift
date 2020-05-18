@@ -28,6 +28,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var viewHasShown = false
     
+    var seeAllNavTitle = ""
+    var seeAllInitialData: [TopElement] = []
+    var seeAllSubtype = ""
+    
     let activityIndicator = UIActivityIndicatorView()
     
     lazy var refresher: UIRefreshControl = {
@@ -270,27 +274,69 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    @objc func topAiringSeeAllButtonPressed() {
+        seeAllNavTitle = "Top Airing Anime"
+        seeAllInitialData = topAiringArray
+        seeAllSubtype = "airing"
+        performSegue(withIdentifier: "seeAllAnimeSegue", sender: self)
+    }
+    
+    @objc func topRankedSeeAllButtonPressed() {
+        seeAllNavTitle = "Top Ranked Anime"
+        seeAllInitialData = topRankedArray
+        seeAllSubtype = ""
+        performSegue(withIdentifier: "seeAllAnimeSegue", sender: self)
+    }
+    
+    @objc func mostPopularSeeAllButtonPressed() {
+        seeAllNavTitle = "Most Popular Anime"
+        seeAllInitialData = mostPopularArray
+        seeAllSubtype = "bypopularity"
+        performSegue(withIdentifier: "seeAllAnimeSegue", sender: self)
+    }
+    
+    @objc func topUpcomingSeeAllButtonPressed() {
+        seeAllNavTitle = "Top Upcoming Anime"
+        seeAllInitialData = topUpcomingArray
+        seeAllSubtype = "upcoming"
+        performSegue(withIdentifier: "seeAllAnimeSegue", sender: self)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UILabelPadding.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
+        let view = UIView()
+        
+        let label = UILabel()
+        label.frame = CGRect(x: 10, y: 0, width: 250, height: 20)
+        
+        let button = UIButton(type: .system)
+        button.frame = CGRect(x: (tableView.frame.width - 120), y: 0, width: 150, height: 20)
+        button.setTitle("See all", for: .normal)
         
         switch Section(rawValue: section) {
         case .topAiringAnime:
-            headerView.text = "Top Airing Anime"
+            label.text = "Top Airing Anime"
+            button.addTarget(self, action: #selector(topAiringSeeAllButtonPressed), for: .touchUpInside)
         case .topRankedAnime:
-            headerView.text = "Top Ranked Anime"
+            label.text = "Top Ranked Anime"
+            button.addTarget(self, action: #selector(topRankedSeeAllButtonPressed), for: .touchUpInside)
         case .mostPopularAnime:
-            headerView.text = "Most Popular Anime"
+            label.text = "Most Popular Anime"
+            button.addTarget(self, action: #selector(mostPopularSeeAllButtonPressed), for: .touchUpInside)
         case .topUpcomingAnime:
-            headerView.text = "Top Upcoming Anime"
+            label.text = "Top Upcoming Anime"
+            button.addTarget(self, action: #selector(topUpcomingSeeAllButtonPressed), for: .touchUpInside)
         case .none:
-            headerView.text = "No Anime available"
+            label.text = "No Anime available"
         }
         
-        return headerView
+        view.addSubview(label)
+        view.addSubview(button)
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        return 25
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -422,6 +468,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             let detailsViewController = segue.destination as? DetailsViewController
             
             detailsViewController?.selection = selection
+        } else if segue.identifier == "seeAllAnimeSegue" {
+            let seeAllViewController = segue.destination as? SeeAllViewController
+            
+            seeAllViewController?.navTitle = seeAllNavTitle
+            seeAllViewController?.initialData = seeAllInitialData
+            seeAllViewController?.subtype = seeAllSubtype
+            seeAllViewController?.type = "anime"
+            seeAllViewController?.isAnime = true
         }
     }
     

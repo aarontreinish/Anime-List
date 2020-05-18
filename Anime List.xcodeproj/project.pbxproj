@@ -89,6 +89,10 @@
 		21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */; };
 		21D4621123F46C9700E1F9B4 /* Anime+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */; };
 		21D4621323F4F3C400E1F9B4 /* MyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4621223F4F3C400E1F9B4 /* MyListViewController.swift */; };
+		21E13A672472E91000D76E60 /* SeeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E13A662472E91000D76E60 /* SeeAllViewController.swift */; };
+		21E13A692472E96F00D76E60 /* SeeAllTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E13A682472E96F00D76E60 /* SeeAllTableViewCell.swift */; };
+		21E13A6C24730FA900D76E60 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E13A6A24730FA900D76E60 /* LoadingTableViewCell.swift */; };
+		21E13A6D24730FA900D76E60 /* LoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21E13A6B24730FA900D76E60 /* LoadingTableViewCell.xib */; };
 		21E372F623DA013700447E4E /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E372F523DA013700447E4E /* DetailsViewController.swift */; };
 		21E372F823DA1C2000447E4E /* MangaDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */; };
 		21EB4D2E23D2375100869419 /* MangaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2D23D2375100869419 /* MangaViewController.swift */; };
@@ -190,6 +194,10 @@
 		21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Anime+CoreDataClass.swift"; path = "Anime List/Core Data/Anime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		21D4620F23F46C9700E1F9B4 /* Anime+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Anime+CoreDataProperties.swift"; path = "Anime List/Core Data/Anime+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		21D4621223F4F3C400E1F9B4 /* MyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListViewController.swift; sourceTree = "<group>"; };
+		21E13A662472E91000D76E60 /* SeeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewController.swift; sourceTree = "<group>"; };
+		21E13A682472E96F00D76E60 /* SeeAllTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllTableViewCell.swift; sourceTree = "<group>"; };
+		21E13A6A24730FA900D76E60 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
+		21E13A6B24730FA900D76E60 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
 		21E372F523DA013700447E4E /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailsViewController.swift; sourceTree = "<group>"; };
 		21EB4D2D23D2375100869419 /* MangaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaViewController.swift; sourceTree = "<group>"; };
@@ -315,6 +323,7 @@
 				2197FD2023B159B70037C88B /* ViewController */,
 				2197FD1F23B159AD0037C88B /* Views */,
 				2160EDED2399F5B8002C9202 /* Main.storyboard */,
+				21E13A6B24730FA900D76E60 /* LoadingTableViewCell.xib */,
 				2160EDF02399F5BC002C9202 /* Assets.xcassets */,
 				2160EDF22399F5BC002C9202 /* LaunchScreen.storyboard */,
 				2160EDF52399F5BC002C9202 /* Info.plist */,
@@ -462,6 +471,8 @@
 				2140816923D7AB7300319AA4 /* CharacterDetailsCollectionViewCell.swift */,
 				2160D4F423DB61200004EE80 /* AppearancesCollectionViewCell.swift */,
 				215FB8D623F4F6E4003178AF /* MyListTableViewCell.swift */,
+				21E13A682472E96F00D76E60 /* SeeAllTableViewCell.swift */,
+				21E13A6A24730FA900D76E60 /* LoadingTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -478,6 +489,7 @@
 				21E372F723DA1C2000447E4E /* MangaDetailsViewController.swift */,
 				2160D4F623DB613C0004EE80 /* VoiceActorsDetailsViewController.swift */,
 				21D4621223F4F3C400E1F9B4 /* MyListViewController.swift */,
+				21E13A662472E91000D76E60 /* SeeAllViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -582,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2160EDF42399F5BC002C9202 /* LaunchScreen.storyboard in Resources */,
+				21E13A6D24730FA900D76E60 /* LoadingTableViewCell.xib in Resources */,
 				2160EDF12399F5BC002C9202 /* Assets.xcassets in Resources */,
 				21372DD0240DFC0D00D13247 /* GoogleService-Info.plist in Resources */,
 				2160EDEF2399F5B8002C9202 /* Main.storyboard in Resources */,
@@ -640,6 +653,7 @@
 				2160EE302399F7D5002C9202 /* Prop.swift in Sources */,
 				2160EE0F2399F6F6002C9202 /* NetworkLogger.swift in Sources */,
 				21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */,
+				21E13A6C24730FA900D76E60 /* LoadingTableViewCell.swift in Sources */,
 				21596E0023CBF5570003A77D /* Characters_staff.swift in Sources */,
 				2197FD1E23B159A30037C88B /* ScheduleTableViewCell.swift in Sources */,
 				2160EE2E2399F7C7002C9202 /* Producers.swift in Sources */,
@@ -661,6 +675,7 @@
 				2160EE1C2399F76E002C9202 /* TopResults.swift in Sources */,
 				2160EE202399F782002C9202 /* Results.swift in Sources */,
 				21D4621323F4F3C400E1F9B4 /* MyListViewController.swift in Sources */,
+				21E13A672472E91000D76E60 /* SeeAllViewController.swift in Sources */,
 				2141CC74243AB4C700008E40 /* Protocols.swift in Sources */,
 				21920B1023B1588000C9A3B9 /* ScheduleViewController.swift in Sources */,
 				2160EE152399F723002C9202 /* JSONParameterEncoder.swift in Sources */,
@@ -725,6 +740,7 @@
 				21EB4D4123D248C100869419 /* Authors.swift in Sources */,
 				2160D4FA23DB629B0004EE80 /* VoiceActors.swift in Sources */,
 				2160EE48239C54DF002C9202 /* HomeCollectionViewCell.swift in Sources */,
+				21E13A692472E96F00D76E60 /* SeeAllTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
