@@ -31,7 +31,6 @@ class MangaDetailsViewController: UIViewController {
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
     
     let activityIndicator = UIActivityIndicatorView()
-        //UIActivityIndicatorView(style: .large)
     
     var selection = 0
     var networkManager = NetworkManager()

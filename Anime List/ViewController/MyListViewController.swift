@@ -96,6 +96,18 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
     
+    func sortByNameDescending() {
+        if segmentedController.selectedSegmentIndex == 0 {
+            let anime = persistenceManager.fetchSortedDataByNameDescending(SavedAnime.self)
+            savedAnime = anime
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            let manga = persistenceManager.fetchSortedDataByNameDescending(SavedManga.self)
+            savedManga = manga
+        }
+        
+        tableView.reloadData()
+    }
+    
     func deleteAll() {
         if segmentedController.selectedSegmentIndex == 0 {
             let alertController = UIAlertController(title: "Are you sure you want to delete all of your favorited Anime?", message: "", preferredStyle: .alert)
@@ -145,14 +157,19 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.deleteAll()
         }
         
-        let orderByNameAction = UIAlertAction(title: "Order by name", style: .default) { (action) in
+        let orderByNameAscendingAction = UIAlertAction(title: "Order by name ascending", style: .default) { (action) in
             self.sortByNameAscending()
+        }
+        
+        let orderByNameDescendingAction = UIAlertAction(title: "Order by name descending", style: .default) { (action) in
+            self.sortByNameDescending()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         optionMenu.addAction(deleteAllAction)
-        optionMenu.addAction(orderByNameAction)
+        optionMenu.addAction(orderByNameAscendingAction)
+        optionMenu.addAction(orderByNameDescendingAction)
         optionMenu.addAction(cancelAction)
         
         if UIDevice.current.userInterfaceIdiom == .pad {

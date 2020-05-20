@@ -83,6 +83,27 @@ final class PersistanceManager {
         }
     }
     
+    func fetchSortedDataByNameDescending<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
+        
+        let entityName = String(describing: objectType)
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        
+        let nameSort = NSSortDescriptor(key:"name", ascending: false)
+        
+        fetchRequest.sortDescriptors = [nameSort]
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [T]
+            
+            return fetchedObjects ?? [T]()
+            
+        } catch {
+            print(error)
+            return [T]()
+        }
+    }
+    
     func delete<T: NSManagedObject>(_ objectType: T.Type, malId: Float) {
         let entityName = String(describing: objectType)
         
