@@ -127,6 +127,39 @@ struct NetworkManager {
         }
     }
     
+    func getSearchedPeople(name: String, completion: @escaping (_ searchedAnime: [PersonResults]?, _ error: String?) -> ()) {
+        router.request(.searchPerson(name: name)) { (data, response, error) in
+            
+            if error != nil {
+                completion(nil, "Please check your network connection.")
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                let result = self.handleNetworkResponse(response)
+                switch result {
+                case .success:
+                    guard let responseData = data else {
+                        completion(nil, NetworkResponse.noData.rawValue)
+                        return
+                    }
+                    do {
+                        print(responseData)
+                        // let jsonData = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers)
+                        // print(jsonData)
+                        let apiResponse = try JSONDecoder().decode(PersonSearch.self, from: responseData)
+                        completion(apiResponse.results, nil)
+                    } catch {
+                        print(error)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                    }
+                case .failure(let networkFailureError):
+                    completion(nil, networkFailureError)
+                }
+            }
+            
+        }
+    }
+    
     func getTopRanked(type: String, completion: @escaping (_ topRanked: [TopElement]?, _ error: String?) -> ()) {
         router.request(.topRanked(type: type)) { data, response, error in
             

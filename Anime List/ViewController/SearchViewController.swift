@@ -30,6 +30,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var animeResultsArray: [Results] = []
     var mangaResultsArray: [Results] = []
     var characterResultsArray: [CharacterResults] = []
+    var personResultsArray: [PersonResults] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,6 +184,22 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self?.tableView.isHidden = false
             }
         }
+        
+        networkManager.getSearchedPeople(name: searchBar.text ?? "") { [weak self] (results, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            if let results = results {
+                self?.personResultsArray = results
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.activityIndicator.stopAnimating()
+                    self?.tableView.isHidden = false
+                }
+            }
+        }
     }
     
     @IBAction func segmentedControllerAction(_ sender: Any) {
@@ -228,6 +245,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return mangaResultsArray.count
         } else if segmentedController.selectedSegmentIndex == 2 {
             return characterResultsArray.count
+        } else if segmentedController.selectedSegmentIndex == 3 {
+            return personResultsArray.count
         } else {
             return 0
         }
@@ -238,6 +257,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let results: Results
         let characterResults: CharacterResults
+        let personResults: PersonResults
         
         if segmentedController.selectedSegmentIndex == 0 {
             results = animeResultsArray[indexPath.row]
@@ -256,6 +276,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             cell.label.text = characterResults.name ?? ""
             cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: characterResults.image_url ?? "")
+        } else if segmentedController.selectedSegmentIndex == 3 {
+            personResults = personResultsArray[indexPath.row]
+            
+            cell.label.text = personResults.name ?? ""
+            cell.searchImageView.loadImageUsingCacheWithUrlString(urlString: personResults.image_url ?? "")
         }
         
         return cell
@@ -265,6 +290,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
        
         let results: Results
         let characterResults: CharacterResults
+        let personResults: PersonResults
         
         if segmentedController.selectedSegmentIndex == 0 {
             
@@ -283,6 +309,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             characterResults = characterResultsArray[indexPath.row]
             selection = characterResults.mal_id ?? 0
             self.performSegue(withIdentifier: "searchCharacterDetailsSegue", sender: self)
+            
+        } else if segmentedController.selectedSegmentIndex == 3 {
+            
+            personResults = personResultsArray[indexPath.row]
+            selection = personResults.mal_id ?? 0
+            self.performSegue(withIdentifier: "searchPersonDetailsSegue", sender: self)
         }
         
     }
@@ -304,6 +336,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let characterDetailsViewController = segue.destination as? CharacterDetailsViewController
             
             characterDetailsViewController?.selection = selection
+        }
+        
+        if segue.identifier == "searchPersonDetailsSegue" {
+            let voiceActorsDetailsViewController = segue.destination as? VoiceActorsDetailsViewController
+            
+            voiceActorsDetailsViewController?.selection = selection
         }
     }
 }

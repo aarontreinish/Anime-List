@@ -856,7 +856,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search for an anime, manga, or character" translatesAutoresizingMaskIntoConstraints="NO" id="oaZ-cE-o64">
+                            <searchBar contentMode="redraw" text="" placeholder="Search for any anime, manga, character, or person" translatesAutoresizingMaskIntoConstraints="NO" id="oaZ-cE-o64">
                                 <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
@@ -864,7 +864,7 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search for any anime, manga, or character!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZP-a0-02a">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search for any anime, manga, character, or person!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZP-a0-02a">
                                 <rect key="frame" x="20" y="418" width="374" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
@@ -917,6 +917,7 @@
                                     <segment title="Anime"/>
                                     <segment title="Manga"/>
                                     <segment title="Characters"/>
+                                    <segment title="Person"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentedControllerAction:" destination="acZ-c0-U12" eventType="valueChanged" id="Z8Z-G3-FTR"/>
@@ -951,6 +952,7 @@
                         <segue destination="4LC-6d-cLE" kind="show" identifier="searchAnimeDetailsSegue" id="dda-yv-l8x"/>
                         <segue destination="pDi-OV-JIg" kind="show" identifier="searchMangaDetailsSegue" id="iGz-pM-VCU"/>
                         <segue destination="YLv-Mf-OHE" kind="show" identifier="searchCharacterDetailsSegue" id="b3B-UI-Ify"/>
+                        <segue destination="r6V-yr-csy" kind="show" identifier="searchPersonDetailsSegue" id="y1a-hk-L2x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jME-Fs-aXt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1846,10 +1848,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="y1a-hk-L2x"/>
         <segue reference="b3B-UI-Ify"/>
-        <segue reference="Pd9-Jx-8sE"/>
+        <segue reference="iGz-pM-VCU"/>
         <segue reference="Bt6-fW-BRO"/>
-        <segue reference="32w-z7-Qqk"/>
+        <segue reference="dda-yv-l8x"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="book" catalog="system" width="128" height="101"/>

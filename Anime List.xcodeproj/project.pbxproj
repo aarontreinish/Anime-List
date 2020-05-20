@@ -84,6 +84,7 @@
 		2197FD2323B15D100037C88B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2223B15D100037C88B /* Schedule.swift */; };
 		2197FD2523B15D170037C88B /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2423B15D170037C88B /* Day.swift */; };
 		21C3D8C0239D52ED00C0CE55 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8BF239D52ED00C0CE55 /* Section.swift */; };
+		21C8F5B62475B22500E85F37 /* PersonSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C8F5B52475B22500E85F37 /* PersonSearch.swift */; };
 		21D461E023F4678300E1F9B4 /* SavedList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */; };
 		21D461E623F468F600E1F9B4 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D461E523F468F600E1F9B4 /* PersistanceManager.swift */; };
 		21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */; };
@@ -189,6 +190,7 @@
 		2197FD2223B15D100037C88B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		2197FD2423B15D170037C88B /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21C3D8BF239D52ED00C0CE55 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		21C8F5B52475B22500E85F37 /* PersonSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonSearch.swift; sourceTree = "<group>"; };
 		21D461DF23F4678300E1F9B4 /* SavedList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SavedList.xcdatamodel; sourceTree = "<group>"; };
 		21D461E523F468F600E1F9B4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Anime+CoreDataClass.swift"; path = "Anime List/Core Data/Anime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -424,6 +426,7 @@
 				2140815F23D793E400319AA4 /* CharacterResults.swift */,
 				2140816123D7942D00319AA4 /* CharacterAnime.swift */,
 				2140816323D79C2300319AA4 /* CharacterManga.swift */,
+				21C8F5B52475B22500E85F37 /* PersonSearch.swift */,
 			);
 			path = Searched;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				2160EE0B2399F6DF002C9202 /* HTTPMethod.swift in Sources */,
 				2160D4F723DB613C0004EE80 /* VoiceActorsDetailsViewController.swift in Sources */,
 				215FB8DA23F87CF6003178AF /* SavedManga+CoreDataClass.swift in Sources */,
+				21C8F5B62475B22500E85F37 /* PersonSearch.swift in Sources */,
 				2160EE052399F6B2002C9202 /* NetworkManager.swift in Sources */,
 				2160D50023DB63590004EE80 /* Anime_Staff_Positions.swift in Sources */,
 				2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */,

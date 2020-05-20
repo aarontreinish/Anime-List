@@ -33,6 +33,7 @@ public enum JikanAPI {
     case character(id: Int)
     case person(id: Int)
     case topPagination(page: Int, type: String, subtype: String)
+    case searchPerson(name: String)
 }
 
 extension JikanAPI: EndPointType {
@@ -88,6 +89,8 @@ extension JikanAPI: EndPointType {
             return "/person/\(id)"
         case .topPagination(let page, let type, let subtype):
             return "/top/\(type)/\(page)/\(subtype)"
+        case .searchPerson:
+            return "/search/person"
         }
     }
     
@@ -102,6 +105,8 @@ extension JikanAPI: EndPointType {
         case .searchManga(let name):
             return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
         case .searchCharacter(let name):
+            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
+        case .searchPerson(let name):
             return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["q":name])
 //        case .anime(let id):
 //            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["":id])
