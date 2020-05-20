@@ -26,6 +26,10 @@ class MangaDetailsViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var japaneseLabel: UILabel!
+    @IBOutlet weak var publishedPublishingLabel: UILabel!
+    @IBOutlet weak var publishedPublishingTitleLabel: UILabel!
+    @IBOutlet weak var englishLabel: UILabel!
     
     @IBOutlet weak var charactersCollectionView: UICollectionView!
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
@@ -195,6 +199,20 @@ class MangaDetailsViewController: UIViewController {
         typeLabel.text = mangaDetailsArray?.type
         genreLabel.text = allGenres
         scoreLabel.text = scoreString
+        
+        japaneseLabel.text = mangaDetailsArray?.title_japanese ?? ""
+        englishLabel.text = mangaDetailsArray?.title_english ?? ""
+        
+        if mangaDetailsArray?.publishing == true {
+            publishedPublishingTitleLabel.text = "PUBLISHING"
+            
+            publishedPublishingLabel.text = "\(mangaDetailsArray?.published?.string ?? "")"
+            
+        } else if mangaDetailsArray?.publishing == false {
+            publishedPublishingTitleLabel.text = "AIRED"
+            
+            publishedPublishingLabel.text = "\(mangaDetailsArray?.published?.string ?? "")"
+        }
     }
     
     func checkIfDataIsAllThere() {

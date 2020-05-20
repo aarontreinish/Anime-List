@@ -17,6 +17,7 @@ class DetailsViewController: UIViewController {
     var didSave: Bool = false
     
     @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var titlesView: UIView!
     
     @IBOutlet weak var mainImageView: CustomImageView!
     @IBOutlet weak var seasonLabel: UILabel!
@@ -30,6 +31,10 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var trailerWebView: WKWebView!
     @IBOutlet weak var charactersCollectionView: UICollectionView!
     @IBOutlet weak var recommendationsCollectionView: UICollectionView!
+    @IBOutlet weak var japaneseLabel: UILabel!
+    @IBOutlet weak var englishLabel: UILabel!
+    @IBOutlet weak var airedAiringTitleLabel: UILabel!
+    @IBOutlet weak var airedAiringLabel: UILabel!
     
     let activityIndicator = UIActivityIndicatorView()
     
@@ -194,6 +199,20 @@ class DetailsViewController: UIViewController {
         typeLabel.text = animeDetailsArray?.type
         genreLabel.text = allGenres
         scoreLabel.text = scoreString
+        japaneseLabel.text = animeDetailsArray?.title_japanese ?? ""
+        englishLabel.text = animeDetailsArray?.title_english ?? ""
+        
+        if animeDetailsArray?.airing == true {
+            airedAiringTitleLabel.text = "AIRING"
+            
+            airedAiringLabel.text = "\(animeDetailsArray?.aired?.string ?? "")"
+            
+        } else if animeDetailsArray?.airing == false {
+            airedAiringTitleLabel.text = "AIRED"
+            
+            airedAiringLabel.text = "\(animeDetailsArray?.aired?.string ?? "")"
+        }
+        
         trailerWebView.layer.cornerRadius = 10
         loadYoutube(url: animeDetailsArray?.trailer_url ?? "")
     }
