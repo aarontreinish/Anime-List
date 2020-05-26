@@ -17,6 +17,13 @@ class MangaDetailsViewController: UIViewController {
     
     @IBOutlet weak var mainView: UIView!
     
+    @IBOutlet weak var rankTitleLabel: UILabel!
+    @IBOutlet weak var scoreTitleLabel: UILabel!
+    @IBOutlet weak var genreTitleLabel: UILabel!
+    @IBOutlet weak var authorTitleLabel: UILabel!
+    @IBOutlet weak var chaptersTitleLabel: UILabel!
+    @IBOutlet weak var volumesTitleLabel: UILabel!
+    @IBOutlet weak var typeTitleLabel: UILabel!
     @IBOutlet weak var imageView: CustomImageView!
     @IBOutlet weak var chaptersLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
@@ -66,6 +73,7 @@ class MangaDetailsViewController: UIViewController {
         recommendationsCollectionView.dataSource = self
         recommendationsCollectionView.delegate = self
         
+        checkDevice()
         callFunctions()
     }
     
@@ -101,6 +109,30 @@ class MangaDetailsViewController: UIViewController {
             activityIndicator.color = UIColor.black
         }
         
+    }
+    
+    func checkDevice() {
+        let modelName = UIDevice.modelName
+        
+        if modelName == "Simulator iPhone SE (2nd generation)" || modelName == "iPhone SE (2nd generation)" {
+            chaptersLabel.font = chaptersLabel.font.withSize(12)
+            chaptersTitleLabel.font = chaptersTitleLabel.font.withSize(12)
+            typeLabel.font = typeLabel.font.withSize(12)
+            typeTitleLabel.font = typeTitleLabel.font.withSize(12)
+            rankLabel.font = rankLabel.font.withSize(12)
+            rankTitleLabel.font = rankTitleLabel.font.withSize(12)
+            genreTitleLabel.font = genreTitleLabel.font.withSize(12)
+            genreLabel.font = genreLabel.font.withSize(12)
+            volumesLabel.font = volumesLabel.font.withSize(12)
+            volumesTitleLabel.font = volumesTitleLabel.font.withSize(12)
+            authorLabel.font = authorLabel.font.withSize(12)
+            authorTitleLabel.font = authorTitleLabel.font.withSize(12)
+            scoreLabel.font = scoreLabel.font.withSize(12)
+            scoreTitleLabel.font = scoreTitleLabel.font.withSize(12)
+            
+        }
+        
+        print(modelName)
     }
     
     func setUpData() {

@@ -180,7 +180,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="OKs-bN-0BC">
-                                                        <rect key="frame" x="80" y="8" width="67" height="36"/>
+                                                        <rect key="frame" x="78.5" y="8" width="67" height="36"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EPISODES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpY-QX-cDB">
                                                                 <rect key="frame" x="0.0" y="0.0" width="67" height="17"/>
@@ -195,26 +195,6 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Kg6-dx-zfE">
-                                                        <rect key="frame" x="0.0" y="8" width="35.5" height="36"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TYPE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mST-eq-ulP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="17"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5G-vH-CDM">
-                                                                <rect key="frame" x="0.0" y="19" width="35.5" height="17"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="C5G-vH-CDM" firstAttribute="top" secondItem="mST-eq-ulP" secondAttribute="bottom" constant="2" id="M7p-is-ARJ"/>
-                                                        </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="7bj-Bv-Zno">
                                                         <rect key="frame" x="0.0" y="156" width="117.5" height="36"/>
@@ -261,29 +241,45 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="jap-Ui-2Mg">
+                                                        <rect key="frame" x="0.0" y="8" width="56" height="36"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TYPE " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mST-eq-ulP">
+                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="17"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="TYPE LA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5G-vH-CDM">
+                                                                <rect key="frame" x="0.0" y="19" width="56" height="17"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstItem="TqL-1O-fi5" firstAttribute="leading" secondItem="OKs-bN-0BC" secondAttribute="trailing" constant="37" id="8LM-Fg-8sE"/>
+                                                    <constraint firstItem="OKs-bN-0BC" firstAttribute="leading" secondItem="jap-Ui-2Mg" secondAttribute="trailing" constant="22.5" id="195-co-Xih"/>
+                                                    <constraint firstItem="TqL-1O-fi5" firstAttribute="leading" secondItem="OKs-bN-0BC" secondAttribute="trailing" constant="38.5" id="8LM-Fg-8sE"/>
                                                     <constraint firstItem="ehO-ah-Cpq" firstAttribute="leading" secondItem="eSZ-kD-rdC" secondAttribute="leading" id="8UL-wI-9PH"/>
                                                     <constraint firstAttribute="trailing" secondItem="TqL-1O-fi5" secondAttribute="trailing" constant="10" id="CMu-na-jie"/>
                                                     <constraint firstItem="OKs-bN-0BC" firstAttribute="top" secondItem="eSZ-kD-rdC" secondAttribute="top" constant="8" id="COV-hT-udh"/>
                                                     <constraint firstItem="IuR-R0-yxd" firstAttribute="top" secondItem="pzy-yy-VhF" secondAttribute="bottom" constant="8" id="JyP-Hi-jsQ"/>
+                                                    <constraint firstItem="jap-Ui-2Mg" firstAttribute="leading" secondItem="eSZ-kD-rdC" secondAttribute="leading" id="Kol-JA-E1e"/>
                                                     <constraint firstItem="pzy-yy-VhF" firstAttribute="leading" secondItem="eSZ-kD-rdC" secondAttribute="leading" id="MPs-ob-ccV"/>
                                                     <constraint firstItem="ehO-ah-Cpq" firstAttribute="top" secondItem="IuR-R0-yxd" secondAttribute="bottom" constant="2" id="O1b-il-9NG"/>
                                                     <constraint firstItem="7bj-Bv-Zno" firstAttribute="leading" secondItem="eSZ-kD-rdC" secondAttribute="leading" id="OnL-oS-gpU"/>
-                                                    <constraint firstItem="OKs-bN-0BC" firstAttribute="leading" secondItem="Kg6-dx-zfE" secondAttribute="trailing" constant="44.5" id="Ouk-SI-6sa"/>
                                                     <constraint firstAttribute="height" constant="200" id="Saf-hB-gDF"/>
-                                                    <constraint firstAttribute="trailing" secondItem="7bj-Bv-Zno" secondAttribute="trailing" constant="132.5" id="W4p-tv-KJK"/>
+                                                    <constraint firstItem="jap-Ui-2Mg" firstAttribute="top" secondItem="eSZ-kD-rdC" secondAttribute="top" constant="8" id="VWT-yp-5e1"/>
                                                     <constraint firstAttribute="trailing" secondItem="IuR-R0-yxd" secondAttribute="trailing" id="XWG-cN-WQx"/>
+                                                    <constraint firstItem="pzy-yy-VhF" firstAttribute="top" secondItem="jap-Ui-2Mg" secondAttribute="bottom" constant="8" id="YLj-kT-rLE"/>
                                                     <constraint firstItem="IuR-R0-yxd" firstAttribute="leading" secondItem="eSZ-kD-rdC" secondAttribute="leading" id="aX2-ZR-ZIq"/>
                                                     <constraint firstAttribute="trailing" secondItem="ehO-ah-Cpq" secondAttribute="trailing" id="dDm-KO-ZIq"/>
-                                                    <constraint firstItem="Kg6-dx-zfE" firstAttribute="leading" secondItem="eSZ-kD-rdC" secondAttribute="leading" id="eSc-ls-8RT"/>
                                                     <constraint firstAttribute="width" constant="250" id="fbj-vB-X08"/>
-                                                    <constraint firstItem="Kg6-dx-zfE" firstAttribute="top" secondItem="eSZ-kD-rdC" secondAttribute="top" constant="8" id="lli-HM-0gJ"/>
                                                     <constraint firstItem="TqL-1O-fi5" firstAttribute="top" secondItem="eSZ-kD-rdC" secondAttribute="top" constant="8" id="rQy-Bq-chw"/>
                                                     <constraint firstAttribute="bottom" secondItem="7bj-Bv-Zno" secondAttribute="bottom" constant="8" id="wBU-sd-s5U"/>
-                                                    <constraint firstItem="pzy-yy-VhF" firstAttribute="top" secondItem="Kg6-dx-zfE" secondAttribute="bottom" constant="8" id="xop-94-Gim"/>
                                                     <constraint firstItem="7bj-Bv-Zno" firstAttribute="top" relation="lessThanOrEqual" secondItem="ehO-ah-Cpq" secondAttribute="bottom" constant="24" id="ymK-Jl-iTG"/>
                                                 </constraints>
                                             </view>
@@ -548,18 +544,25 @@
                         <outlet property="descriptionLabel" destination="Ejr-s6-d2f" id="KhL-Fr-jao"/>
                         <outlet property="englishLabel" destination="6hm-r0-n0e" id="52L-JC-6c1"/>
                         <outlet property="episodesLabel" destination="ZVp-B1-4Ob" id="vyC-Ic-cNJ"/>
+                        <outlet property="episodesTypeLabel" destination="CpY-QX-cDB" id="WNA-So-v8A"/>
                         <outlet property="genreLabel" destination="ehO-ah-Cpq" id="jpP-Qs-8CV"/>
+                        <outlet property="genreTitleLabel" destination="IuR-R0-yxd" id="HsF-Vr-MaR"/>
                         <outlet property="japaneseLabel" destination="uOC-FQ-Hhq" id="YTi-Fa-lVf"/>
                         <outlet property="mainImageView" destination="BQJ-jj-XGW" id="J7u-85-bjA"/>
                         <outlet property="mainView" destination="diJ-h3-kun" id="syq-OT-5qt"/>
                         <outlet property="rankLabel" destination="kTG-rB-btj" id="7f4-cU-1U6"/>
+                        <outlet property="rankTitleLabel" destination="UL0-h7-ebU" id="sYO-uS-5nC"/>
                         <outlet property="recommendationsCollectionView" destination="0Hk-hx-VWS" id="mgh-7m-eSP"/>
                         <outlet property="scoreLabel" destination="EZ8-wn-FkY" id="U1R-dr-7sW"/>
+                        <outlet property="scoreTitleLabel" destination="KFt-1h-VjS" id="K3v-dl-Cwy"/>
                         <outlet property="seasonLabel" destination="62O-S4-sDR" id="20x-IQ-9Fm"/>
+                        <outlet property="seasonTitleLabel" destination="XtG-Tr-TNm" id="Rlv-vz-kKp"/>
                         <outlet property="studioLabel" destination="lUm-tr-Uha" id="Mtb-a0-hIf"/>
+                        <outlet property="studioTitleLabel" destination="hwr-zn-eXu" id="x5l-8q-oc4"/>
                         <outlet property="titlesView" destination="TSr-I2-Zny" id="E8E-on-Q5M"/>
                         <outlet property="trailerWebView" destination="DbS-4E-neQ" id="3UN-03-WAk"/>
                         <outlet property="typeLabel" destination="C5G-vH-CDM" id="czd-fd-cDw"/>
+                        <outlet property="typeTitleLabel" destination="mST-eq-ulP" id="2ba-Yi-nJn"/>
                         <segue destination="YLv-Mf-OHE" kind="show" identifier="animeDetailsCharacterSegue" id="nln-7V-wJj"/>
                     </connections>
                 </viewController>
@@ -1457,7 +1460,6 @@
                                                     <constraint firstItem="Edu-zw-mUR" firstAttribute="leading" secondItem="Zl8-Kj-Zag" secondAttribute="leading" id="mF2-LI-d8F"/>
                                                     <constraint firstAttribute="trailing" secondItem="K5D-Ov-CT2" secondAttribute="trailing" id="pJZ-JO-Oz6"/>
                                                     <constraint firstItem="xYc-MY-pdL" firstAttribute="top" secondItem="Zl8-Kj-Zag" secondAttribute="top" constant="8" id="sDr-e3-ChU"/>
-                                                    <constraint firstAttribute="trailing" secondItem="DZx-uZ-3nH" secondAttribute="trailing" constant="132.5" id="tfj-T7-WrP"/>
                                                     <constraint firstItem="haC-eP-bdX" firstAttribute="leading" secondItem="Zl8-Kj-Zag" secondAttribute="leading" id="x85-bA-hrZ"/>
                                                     <constraint firstItem="haC-eP-bdX" firstAttribute="top" secondItem="Edu-zw-mUR" secondAttribute="bottom" constant="8" id="zZl-8I-lVH"/>
                                                 </constraints>
@@ -1587,21 +1589,28 @@
                     <size key="freeformSize" width="414" height="1066"/>
                     <connections>
                         <outlet property="authorLabel" destination="IRO-FW-Kub" id="MYl-Jd-Ft5"/>
+                        <outlet property="authorTitleLabel" destination="KpD-r0-vzu" id="Rn8-Sk-TQF"/>
                         <outlet property="chaptersLabel" destination="FAM-pf-L8D" id="uVQ-D1-EJe"/>
+                        <outlet property="chaptersTitleLabel" destination="Y0E-mg-B8z" id="Lfn-00-OdL"/>
                         <outlet property="charactersCollectionView" destination="TXu-gt-BIY" id="zsz-AW-Rpd"/>
                         <outlet property="descriptionLabel" destination="g9I-rS-dts" id="HUv-Uz-wBi"/>
                         <outlet property="englishLabel" destination="vKM-iX-ydH" id="HbO-RQ-dhq"/>
                         <outlet property="genreLabel" destination="v3m-nQ-UHu" id="Ms0-jp-p6W"/>
+                        <outlet property="genreTitleLabel" destination="K5D-Ov-CT2" id="qKr-b6-m3v"/>
                         <outlet property="imageView" destination="OtB-O8-NeQ" id="G2T-Lu-IwT"/>
                         <outlet property="japaneseLabel" destination="Jdz-YE-ooc" id="4MT-BB-jvz"/>
                         <outlet property="mainView" destination="2ZI-2U-IQV" id="PPi-Cb-1Gc"/>
                         <outlet property="publishedPublishingLabel" destination="aF8-Cd-ASF" id="ovf-WC-qqh"/>
                         <outlet property="publishedPublishingTitleLabel" destination="UDu-6v-wzl" id="RS5-tI-MVv"/>
                         <outlet property="rankLabel" destination="6Z1-7D-Igl" id="sqd-jf-Cy8"/>
+                        <outlet property="rankTitleLabel" destination="N5H-jv-CZh" id="gz9-Ds-E0d"/>
                         <outlet property="recommendationsCollectionView" destination="tqc-sv-w1l" id="TbD-fc-uJ8"/>
                         <outlet property="scoreLabel" destination="Y4a-NQ-BgR" id="rqg-5k-luj"/>
+                        <outlet property="scoreTitleLabel" destination="uSU-rf-XFN" id="5Im-4s-0NO"/>
                         <outlet property="typeLabel" destination="z88-1R-jmH" id="zd3-g6-dwN"/>
+                        <outlet property="typeTitleLabel" destination="ZPk-1K-VWN" id="y77-sL-VNq"/>
                         <outlet property="volumesLabel" destination="1Dj-hF-1xX" id="J1A-4A-v4i"/>
+                        <outlet property="volumesTitleLabel" destination="sMO-QU-1GU" id="oeO-s5-Han"/>
                         <segue destination="YLv-Mf-OHE" kind="show" identifier="mangaDetailsCharacterSegue" id="JoE-Q4-eyP"/>
                     </connections>
                 </viewController>

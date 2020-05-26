@@ -19,6 +19,13 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var titlesView: UIView!
     
+    @IBOutlet weak var genreTitleLabel: UILabel!
+    @IBOutlet weak var rankTitleLabel: UILabel!
+    @IBOutlet weak var scoreTitleLabel: UILabel!
+    @IBOutlet weak var studioTitleLabel: UILabel!
+    @IBOutlet weak var seasonTitleLabel: UILabel!
+    @IBOutlet weak var episodesTypeLabel: UILabel!
+    @IBOutlet weak var typeTitleLabel: UILabel!
     @IBOutlet weak var mainImageView: CustomImageView!
     @IBOutlet weak var seasonLabel: UILabel!
     @IBOutlet weak var studioLabel: UILabel!
@@ -65,6 +72,7 @@ class DetailsViewController: UIViewController {
         recommendationsCollectionView.dataSource = self
         recommendationsCollectionView.delegate = self
         
+        checkDevice()
         callFunctions()
         
         getSavedAnime()
@@ -189,6 +197,7 @@ class DetailsViewController: UIViewController {
     
     func setLabels() {
         self.navigationItem.title = animeDetailsArray?.title
+        typeTitleLabel.text = "TYPE"
         mainImageView.layer.cornerRadius = 10
         mainImageView.loadImageUsingCacheWithUrlString(urlString: animeDetailsArray?.image_url ?? "")
         descriptionLabel.text = animeDetailsArray?.synopsis
@@ -215,6 +224,30 @@ class DetailsViewController: UIViewController {
         
         trailerWebView.layer.cornerRadius = 10
         loadYoutube(url: animeDetailsArray?.trailer_url ?? "")
+    }
+    
+    func checkDevice() {
+        let modelName = UIDevice.modelName
+        
+        if modelName == "Simulator iPhone SE (2nd generation)" || modelName == "iPhone SE (2nd generation)" {
+            seasonLabel.font = seasonLabel.font.withSize(12)
+            seasonTitleLabel.font = seasonTitleLabel.font.withSize(12)
+            typeLabel.font = typeLabel.font.withSize(12)
+            typeTitleLabel.font = typeTitleLabel.font.withSize(12)
+            rankLabel.font = rankLabel.font.withSize(12)
+            rankTitleLabel.font = rankTitleLabel.font.withSize(12)
+            genreTitleLabel.font = genreTitleLabel.font.withSize(12)
+            genreLabel.font = genreLabel.font.withSize(12)
+            episodesLabel.font = episodesLabel.font.withSize(12)
+            episodesTypeLabel.font = episodesTypeLabel.font.withSize(12)
+            studioLabel.font = studioLabel.font.withSize(12)
+            studioTitleLabel.font = studioTitleLabel.font.withSize(12)
+            scoreLabel.font = scoreLabel.font.withSize(12)
+            scoreTitleLabel.font = scoreTitleLabel.font.withSize(12)
+            
+        }
+        
+        print(modelName)
     }
     
     func checkIfDataIsAllThere() {
