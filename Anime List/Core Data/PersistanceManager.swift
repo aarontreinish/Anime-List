@@ -117,7 +117,7 @@ final class PersistanceManager {
             
             if results.count > 0 {
                 for result in results as? [NSManagedObject] ?? [] {
-                    if result.value(forKey: "mal_id" as? String ?? "") != nil {
+                    if result.value(forKey: "mal_id") != nil {
                         context.delete(result)
                         
                         do {

@@ -17,14 +17,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1024" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-Rz-sYv">
-                                <rect key="frame" x="0.0" y="-64" width="414" height="1024"/>
+                                <rect key="frame" x="0.0" y="283" width="414" height="330"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="330" id="ZNT-QB-wxW"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qkR-Rz-sYv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ILJ-xS-GuT"/>
-                            <constraint firstItem="qkR-Rz-sYv" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="MyC-xY-je9"/>
-                            <constraint firstItem="qkR-Rz-sYv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="utd-fz-V4t"/>
+                            <constraint firstItem="qkR-Rz-sYv" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ERV-F7-YsO"/>
+                            <constraint firstItem="qkR-Rz-sYv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="mpT-nd-3SO"/>
+                            <constraint firstItem="qkR-Rz-sYv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="x3W-Pz-9ML"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

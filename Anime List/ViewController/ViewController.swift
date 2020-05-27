@@ -22,6 +22,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var topUpcomingArray: [TopElement] = []
     var mostPopularArray: [TopElement] = []
     
+    private var errorArray: [String] = []
+    
     var selection = 0
     
     var nsfwAnimeArray: [Int] = []
@@ -161,9 +163,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         group.enter()
         let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.checkIfDataIsAllThere()
+            if self.topUpcomingArray.count == 0 || self.topRankedArray.count == 0 || self.topAiringArray.count == 0 || self.mostPopularArray.count == 0 {
+                self.getAllData()
+            }
+            group.leave()
         }
-        group.leave()
     }
     
     @objc func refreshData() {
@@ -185,6 +189,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.networkManager.getTopRanked(type: "anime") { [weak self] (topRanked, error) in
                 if let error = error {
                     print(error)
+                    self?.errorArray.append(error)
                 }
                 
                 if let topRanked = topRanked {
@@ -205,7 +210,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.networkManager.getMostPopular(type: "anime") { [weak self] (mostPopular, error) in
                 if let error = error {
                     print(error)
-                    
+                    self?.errorArray.append(error)
                 }
                 
                 if let mostPopular = mostPopular {
@@ -220,42 +225,46 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        if topAiringArray.count == 0 {
-            group.enter()
-            
-            self.networkManager.getTopAiring(type: "anime") { [weak self] (topAiring, error) in
-                if let error = error {
-                    print(error)
-                }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if self.topAiringArray.count == 0 {
+                group.enter()
                 
-                if let topAiring = topAiring {
-                    self?.topAiringArray = topAiring
-                    self?.filterTopAiringData()
-                    
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                self.networkManager.getTopAiring(type: "anime") { [weak self] (topAiring, error) in
+                    if let error = error {
+                        print(error)
+                        self?.errorArray.append(error)
                     }
-                    group.leave()
+                    
+                    if let topAiring = topAiring {
+                        self?.topAiringArray = topAiring
+                        self?.filterTopAiringData()
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
+                    }
                 }
             }
-        }
-        
-        if topUpcomingArray.count == 0 {
-            group.enter()
             
-            self.networkManager.getTopUpcoming(type: "anime") { [weak self] (topUpcoming, error) in
-                if let error = error {
-                    print(error)
-                }
+            if self.topUpcomingArray.count == 0 {
+                group.enter()
                 
-                if let topUpcoming = topUpcoming {
-                    self?.topUpcomingArray = topUpcoming
-                    self?.filterTopUpcomingData()
-                    
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                self.networkManager.getTopUpcoming(type: "anime") { [weak self] (topUpcoming, error) in
+                    if let error = error {
+                        print(error)
+                        self?.errorArray.append(error)
                     }
-                    group.leave()
+                    
+                    if let topUpcoming = topUpcoming {
+                        self?.topUpcomingArray = topUpcoming
+                        self?.filterTopUpcomingData()
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
+                    }
                 }
             }
         }
@@ -270,7 +279,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func checkIfDataIsAllThere() {
         if topUpcomingArray.count == 0 || topRankedArray.count == 0 || topAiringArray.count == 0 || mostPopularArray.count == 0 {
-            getAllData()
+            
         }
     }
     
