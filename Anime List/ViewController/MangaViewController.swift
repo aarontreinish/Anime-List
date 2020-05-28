@@ -177,22 +177,24 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        if topFavoritesArray.count == 0 {
-            group.enter()
-            
-            self.networkManager.getTopFavorties(type: "manga") { [weak self] (topUpcoming, error) in
-                if let error = error {
-                    print(error)
-                }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if self.topFavoritesArray.count == 0 {
+                group.enter()
                 
-                if let topUpcoming = topUpcoming {
-                    self?.topFavoritesArray = topUpcoming
-                    self?.filterTopFavoritesData()
-                    
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                self.networkManager.getTopFavorties(type: "manga") { [weak self] (topUpcoming, error) in
+                    if let error = error {
+                        print(error)
                     }
-                    group.leave()
+                    
+                    if let topUpcoming = topUpcoming {
+                        self?.topFavoritesArray = topUpcoming
+                        self?.filterTopFavoritesData()
+                        
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                        group.leave()
+                    }
                 }
             }
         }

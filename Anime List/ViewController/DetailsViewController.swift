@@ -164,20 +164,22 @@ class DetailsViewController: UIViewController {
             }
         }
         
-        if animeRecommendationsArray.isEmpty {
-            group.enter()
-            networkManager.getRecommendations(id: selection) { [weak self] (recommendations, error) in
-                if let error = error {
-                    print(error)
-                }
-                
-                if let recommendations = recommendations {
-                    self?.animeRecommendationsArray = recommendations
-                    
-                    DispatchQueue.main.async {
-                        self?.recommendationsCollectionView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if self.animeRecommendationsArray.isEmpty {
+                group.enter()
+                self.networkManager.getRecommendations(id: self.selection) { [weak self] (recommendations, error) in
+                    if let error = error {
+                        print(error)
                     }
-                    group.leave()
+                    
+                    if let recommendations = recommendations {
+                        self?.animeRecommendationsArray = recommendations
+                        
+                        DispatchQueue.main.async {
+                            self?.recommendationsCollectionView.reloadData()
+                        }
+                        group.leave()
+                    }
                 }
             }
         }
