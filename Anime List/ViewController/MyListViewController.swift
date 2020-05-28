@@ -11,12 +11,18 @@ import UIKit
 class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let persistenceManager = PersistanceManager()
-    var savedAnime = [SavedAnime]()
-    var savedManga = [SavedManga]()
-    var watching = [Watching]()
+    
     var planToWatch = [PlanToWatch]()
+    var watching = [Watching]()
+    var savedAnime = [SavedAnime]()
     var onHoldAnime = [OnHoldAnime]()
     var droppedAnime = [DroppedAnime]()
+    
+    var planToRead = [PlanToRead]()
+    var reading = [Reading]()
+    var savedManga = [SavedManga]()
+    var onHoldManga = [OnHoldManga]()
+    var droppedManga = [DroppedManga]()
     
     var selection = 0
     
@@ -102,9 +108,20 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getSavedManga() {
-        let manga = persistenceManager.fetch(SavedManga.self)
+        let planToReadList = persistenceManager.fetch(PlanToRead.self)
+        planToRead = planToReadList
         
-        savedManga = manga
+        let readingList = persistenceManager.fetch(Reading.self)
+        reading = readingList
+        
+        let completedList = persistenceManager.fetch(SavedManga.self)
+        savedManga = completedList
+        
+        let onHoldList = persistenceManager.fetch(OnHoldManga.self)
+        onHoldManga = onHoldList
+        
+        let droppedList = persistenceManager.fetch(DroppedManga.self)
+        droppedManga = droppedList
     }
     
     func sortByNameAscending() {
@@ -226,15 +243,15 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
         } else if segmentedController.selectedSegmentIndex == 1 {
             if watchSegmentedController.selectedSegmentIndex == 0 {
-                
+                totalLabel.text = "Total: \(planToRead.count)"
             } else if watchSegmentedController.selectedSegmentIndex == 1 {
-                
+                totalLabel.text = "Total: \(reading.count)"
             } else if watchSegmentedController.selectedSegmentIndex == 2 {
                 totalLabel.text = "Total: \(savedManga.count)"
             } else if watchSegmentedController.selectedSegmentIndex == 3 {
-                
+                totalLabel.text = "Total: \(onHoldManga.count)"
             } else if watchSegmentedController.selectedSegmentIndex == 4 {
-                
+                totalLabel.text = "Total: \(droppedManga.count)"
             }
         }
         return footerView
@@ -256,15 +273,15 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         } else if segmentedController.selectedSegmentIndex == 1 {
             if watchSegmentedController.selectedSegmentIndex == 0 {
-                
+                return planToRead.count
             } else if watchSegmentedController.selectedSegmentIndex == 1 {
-                
+                return reading.count
             } else if watchSegmentedController.selectedSegmentIndex == 2 {
                 return savedManga.count
             } else if watchSegmentedController.selectedSegmentIndex == 3 {
-                
+                return onHoldManga.count
             } else if watchSegmentedController.selectedSegmentIndex == 4 {
-                
+                return droppedManga.count
             }
         }
         return 0
@@ -298,17 +315,25 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
         } else if segmentedController.selectedSegmentIndex == 1 {
             if watchSegmentedController.selectedSegmentIndex == 0 {
-                
+                let manga = planToRead[indexPath.row]
+                cell.mainImageView.loadImageUsingCacheWithUrlString(urlString: manga.image_url ?? "")
+                cell.titleLabel.text = manga.name
             } else if watchSegmentedController.selectedSegmentIndex == 1 {
-                
+                let manga = reading[indexPath.row]
+                cell.mainImageView.loadImageUsingCacheWithUrlString(urlString: manga.image_url ?? "")
+                cell.titleLabel.text = manga.name
             } else if watchSegmentedController.selectedSegmentIndex == 2 {
                 let manga = savedManga[indexPath.row]
                 cell.mainImageView.loadImageUsingCacheWithUrlString(urlString: manga.image_url ?? "")
                 cell.titleLabel.text = manga.name
             } else if watchSegmentedController.selectedSegmentIndex == 3 {
-                
+                let manga = onHoldManga[indexPath.row]
+                cell.mainImageView.loadImageUsingCacheWithUrlString(urlString: manga.image_url ?? "")
+                cell.titleLabel.text = manga.name
             } else if watchSegmentedController.selectedSegmentIndex == 4 {
-                
+                let manga = droppedManga[indexPath.row]
+                cell.mainImageView.loadImageUsingCacheWithUrlString(urlString: manga.image_url ?? "")
+                cell.titleLabel.text = manga.name
             }
         }
         

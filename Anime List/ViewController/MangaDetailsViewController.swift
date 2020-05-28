@@ -7,13 +7,12 @@
 //
 
 import UIKit
+import CoreData
+import NotificationBannerSwift
 
 class MangaDetailsViewController: UIViewController {
     
     let persistenceManager = PersistanceManager()
-    var savedManga = [SavedManga]()
-    var isAlreadySaved: Bool = false
-    var didSave: Bool = false
     
     @IBOutlet weak var mainView: UIView!
     
@@ -89,8 +88,6 @@ class MangaDetailsViewController: UIViewController {
             mainView.isHidden = true
             activityIndicator.startAnimating()
         }
-        
-        checkIfAlreadySaved()
     }
     
     func setupActivityIndicator() {
@@ -195,23 +192,25 @@ class MangaDetailsViewController: UIViewController {
             }
         }
         
-        if mangaRecommendationsArray.isEmpty {
-            group.enter()
-            networkManager.getMangaRecommendations(id: selection) { [weak self] (recommendations, error) in
-                if let error = error {
-                    print(error)
-                }
-                if let recommendations = recommendations {
-                    self?.mangaRecommendationsArray = recommendations
-                    
-                    DispatchQueue.main.async {
-                        self?.recommendationsCollectionView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if self.mangaRecommendationsArray.isEmpty {
+                group.enter()
+                self.networkManager.getMangaRecommendations(id: self.selection) { [weak self] (recommendations, error) in
+                    if let error = error {
+                        print(error)
                     }
-                    group.leave()
+                    if let recommendations = recommendations {
+                        self?.mangaRecommendationsArray = recommendations
+                        
+                        DispatchQueue.main.async {
+                            self?.recommendationsCollectionView.reloadData()
+                        }
+                        group.leave()
+                    }
                 }
             }
         }
-
+        
         group.notify(queue: .main) {
             self.charactersCollectionView.reloadData()
             self.recommendationsCollectionView.reloadData()
@@ -271,59 +270,225 @@ class MangaDetailsViewController: UIViewController {
         
     }
     
-    func saveManga() {
-           let malId = Float(mangaDetailsArray?.mal_id ?? 0)
-           
-           let savedManga = SavedManga(context: persistenceManager.context)
-           savedManga.mal_id = malId
-           savedManga.image_url = mangaDetailsArray?.image_url
-           savedManga.name = mangaDetailsArray?.title
-           
-           persistenceManager.save()
-       }
-       
-       func deleteManga() {
-           persistenceManager.delete(SavedManga.self, malId: Float(selection))
-       }
-       
-       func getSavedManga() {
-           let savedManga = persistenceManager.fetch(SavedManga.self)
-           self.savedManga = savedManga
-           
-       }
-       
-       func checkIfAlreadySaved() {
-           
-           isAlreadySaved = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
-           
-           if isAlreadySaved == true {
-               if #available(iOS 13.0, *) {
-                   navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-                didSave = true
-               } else {
-                   // Fallback on earlier versions
-               }
-           }
-       }
+    func addToPlanToRead() {
+        
+        if checkIfAlreadySaved(entity: PlanToRead.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(mangaDetailsArray?.mal_id ?? 0)
+            
+            let planToRead = PlanToRead(context: persistenceManager.context)
+            planToRead.mal_id = malId
+            planToRead.image_url = mangaDetailsArray?.image_url
+            planToRead.name = mangaDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToReading() {
+        
+        if checkIfAlreadySaved(entity: Reading.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(mangaDetailsArray?.mal_id ?? 0)
+            
+            let reading = Reading(context: persistenceManager.context)
+            reading.mal_id = malId
+            reading.image_url = mangaDetailsArray?.image_url
+            reading.name = mangaDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToCompleted() {
+        
+        if checkIfAlreadySaved(entity: SavedManga.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(mangaDetailsArray?.mal_id ?? 0)
+            
+            let savedManga = SavedManga(context: persistenceManager.context)
+            savedManga.mal_id = malId
+            savedManga.image_url = mangaDetailsArray?.image_url
+            savedManga.name = mangaDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToDropped() {
+        
+        if checkIfAlreadySaved(entity: DroppedManga.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(mangaDetailsArray?.mal_id ?? 0)
+            
+            let dropped = DroppedManga(context: persistenceManager.context)
+            dropped.mal_id = malId
+            dropped.image_url = mangaDetailsArray?.image_url
+            dropped.name = mangaDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToOnHold() {
+        
+        if checkIfAlreadySaved(entity: OnHoldManga.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(mangaDetailsArray?.mal_id ?? 0)
+            
+            let onHold = OnHoldManga(context: persistenceManager.context)
+            onHold.mal_id = malId
+            onHold.image_url = mangaDetailsArray?.image_url
+            onHold.name = mangaDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+        
+    }
+    
+    func deleteManga<T: NSManagedObject>(entity: T.Type) {
+        persistenceManager.delete(entity.self, malId: Float(selection))
+    }
+    
+    func checkIfAlreadySaved<T: NSManagedObject>(entity: T.Type) -> Bool {
+        let isSaved = persistenceManager.checkIfExists(entity.self, malId: Float(selection), attributeName: "mal_id")
+        
+        return isSaved
+        
+    }
+    
+    func checkIfSavedAtAll() -> Bool {
+        let isCompleted = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        
+        if isCompleted == true || isPlanToWatch == true || isWatching == true || isOnHold == true || isDropped == true {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func removeFromEntity() {
+        let isCompleted = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        if isCompleted == true {
+            deleteManga(entity: SavedManga.self)
+        }
+        
+        if isPlanToWatch == true {
+            deleteManga(entity: PlanToRead.self)
+        }
+        
+        if isWatching == true {
+            deleteManga(entity: Reading.self)
+        }
+        
+        if isOnHold == true {
+            deleteManga(entity: OnHoldManga.self)
+        }
+        
+        if isDropped == true {
+            deleteManga(entity: DroppedManga.self)
+        }
+    }
     
     @IBAction func saveButtonAction(_ sender: Any) {
         
-        if didSave == true {
-            deleteManga()
-            didSave = false
-            if #available(iOS 13.0, *) {
-                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
-            } else {
-                // Fallback on earlier versions
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let planToReadAction = UIAlertAction(title: "Add to Plan to Read", style: .default) { (action) in
+            self.addToPlanToRead()
+        }
+        
+        let readingAction = UIAlertAction(title: "Add to Reading", style: .default) { (action) in
+            self.addToReading()
+        }
+        
+        let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
+            self.addToCompleted()
+        }
+        
+        let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
+            self.addToOnHold()
+        }
+        
+        let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
+            self.addToDropped()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        optionMenu.addAction(planToReadAction)
+        optionMenu.addAction(readingAction)
+        optionMenu.addAction(completedAction)
+        optionMenu.addAction(onHoldAction)
+        optionMenu.addAction(droppedAction)
+        if checkIfSavedAtAll() == true {
+            let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
+                self.removeFromEntity()
             }
-        } else if didSave == false {
-            saveManga()
-            didSave = true
-            if #available(iOS 13.0, *) {
-                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-            } else {
-                // Fallback on earlier versions
-            }
+            
+            optionMenu.addAction(removeAction)
+        }
+        optionMenu.addAction(cancelAction)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+
+            self.present(optionMenu, animated: true, completion: nil)
+        } else {
+            self.present(optionMenu, animated: true, completion: nil)
         }
     }
 }
