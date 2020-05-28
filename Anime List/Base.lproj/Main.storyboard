@@ -834,7 +834,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-0s-UCs">
-                                <rect key="frame" x="0.0" y="119" width="414" height="694"/>
+                                <rect key="frame" x="0.0" y="150" width="414" height="663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="XsL-Zl-EuD">
                                     <rect key="frame" x="0.0" y="258" width="414" height="25"/>
@@ -893,16 +893,27 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="evf-J2-nP3">
+                                <rect key="frame" x="0.0" y="119" width="414" height="32"/>
+                                <segments>
+                                    <segment title="Plan to watch"/>
+                                    <segment title="Watching"/>
+                                    <segment title="Completed"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Pvd-0s-UCs" firstAttribute="bottom" secondItem="1jc-Aa-Sx1" secondAttribute="bottom" id="JOl-nw-0f6"/>
+                            <constraint firstItem="evf-J2-nP3" firstAttribute="trailing" secondItem="1jc-Aa-Sx1" secondAttribute="trailing" id="K0V-1I-6PD"/>
+                            <constraint firstItem="evf-J2-nP3" firstAttribute="leading" secondItem="1jc-Aa-Sx1" secondAttribute="leading" id="MeU-YJ-Qm3"/>
                             <constraint firstItem="Pvd-0s-UCs" firstAttribute="leading" secondItem="1jc-Aa-Sx1" secondAttribute="leading" id="MrG-sw-tcz"/>
+                            <constraint firstItem="evf-J2-nP3" firstAttribute="top" secondItem="u8j-6E-1zB" secondAttribute="bottom" id="Qd0-z0-oIw"/>
                             <constraint firstItem="u8j-6E-1zB" firstAttribute="top" secondItem="1jc-Aa-Sx1" secondAttribute="top" id="UDb-Xd-Vc6"/>
                             <constraint firstItem="u8j-6E-1zB" firstAttribute="trailing" secondItem="1jc-Aa-Sx1" secondAttribute="trailing" id="Who-g2-b5T"/>
+                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="top" secondItem="evf-J2-nP3" secondAttribute="bottom" id="bbe-Xl-nQf"/>
                             <constraint firstItem="u8j-6E-1zB" firstAttribute="leading" secondItem="1jc-Aa-Sx1" secondAttribute="leading" id="dzw-H9-NIf"/>
                             <constraint firstItem="Pvd-0s-UCs" firstAttribute="trailing" secondItem="1jc-Aa-Sx1" secondAttribute="trailing" id="iek-xa-BwS"/>
-                            <constraint firstItem="Pvd-0s-UCs" firstAttribute="top" secondItem="u8j-6E-1zB" secondAttribute="bottom" id="lWc-G5-dxT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1jc-Aa-Sx1"/>
                     </view>
@@ -917,6 +928,7 @@
                         <outlet property="segmentedController" destination="u8j-6E-1zB" id="GyY-6L-vdx"/>
                         <outlet property="tableView" destination="Pvd-0s-UCs" id="0Mr-kv-dkT"/>
                         <outlet property="totalLabel" destination="4W4-K4-RT7" id="54K-kh-PPC"/>
+                        <outlet property="watchSegmentedController" destination="evf-J2-nP3" id="4zZ-9u-ydP"/>
                         <segue destination="4LC-6d-cLE" kind="show" identifier="myListDetailsSegue" id="UTh-Ze-7J1"/>
                         <segue destination="pDi-OV-JIg" kind="show" identifier="myListMangaDetailsSegue" id="dx6-6u-wXP"/>
                     </connections>
@@ -2006,9 +2018,9 @@
     <inferredMetricsTieBreakers>
         <segue reference="ubD-1V-wPn"/>
         <segue reference="JoE-Q4-eyP"/>
-        <segue reference="iGz-pM-VCU"/>
+        <segue reference="dx6-6u-wXP"/>
         <segue reference="Bt6-fW-BRO"/>
-        <segue reference="dda-yv-l8x"/>
+        <segue reference="UTh-Ze-7J1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="book" catalog="system" width="128" height="101"/>

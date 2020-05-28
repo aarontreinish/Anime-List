@@ -24,6 +24,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var segmentedController: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var watchSegmentedController: UISegmentedControl!
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -42,8 +43,10 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if #available(iOS 13.0, *) {
             segmentedController.selectedSegmentTintColor = .systemRed
+            watchSegmentedController.selectedSegmentTintColor = .systemRed
         } else {
             segmentedController.tintColor = .systemRed
+            watchSegmentedController.tintColor = .systemRed
         }
     }
     
