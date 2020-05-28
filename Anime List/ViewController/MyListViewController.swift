@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -126,11 +127,39 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func sortByNameAscending() {
         if segmentedController.selectedSegmentIndex == 0 {
-            let anime = persistenceManager.fetchSortedDataByName(SavedAnime.self)
-            savedAnime = anime
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let anime = persistenceManager.fetchSortedDataByName(PlanToWatch.self)
+                planToWatch = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let anime = persistenceManager.fetchSortedDataByName(Watching.self)
+                watching = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let anime = persistenceManager.fetchSortedDataByName(SavedAnime.self)
+                savedAnime = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let anime = persistenceManager.fetchSortedDataByName(OnHoldAnime.self)
+                onHoldAnime = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let anime = persistenceManager.fetchSortedDataByName(DroppedAnime.self)
+                droppedAnime = anime
+            }
         } else if segmentedController.selectedSegmentIndex == 1 {
-            let manga = persistenceManager.fetchSortedDataByName(SavedManga.self)
-            savedManga = manga
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let manga = persistenceManager.fetchSortedDataByName(PlanToRead.self)
+                planToRead = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let manga = persistenceManager.fetchSortedDataByName(Reading.self)
+                reading = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let manga = persistenceManager.fetchSortedDataByName(SavedManga.self)
+                savedManga = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let manga = persistenceManager.fetchSortedDataByName(OnHoldManga.self)
+                onHoldManga = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let manga = persistenceManager.fetchSortedDataByName(DroppedManga.self)
+                droppedManga = manga
+            }
         }
         
         tableView.reloadData()
@@ -138,54 +167,125 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func sortByNameDescending() {
         if segmentedController.selectedSegmentIndex == 0 {
-            let anime = persistenceManager.fetchSortedDataByNameDescending(SavedAnime.self)
-            savedAnime = anime
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let anime = persistenceManager.fetchSortedDataByNameDescending(PlanToWatch.self)
+                planToWatch = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let anime = persistenceManager.fetchSortedDataByNameDescending(Watching.self)
+                watching = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let anime = persistenceManager.fetchSortedDataByNameDescending(SavedAnime.self)
+                savedAnime = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let anime = persistenceManager.fetchSortedDataByNameDescending(OnHoldAnime.self)
+                onHoldAnime = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let anime = persistenceManager.fetchSortedDataByNameDescending(DroppedAnime.self)
+                droppedAnime = anime
+            }
         } else if segmentedController.selectedSegmentIndex == 1 {
-            let manga = persistenceManager.fetchSortedDataByNameDescending(SavedManga.self)
-            savedManga = manga
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let manga = persistenceManager.fetchSortedDataByNameDescending(PlanToRead.self)
+                planToRead = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let manga = persistenceManager.fetchSortedDataByNameDescending(Reading.self)
+                reading = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let manga = persistenceManager.fetchSortedDataByNameDescending(SavedManga.self)
+                savedManga = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let manga = persistenceManager.fetchSortedDataByNameDescending(OnHoldManga.self)
+                onHoldManga = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let manga = persistenceManager.fetchSortedDataByNameDescending(DroppedManga.self)
+                droppedManga = manga
+            }
         }
         
         tableView.reloadData()
     }
     
+    func showDeleteAllAlert<T: NSManagedObject>(entity: T.Type, title: String) {
+        
+        let alertController = UIAlertController(title: "Are you sure you want to delete all of your \(title)?", message: "", preferredStyle: .alert)
+        
+        let action1 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let action2 = UIAlertAction(title: "Yes", style: .destructive) { (action:UIAlertAction) in
+            self.persistenceManager.deleteAllRecords(entity.self)
+            
+            if self.segmentedController.selectedSegmentIndex == 0 {
+                if self.watchSegmentedController.selectedSegmentIndex == 0 {
+                    self.planToWatch.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 1 {
+                    self.watching.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 2 {
+                    self.savedAnime.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 3 {
+                    self.onHoldAnime.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 4 {
+                    self.droppedAnime.removeAll()
+                }
+            } else if self.segmentedController.selectedSegmentIndex == 1 {
+                if self.watchSegmentedController.selectedSegmentIndex == 0 {
+                    self.planToRead.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 1 {
+                    self.reading.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 2 {
+                    self.savedAnime.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 3 {
+                    self.onHoldManga.removeAll()
+                } else if self.watchSegmentedController.selectedSegmentIndex == 4 {
+                    self.droppedManga.removeAll()
+                }
+            }
+            
+            self.tableView.reloadData()
+        }
+        
+        alertController.addAction(action1)
+        alertController.addAction(action2)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func deleteAll() {
         if segmentedController.selectedSegmentIndex == 0 {
-            let alertController = UIAlertController(title: "Are you sure you want to delete all of your favorited Anime?", message: "", preferredStyle: .alert)
-
-            let action1 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-            let action2 = UIAlertAction(title: "YES", style: .destructive) { (action:UIAlertAction) in
-                self.persistenceManager.deleteAllRecords(SavedAnime.self)
-                
-                self.savedAnime.removeAll()
-                
-                self.tableView.reloadData()
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                showDeleteAllAlert(entity: PlanToWatch.self, title: "Plan to Watch Anime")
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                showDeleteAllAlert(entity: Watching.self, title: "Watching Anime")
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                showDeleteAllAlert(entity: SavedAnime.self, title: "Completed Anime")
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                showDeleteAllAlert(entity: OnHoldAnime.self, title: "On Hold Anime")
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                showDeleteAllAlert(entity: DroppedAnime.self, title: "Dropped Anime")
             }
-
-            alertController.addAction(action1)
-            alertController.addAction(action2)
-            self.present(alertController, animated: true, completion: nil)
-            
         } else if segmentedController.selectedSegmentIndex == 1 {
-            let alertController = UIAlertController(title: "Are you sure you want to delete all of your favorited Manga?", message: "", preferredStyle: .alert)
-
-            let action1 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-            let action2 = UIAlertAction(title: "YES", style: .destructive) { (action:UIAlertAction) in
-                self.persistenceManager.deleteAllRecords(SavedManga.self)
-                
-                self.savedManga.removeAll()
-                
-                self.tableView.reloadData()
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                showDeleteAllAlert(entity: PlanToRead.self, title: "Plan to Read Manga")
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                showDeleteAllAlert(entity: Reading.self, title: "Reading Manga")
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                showDeleteAllAlert(entity: SavedManga.self, title: "Completed Manga")
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                showDeleteAllAlert(entity: OnHoldManga.self, title: "On Hold Manga")
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                showDeleteAllAlert(entity: DroppedManga.self, title: "Dropped Manga")
             }
-
-            alertController.addAction(action1)
-            alertController.addAction(action2)
-            self.present(alertController, animated: true, completion: nil)
         }
     }
     
     @IBAction func segmentedControllerAction(_ sender: Any) {
+        
+        if segmentedController.selectedSegmentIndex == 0 {
+            watchSegmentedController.setTitle("Plan to Watch", forSegmentAt: 0)
+            watchSegmentedController.setTitle("Watching", forSegmentAt: 1)
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            watchSegmentedController.setTitle("Plan to Read", forSegmentAt: 0)
+            watchSegmentedController.setTitle("Reading", forSegmentAt: 1)
+        }
+        
         tableView.reloadData()
     }
     
@@ -218,7 +318,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-
+            
             self.present(optionMenu, animated: true, completion: nil)
         } else {
             self.present(optionMenu, animated: true, completion: nil)
@@ -344,19 +444,79 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if editingStyle == .delete {
             
             if segmentedController.selectedSegmentIndex == 0 {
-                let anime = savedAnime[indexPath.row]
-                persistenceManager.context.delete(anime)
-                savedAnime.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                persistenceManager.save()
+                if watchSegmentedController.selectedSegmentIndex == 0 {
+                    let anime = planToWatch[indexPath.row]
+                    persistenceManager.context.delete(anime)
+                    planToWatch.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                    let anime = watching[indexPath.row]
+                    persistenceManager.context.delete(anime)
+                    watching.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                    let anime = savedAnime[indexPath.row]
+                    persistenceManager.context.delete(anime)
+                    savedAnime.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                    let anime = onHoldAnime[indexPath.row]
+                    persistenceManager.context.delete(anime)
+                    onHoldAnime.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                    let anime = droppedAnime[indexPath.row]
+                    persistenceManager.context.delete(anime)
+                    droppedAnime.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                }
             } else if segmentedController.selectedSegmentIndex == 1 {
-                let manga = savedManga[indexPath.row]
-                persistenceManager.context.delete(manga)
-                savedManga.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                persistenceManager.save()
+                if watchSegmentedController.selectedSegmentIndex == 0 {
+                    let manga = planToRead[indexPath.row]
+                    persistenceManager.context.delete(manga)
+                    planToRead.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                    let manga = reading[indexPath.row]
+                    persistenceManager.context.delete(manga)
+                    reading.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                    let manga = savedManga[indexPath.row]
+                    persistenceManager.context.delete(manga)
+                    savedManga.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                    let manga = onHoldManga[indexPath.row]
+                    persistenceManager.context.delete(manga)
+                    onHoldManga.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                    let manga = droppedManga[indexPath.row]
+                    persistenceManager.context.delete(manga)
+                    droppedManga.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    persistenceManager.save()
+                }
             }
         }
     }
@@ -364,13 +524,49 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if segmentedController.selectedSegmentIndex == 0 {
-            let anime = savedAnime[indexPath.row]
-            selection = Int(anime.mal_id)
-            self.performSegue(withIdentifier: "myListDetailsSegue", sender: self)
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let anime = planToWatch[indexPath.row]
+                selection = Int(anime.mal_id)
+                self.performSegue(withIdentifier: "myListDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let anime = watching[indexPath.row]
+                selection = Int(anime.mal_id)
+                self.performSegue(withIdentifier: "myListDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let anime = savedAnime[indexPath.row]
+                selection = Int(anime.mal_id)
+                self.performSegue(withIdentifier: "myListDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let anime = onHoldAnime[indexPath.row]
+                selection = Int(anime.mal_id)
+                self.performSegue(withIdentifier: "myListDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let anime = droppedAnime[indexPath.row]
+                selection = Int(anime.mal_id)
+                self.performSegue(withIdentifier: "myListDetailsSegue", sender: self)
+            }
         } else if segmentedController.selectedSegmentIndex == 1 {
-            let manga = savedManga[indexPath.row]
-            selection = Int(manga.mal_id)
-            self.performSegue(withIdentifier: "myListMangaDetailsSegue", sender: self)
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let manga = planToRead[indexPath.row]
+                selection = Int(manga.mal_id)
+                self.performSegue(withIdentifier: "myListMangaDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let manga = reading[indexPath.row]
+                selection = Int(manga.mal_id)
+                self.performSegue(withIdentifier: "myListMangaDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let manga = savedManga[indexPath.row]
+                selection = Int(manga.mal_id)
+                self.performSegue(withIdentifier: "myListMangaDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let manga = onHoldManga[indexPath.row]
+                selection = Int(manga.mal_id)
+                self.performSegue(withIdentifier: "myListMangaDetailsSegue", sender: self)
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let manga = droppedManga[indexPath.row]
+                selection = Int(manga.mal_id)
+                self.performSegue(withIdentifier: "myListMangaDetailsSegue", sender: self)
+            }
         }
     }
     
@@ -387,3 +583,15 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
 }
+
+//if watchSegmentedController.selectedSegmentIndex == 0 {
+//
+//} else if watchSegmentedController.selectedSegmentIndex == 1 {
+//
+//} else if watchSegmentedController.selectedSegmentIndex == 2 {
+//
+//} else if watchSegmentedController.selectedSegmentIndex == 3 {
+//
+//} else if watchSegmentedController.selectedSegmentIndex == 4 {
+//
+//}
