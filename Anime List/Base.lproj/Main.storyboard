@@ -530,7 +530,7 @@
                         <viewLayoutGuide key="safeArea" id="N7x-tI-QKc"/>
                     </view>
                     <navigationItem key="navigationItem" id="YYp-Sc-S46">
-                        <barButtonItem key="rightBarButtonItem" image="heart" catalog="system" style="plain" id="Jc2-Y0-6dW">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" style="plain" id="Jc2-Y0-6dW">
                             <connections>
                                 <action selector="saveButtonAction:" destination="4LC-6d-cLE" id="1XS-6A-HnW"/>
                             </connections>
@@ -899,6 +899,8 @@
                                     <segment title="Plan to watch"/>
                                     <segment title="Watching"/>
                                     <segment title="Completed"/>
+                                    <segment title="On hold"/>
+                                    <segment title="Dropped"/>
                                 </segments>
                             </segmentedControl>
                         </subviews>
@@ -2017,7 +2019,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ubD-1V-wPn"/>
-        <segue reference="JoE-Q4-eyP"/>
+        <segue reference="nln-7V-wJj"/>
         <segue reference="dx6-6u-wXP"/>
         <segue reference="Bt6-fW-BRO"/>
         <segue reference="UTh-Ze-7J1"/>

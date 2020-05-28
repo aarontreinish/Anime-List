@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DroppedAnime" representedClassName=".DroppedAnime" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DroppedManga" representedClassName=".DroppedManga" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="OnHoldAnime" representedClassName=".OnHoldAnime" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="OnHoldManga" representedClassName=".OnHoldManga" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PlanToRead" representedClassName=".PlanToRead" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PlanToWatch" representedClassName=".PlanToWatch" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Reading" representedClassName=".Reading" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="SavedAnime" representedClassName=".SavedAnime" syncable="YES">
         <attribute name="image_url" optional="YES" attributeType="String"/>
         <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
@@ -10,8 +45,21 @@
         <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Watching" representedClassName=".Watching" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String"/>
+        <attribute name="mal_id" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="SavedAnime" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="SavedManga" positionX="-63" positionY="9" width="128" height="88"/>
+        <element name="PlanToWatch" positionX="-63" positionY="18" width="128" height="88"/>
+        <element name="Watching" positionX="-54" positionY="27" width="128" height="88"/>
+        <element name="DroppedAnime" positionX="-36" positionY="45" width="128" height="88"/>
+        <element name="OnHoldAnime" positionX="-18" positionY="54" width="128" height="88"/>
+        <element name="DroppedManga" positionX="0" positionY="63" width="128" height="88"/>
+        <element name="OnHoldManga" positionX="18" positionY="72" width="128" height="88"/>
+        <element name="PlanToRead" positionX="36" positionY="81" width="128" height="88"/>
+        <element name="Reading" positionX="-9" positionY="36" width="128" height="88"/>
     </elements>
 </model>
