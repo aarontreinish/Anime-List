@@ -902,6 +902,9 @@
                                     <segment title="On hold"/>
                                     <segment title="Dropped"/>
                                 </segments>
+                                <connections>
+                                    <action selector="watchSegmentedControllerAction:" destination="zsJ-Ef-Vhk" eventType="valueChanged" id="tUh-Fr-iue"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

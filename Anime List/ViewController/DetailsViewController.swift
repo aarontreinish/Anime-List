@@ -8,13 +8,12 @@
 
 import UIKit
 import WebKit
+import CoreData
+import NotificationBannerSwift
 
 class DetailsViewController: UIViewController {
     
     let persistenceManager = PersistanceManager()
-    var savedAnime = [SavedAnime]()
-    var isAlreadySaved: Bool = false
-    var didSave: Bool = false
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var titlesView: UIView!
@@ -74,8 +73,6 @@ class DetailsViewController: UIViewController {
         
         checkDevice()
         callFunctions()
-        
-        getSavedAnime()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,8 +87,6 @@ class DetailsViewController: UIViewController {
             mainView.isHidden = true
             activityIndicator.startAnimating()
         }
-        
-        checkIfAlreadySaved()
     }
     
     func setupActivityIndicator() {
@@ -279,77 +274,226 @@ class DetailsViewController: UIViewController {
         trailerWebView.load(URLRequest(url: youtubeURL))
     }
     
-    func saveAnime() {
-        let malId = Float(animeDetailsArray?.mal_id ?? 0)
+    func addToPlanToWatch() {
         
-        let savedAnime = SavedAnime(context: persistenceManager.context)
-        savedAnime.mal_id = malId
-        savedAnime.image_url = animeDetailsArray?.image_url
-        savedAnime.name = animeDetailsArray?.title
-        
-        persistenceManager.save()
+        if checkIfAlreadySaved(entity: PlanToWatch.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(animeDetailsArray?.mal_id ?? 0)
+            
+            let planToWatch = PlanToWatch(context: persistenceManager.context)
+            planToWatch.mal_id = malId
+            planToWatch.image_url = animeDetailsArray?.image_url
+            planToWatch.name = animeDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
     }
     
-    func deleteAnime() {
-        persistenceManager.delete(SavedAnime.self, malId: Float(selection))
+    func addToWatching() {
+        
+        if checkIfAlreadySaved(entity: Watching.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(animeDetailsArray?.mal_id ?? 0)
+            
+            let watching = Watching(context: persistenceManager.context)
+            watching.mal_id = malId
+            watching.image_url = animeDetailsArray?.image_url
+            watching.name = animeDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
     }
     
-    func getSavedAnime() {
-        let anime = persistenceManager.fetch(SavedAnime.self)
-        self.savedAnime = anime
+    func addToCompleted() {
+        
+        if checkIfAlreadySaved(entity: SavedAnime.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(animeDetailsArray?.mal_id ?? 0)
+            
+            let savedAnime = SavedAnime(context: persistenceManager.context)
+            savedAnime.mal_id = malId
+            savedAnime.image_url = animeDetailsArray?.image_url
+            savedAnime.name = animeDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToDropped() {
+        
+        if checkIfAlreadySaved(entity: DroppedAnime.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(animeDetailsArray?.mal_id ?? 0)
+            
+            let dropped = DroppedAnime(context: persistenceManager.context)
+            dropped.mal_id = malId
+            dropped.image_url = animeDetailsArray?.image_url
+            dropped.name = animeDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToOnHold() {
+        
+        if checkIfAlreadySaved(entity: OnHoldAnime.self) == true {
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity()
+            
+            let malId = Float(animeDetailsArray?.mal_id ?? 0)
+            
+            let onHold = OnHoldAnime(context: persistenceManager.context)
+            onHold.mal_id = malId
+            onHold.image_url = animeDetailsArray?.image_url
+            onHold.name = animeDetailsArray?.title
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
+            banner.show()
+        }
         
     }
     
-    func checkIfAlreadySaved() {
+    func deleteAnime<T: NSManagedObject>(entity: T.Type) {
+        persistenceManager.delete(entity.self, malId: Float(selection))
+    }
+    
+    func checkIfAlreadySaved<T: NSManagedObject>(entity: T.Type) -> Bool {
+        let isSaved = persistenceManager.checkIfExists(entity.self, malId: Float(selection), attributeName: "mal_id")
         
-        isAlreadySaved = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        return isSaved
         
-        if isAlreadySaved == true {
-            if #available(iOS 13.0, *) {
-                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-                didSave = true
-            } else {
-                // Fallback on earlier versions
-            }
+    }
+    
+    func checkIfSavedAtAll() -> Bool {
+        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Watching.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        
+        if isCompleted == true || isPlanToWatch == true || isWatching == true || isOnHold == true || isDropped == true {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func removeFromEntity() {
+        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Watching.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        if isCompleted == true {
+            deleteAnime(entity: SavedAnime.self)
+        }
+        
+        if isPlanToWatch == true {
+            deleteAnime(entity: PlanToWatch.self)
+        }
+        
+        if isWatching == true {
+            deleteAnime(entity: Watching.self)
+        }
+        
+        if isOnHold == true {
+            deleteAnime(entity: OnHoldAnime.self)
+        }
+        
+        if isDropped == true {
+            deleteAnime(entity: DroppedAnime.self)
         }
     }
     
     @IBAction func saveButtonAction(_ sender: Any) {
         
-        if didSave == true {
-            deleteAnime()
-            didSave = false
-            if #available(iOS 13.0, *) {
-                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
-            } else {
-                // Fallback on earlier versions
-            }
-        } else if didSave == false {
-            saveAnime()
-            didSave = true
-            if #available(iOS 13.0, *) {
-                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-            } else {
-                // Fallback on earlier versions
-            }
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let planToWatchAction = UIAlertAction(title: "Add to Plan to Watch", style: .default) { (action) in
+            self.addToPlanToWatch()
         }
         
-//
-//        if isAlreadySaved == true {
-//            deleteAnime()
-//            if #available(iOS 13.0, *) {
-//                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
-//            } else {
-//                // Fallback on earlier versions
-//            }
-//        } else {
-//            saveAnime()
-//            if #available(iOS 13.0, *) {
-//                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-//            } else {
-//                // Fallback on earlier versions
-//            }
-//        }
+        let watchingAction = UIAlertAction(title: "Add to Watching", style: .default) { (action) in
+            self.addToWatching()
+        }
+        
+        let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
+            self.addToCompleted()
+        }
+        
+        let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
+            self.addToOnHold()
+        }
+        
+        let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
+            self.addToDropped()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        optionMenu.addAction(planToWatchAction)
+        optionMenu.addAction(watchingAction)
+        optionMenu.addAction(completedAction)
+        optionMenu.addAction(onHoldAction)
+        optionMenu.addAction(droppedAction)
+        if checkIfSavedAtAll() == true {
+            let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
+                self.removeFromEntity()
+            }
+            
+            optionMenu.addAction(removeAction)
+        }
+        optionMenu.addAction(cancelAction)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+
+            self.present(optionMenu, animated: true, completion: nil)
+        } else {
+            self.present(optionMenu, animated: true, completion: nil)
+        }
     }
 }
 
