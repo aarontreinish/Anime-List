@@ -205,6 +205,77 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
     
+    func sortByRecentlyAdded() {
+
+        if segmentedController.selectedSegmentIndex == 0 {
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let planToWatchList = persistenceManager.fetch(PlanToWatch.self)
+                planToWatch = planToWatchList
+                
+                let anime = Array(planToWatch.reversed())
+                planToWatch = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let watchingList = persistenceManager.fetch(Watching.self)
+                watching = watchingList
+                
+                let anime = Array(watching.reversed())
+                watching = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let completedList = persistenceManager.fetch(SavedAnime.self)
+                savedAnime = completedList
+                
+                let anime = Array(savedAnime.reversed())
+                savedAnime = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let onHoldList = persistenceManager.fetch(OnHoldAnime.self)
+                onHoldAnime = onHoldList
+                
+                let anime = Array(onHoldAnime.reversed())
+                onHoldAnime = anime
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let droppedList = persistenceManager.fetch(DroppedAnime.self)
+                droppedAnime = droppedList
+                
+                let anime = Array(droppedAnime.reversed())
+                droppedAnime = anime
+            }
+        } else if segmentedController.selectedSegmentIndex == 1 {
+            if watchSegmentedController.selectedSegmentIndex == 0 {
+                let planToReadList = persistenceManager.fetch(PlanToRead.self)
+                planToRead = planToReadList
+                
+                let manga = Array(planToRead.reversed())
+                planToRead = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                let readingList = persistenceManager.fetch(Reading.self)
+                reading = readingList
+                
+                let manga = Array(reading.reversed())
+                reading = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                let completedList = persistenceManager.fetch(SavedManga.self)
+                savedManga = completedList
+                
+                let manga = Array(savedManga.reversed())
+                savedManga = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                let onHoldList = persistenceManager.fetch(OnHoldManga.self)
+                onHoldManga = onHoldList
+                
+                let manga = Array(onHoldManga.reversed())
+                onHoldManga = manga
+            } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                let droppedList = persistenceManager.fetch(DroppedManga.self)
+                droppedManga = droppedList
+                
+                let manga = Array(droppedManga.reversed())
+                droppedManga = manga
+            }
+        }
+        
+        tableView.reloadData()
+    }
+    
     func showDeleteAllAlert<T: NSManagedObject>(entity: T.Type, title: String) {
         
         let alertController = UIAlertController(title: "Are you sure you want to delete all of your \(title)?", message: "", preferredStyle: .alert)
@@ -309,11 +380,16 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.sortByNameDescending()
         }
         
+        let sortByRecentlyAdded = UIAlertAction(title: "Order by recently added", style: .default) { (action) in
+            self.sortByRecentlyAdded()
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        optionMenu.addAction(deleteAllAction)
+        optionMenu.addAction(sortByRecentlyAdded)
         optionMenu.addAction(orderByNameAscendingAction)
         optionMenu.addAction(orderByNameDescendingAction)
+        optionMenu.addAction(deleteAllAction)
         optionMenu.addAction(cancelAction)
         
         if UIDevice.current.userInterfaceIdiom == .pad {
