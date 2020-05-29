@@ -71,6 +71,11 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+xcschememanagement.plist
+*.xcbkptlist
 
 ## Obj-C/Swift specific
 *.hmap
