@@ -197,7 +197,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="7bj-Bv-Zno">
-                                                        <rect key="frame" x="0.0" y="156" width="117.5" height="36"/>
+                                                        <rect key="frame" x="0.0" y="156" width="204.5" height="36"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="P9y-Og-Q0w">
                                                                 <rect key="frame" x="0.0" y="0.0" width="46.5" height="36"/>
@@ -227,6 +227,23 @@
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTG-rB-btj">
                                                                         <rect key="frame" x="0.0" y="19" width="38" height="17"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="1vc-y8-8i2">
+                                                                <rect key="frame" x="150.5" y="0.0" width="54" height="36"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY LIST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWk-iH-1As">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="17"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3m-NF-HpE">
+                                                                        <rect key="frame" x="0.0" y="19" width="54" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -550,6 +567,8 @@
                         <outlet property="japaneseLabel" destination="uOC-FQ-Hhq" id="YTi-Fa-lVf"/>
                         <outlet property="mainImageView" destination="BQJ-jj-XGW" id="J7u-85-bjA"/>
                         <outlet property="mainView" destination="diJ-h3-kun" id="syq-OT-5qt"/>
+                        <outlet property="myListLabel" destination="H3m-NF-HpE" id="Qax-Ut-Rhq"/>
+                        <outlet property="myListTitleLabel" destination="fWk-iH-1As" id="wL6-xa-ldL"/>
                         <outlet property="rankLabel" destination="kTG-rB-btj" id="7f4-cU-1U6"/>
                         <outlet property="rankTitleLabel" destination="UL0-h7-ebU" id="sYO-uS-5nC"/>
                         <outlet property="recommendationsCollectionView" destination="0Hk-hx-VWS" id="mgh-7m-eSP"/>
@@ -1372,7 +1391,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="DZx-uZ-3nH">
-                                                        <rect key="frame" x="0.0" y="156" width="117.5" height="36"/>
+                                                        <rect key="frame" x="0.0" y="156" width="204.5" height="36"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="gCx-oI-Wjj">
                                                                 <rect key="frame" x="0.0" y="0.0" width="46.5" height="36"/>
@@ -1402,6 +1421,23 @@
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Z1-7D-Igl">
                                                                         <rect key="frame" x="0.0" y="19" width="38" height="17"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="P8F-AN-hfr">
+                                                                <rect key="frame" x="150.5" y="0.0" width="54" height="36"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY LIST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aph-h0-mgC">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="17"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPu-qJ-tga">
+                                                                        <rect key="frame" x="0.0" y="19" width="54" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -1617,6 +1653,8 @@
                         <outlet property="imageView" destination="OtB-O8-NeQ" id="G2T-Lu-IwT"/>
                         <outlet property="japaneseLabel" destination="Jdz-YE-ooc" id="4MT-BB-jvz"/>
                         <outlet property="mainView" destination="2ZI-2U-IQV" id="PPi-Cb-1Gc"/>
+                        <outlet property="myListLabel" destination="tPu-qJ-tga" id="MVL-Wu-JGh"/>
+                        <outlet property="myListTitleLabel" destination="aph-h0-mgC" id="93x-4v-7fi"/>
                         <outlet property="publishedPublishingLabel" destination="aF8-Cd-ASF" id="ovf-WC-qqh"/>
                         <outlet property="publishedPublishingTitleLabel" destination="UDu-6v-wzl" id="RS5-tI-MVv"/>
                         <outlet property="rankLabel" destination="6Z1-7D-Igl" id="sqd-jf-Cy8"/>

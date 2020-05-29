@@ -16,6 +16,8 @@ class MangaDetailsViewController: UIViewController {
     
     @IBOutlet weak var mainView: UIView!
     
+    @IBOutlet weak var myListLabel: UILabel!
+    @IBOutlet weak var myListTitleLabel: UILabel!
     @IBOutlet weak var rankTitleLabel: UILabel!
     @IBOutlet weak var scoreTitleLabel: UILabel!
     @IBOutlet weak var genreTitleLabel: UILabel!
@@ -244,6 +246,13 @@ class MangaDetailsViewController: UIViewController {
             
             publishedPublishingLabel.text = "\(mangaDetailsArray?.published?.string ?? "")"
         }
+        
+        if checkIfSavedAtAll() == true {
+            myListLabel.text = checkWhichEntityMangaIsSavedIn()
+        } else {
+            myListTitleLabel.isHidden = true
+            myListLabel.isHidden = true
+        }
     }
     
     func checkIfDataIsAllThere() {
@@ -395,28 +404,62 @@ class MangaDetailsViewController: UIViewController {
     func checkIfSavedAtAll() -> Bool {
         let isCompleted = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
         
-        let isPlanToWatch = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
+        let isPlanToRead = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
         
-        let isWatching = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
+        let isReading = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
         
         let isOnHold = persistenceManager.checkIfExists(OnHoldManga.self, malId: Float(selection), attributeName: "mal_id")
         
         let isDropped = persistenceManager.checkIfExists(DroppedManga.self, malId: Float(selection), attributeName: "mal_id")
         
         
-        if isCompleted == true || isPlanToWatch == true || isWatching == true || isOnHold == true || isDropped == true {
+        if isCompleted == true || isPlanToRead == true || isReading == true || isOnHold == true || isDropped == true {
             return true
         } else {
             return false
         }
     }
     
+    func checkWhichEntityMangaIsSavedIn() -> String {
+        let isCompleted = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToRead = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isReading = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedManga.self, malId: Float(selection), attributeName: "mal_id")
+        
+        if isCompleted == true {
+            return "Completed"
+        }
+        
+        if isPlanToRead == true {
+            return "Plan to read"
+        }
+        
+        if isReading == true {
+            return "Reading"
+        }
+        
+        if isOnHold == true {
+            return "On hold"
+        }
+        
+        if isDropped == true {
+            return "Dropped"
+        }
+        
+        return ""
+    }
+    
     func removeFromEntity() {
         let isCompleted = persistenceManager.checkIfExists(SavedManga.self, malId: Float(selection), attributeName: "mal_id")
         
-        let isPlanToWatch = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
+        let isPlanToRead = persistenceManager.checkIfExists(PlanToRead.self, malId: Float(selection), attributeName: "mal_id")
         
-        let isWatching = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
+        let isReading = persistenceManager.checkIfExists(Reading.self, malId: Float(selection), attributeName: "mal_id")
         
         let isOnHold = persistenceManager.checkIfExists(OnHoldManga.self, malId: Float(selection), attributeName: "mal_id")
         
@@ -426,11 +469,11 @@ class MangaDetailsViewController: UIViewController {
             deleteManga(entity: SavedManga.self)
         }
         
-        if isPlanToWatch == true {
+        if isPlanToRead == true {
             deleteManga(entity: PlanToRead.self)
         }
         
-        if isWatching == true {
+        if isReading == true {
             deleteManga(entity: Reading.self)
         }
         
@@ -448,22 +491,42 @@ class MangaDetailsViewController: UIViewController {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
         let planToReadAction = UIAlertAction(title: "Add to Plan to Read", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Plan to read"
+            
             self.addToPlanToRead()
         }
         
         let readingAction = UIAlertAction(title: "Add to Reading", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Reading"
+            
             self.addToReading()
         }
         
         let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Completed"
+            
             self.addToCompleted()
         }
         
         let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "On hold"
+            
             self.addToOnHold()
         }
         
         let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Dropped"
+            
             self.addToDropped()
         }
         
@@ -477,6 +540,12 @@ class MangaDetailsViewController: UIViewController {
         if checkIfSavedAtAll() == true {
             let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
                 self.removeFromEntity()
+                
+                self.myListTitleLabel.isHidden = true
+                self.myListLabel.isHidden = true
+                
+                let banner = StatusBarNotificationBanner(title: "\(self.mangaDetailsArray?.title ?? "") removed successfully", style: .danger)
+                banner.show()
             }
             
             optionMenu.addAction(removeAction)

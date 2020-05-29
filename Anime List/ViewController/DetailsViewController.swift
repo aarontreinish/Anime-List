@@ -18,6 +18,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var titlesView: UIView!
     
+    @IBOutlet weak var myListLabel: UILabel!
+    @IBOutlet weak var myListTitleLabel: UILabel!
     @IBOutlet weak var genreTitleLabel: UILabel!
     @IBOutlet weak var rankTitleLabel: UILabel!
     @IBOutlet weak var scoreTitleLabel: UILabel!
@@ -219,6 +221,13 @@ class DetailsViewController: UIViewController {
             airedAiringLabel.text = "\(animeDetailsArray?.aired?.string ?? "")"
         }
         
+        if checkIfSavedAtAll() == true {
+            myListLabel.text = checkWhichEntityAnimeIsSavedIn()
+        } else {
+            myListTitleLabel.isHidden = true
+            myListLabel.isHidden = true
+        }
+        
         trailerWebView.layer.cornerRadius = 10
         loadYoutube(url: animeDetailsArray?.trailer_url ?? "")
     }
@@ -241,6 +250,8 @@ class DetailsViewController: UIViewController {
             studioTitleLabel.font = studioTitleLabel.font.withSize(12)
             scoreLabel.font = scoreLabel.font.withSize(12)
             scoreTitleLabel.font = scoreTitleLabel.font.withSize(12)
+            myListLabel.font = myListLabel.font.withSize(12)
+            myListTitleLabel.font = myListTitleLabel.font.withSize(12)
             
         }
         
@@ -417,6 +428,40 @@ class DetailsViewController: UIViewController {
         }
     }
     
+    func checkWhichEntityAnimeIsSavedIn() -> String {
+        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Watching.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        if isCompleted == true {
+            return "Completed"
+        }
+        
+        if isPlanToWatch == true {
+            return "Plan to watch"
+        }
+        
+        if isWatching == true {
+            return "Watching"
+        }
+        
+        if isOnHold == true {
+            return "On hold"
+        }
+        
+        if isDropped == true {
+            return "Dropped"
+        }
+        
+        return ""
+    }
+    
     func removeFromEntity() {
         let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
         
@@ -454,22 +499,42 @@ class DetailsViewController: UIViewController {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
         let planToWatchAction = UIAlertAction(title: "Add to Plan to Watch", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Plan to watch"
+            
             self.addToPlanToWatch()
         }
         
         let watchingAction = UIAlertAction(title: "Add to Watching", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Watching"
+            
             self.addToWatching()
         }
         
         let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Completed"
+            
             self.addToCompleted()
         }
         
         let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "On hold"
+            
             self.addToOnHold()
         }
         
         let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
+            self.myListTitleLabel.isHidden = false
+            self.myListLabel.isHidden = false
+            self.myListLabel.text = "Dropped"
+            
             self.addToDropped()
         }
         
@@ -483,6 +548,12 @@ class DetailsViewController: UIViewController {
         if checkIfSavedAtAll() == true {
             let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
                 self.removeFromEntity()
+                
+                self.myListTitleLabel.isHidden = true
+                self.myListLabel.isHidden = true
+                
+                let banner = StatusBarNotificationBanner(title: "\(self.animeDetailsArray?.title ?? "") removed successfully", style: .danger)
+                banner.show()
             }
             
             optionMenu.addAction(removeAction)
