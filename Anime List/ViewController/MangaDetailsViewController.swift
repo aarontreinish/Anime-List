@@ -242,7 +242,7 @@ class MangaDetailsViewController: UIViewController {
             publishedPublishingLabel.text = "\(mangaDetailsArray?.published?.string ?? "")"
             
         } else if mangaDetailsArray?.publishing == false {
-            publishedPublishingTitleLabel.text = "AIRED"
+            publishedPublishingTitleLabel.text = "PUBLISHED"
             
             publishedPublishingLabel.text = "\(mangaDetailsArray?.published?.string ?? "")"
         }
