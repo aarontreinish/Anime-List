@@ -44,6 +44,8 @@ class MangaDetailsViewController: UIViewController {
     
     let activityIndicator = UIActivityIndicatorView()
     
+    let reviewService = ReviewService.shared
+    
     var selection = 0
     var networkManager = NetworkManager()
     
@@ -272,8 +274,8 @@ class MangaDetailsViewController: UIViewController {
         
         group.enter()
         let deadlineTime = DispatchTime.now() + 2.0
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.checkIfDataIsAllThere()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
+            self?.checkIfDataIsAllThere()
         }
         group.leave()
         
@@ -298,6 +300,8 @@ class MangaDetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -320,6 +324,8 @@ class MangaDetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -342,6 +348,8 @@ class MangaDetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -364,6 +372,8 @@ class MangaDetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -386,8 +396,16 @@ class MangaDetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(mangaDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
-        
+    }
+    
+    func requestReview() {
+        let deadline = DispatchTime.now() + .seconds(6)
+        DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
+            self?.reviewService.requestReview()
+        }
     }
     
     func deleteManga<T: NSManagedObject>(entity: T.Type) {

@@ -69,23 +69,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         fetchFirebaseData()
         
         callFunctions()
-        
-        askForReview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupActivityIndicator()
-    }
-    
-    func askForReview() {
-        let manager = InAppReviewManager()
-        if manager.shouldAskForReview() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                SKStoreReviewController.requestReview()
-            }
-        }
     }
     
     func setupActivityIndicator() {
@@ -162,9 +151,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         group.enter()
         let deadlineTime = DispatchTime.now() + 2.0
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            if self.topUpcomingArray.count == 0 || self.topRankedArray.count == 0 || self.topAiringArray.count == 0 || self.mostPopularArray.count == 0 {
-                self.getAllData()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
+            if self?.topUpcomingArray.count == 0 || self?.topRankedArray.count == 0 || self?.topAiringArray.count == 0 || self?.mostPopularArray.count == 0 {
+                self?.getAllData()
             }
             group.leave()
         }
@@ -225,11 +214,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if self.topAiringArray.count == 0 {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            if self?.topAiringArray.count == 0 {
                 group.enter()
                 
-                self.networkManager.getTopAiring(type: "anime") { [weak self] (topAiring, error) in
+                self?.networkManager.getTopAiring(type: "anime") { [weak self] (topAiring, error) in
                     if let error = error {
                         print(error)
                         self?.errorArray.append(error)
@@ -247,10 +236,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
             
-            if self.topUpcomingArray.count == 0 {
+            if self?.topUpcomingArray.count == 0 {
                 group.enter()
                 
-                self.networkManager.getTopUpcoming(type: "anime") { [weak self] (topUpcoming, error) in
+                self?.networkManager.getTopUpcoming(type: "anime") { [weak self] (topUpcoming, error) in
                     if let error = error {
                         print(error)
                         self?.errorArray.append(error)

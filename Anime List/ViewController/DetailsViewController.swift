@@ -46,6 +46,8 @@ class DetailsViewController: UIViewController {
     
     let activityIndicator = UIActivityIndicatorView()
     
+    let reviewService = ReviewService.shared
+    
     var selection = 0
     var networkManager = NetworkManager()
     
@@ -275,8 +277,8 @@ class DetailsViewController: UIViewController {
         
         group.enter()
         let deadlineTime = DispatchTime.now() + 2.0
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.checkIfDataIsAllThere()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
+            self?.checkIfDataIsAllThere()
         }
         group.leave()
         
@@ -306,6 +308,8 @@ class DetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -328,6 +332,8 @@ class DetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -350,6 +356,8 @@ class DetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -372,6 +380,8 @@ class DetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
     }
     
@@ -394,8 +404,16 @@ class DetailsViewController: UIViewController {
             
             let banner = StatusBarNotificationBanner(title: "\(animeDetailsArray?.title ?? "") added successfully", style: .success)
             banner.show()
+            
+            requestReview()
         }
-        
+    }
+    
+    func requestReview() {
+        let deadline = DispatchTime.now() + .seconds(6)
+        DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
+            self?.reviewService.requestReview()
+        }
     }
     
     func deleteAnime<T: NSManagedObject>(entity: T.Type) {

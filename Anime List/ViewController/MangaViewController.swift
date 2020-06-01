@@ -177,11 +177,11 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if self.topFavoritesArray.count == 0 {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            if self?.topFavoritesArray.count == 0 {
                 group.enter()
                 
-                self.networkManager.getTopFavorties(type: "manga") { [weak self] (topUpcoming, error) in
+                self?.networkManager.getTopFavorties(type: "manga") { [weak self] (topUpcoming, error) in
                     if let error = error {
                         print(error)
                     }
@@ -221,8 +221,8 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         group.enter()
         let deadlineTime = DispatchTime.now() + 2.0
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.checkIfDataIsAllThere()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
+            self?.checkIfDataIsAllThere()
         }
         group.leave()
     }

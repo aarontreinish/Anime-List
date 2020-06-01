@@ -21,8 +21,6 @@
 		2140816D23D7AE2300319AA4 /* CharacterDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2140816C23D7AE2300319AA4 /* CharacterDetails.swift */; };
 		2140816F23D7AE4B00319AA4 /* Mangaography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2140816E23D7AE4B00319AA4 /* Mangaography.swift */; };
 		2140817123D7AE5500319AA4 /* Animeography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2140817023D7AE5500319AA4 /* Animeography.swift */; };
-		2141CC74243AB4C700008E40 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141CC73243AB4C700008E40 /* Protocols.swift */; };
-		2141CC77243AB52800008E40 /* InAppReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2141CC76243AB52800008E40 /* InAppReviewManager.swift */; };
 		21596DFB23CBF43F0003A77D /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596DFA23CBF43F0003A77D /* Recommendations.swift */; };
 		21596DFD23CBF4490003A77D /* Recommendations_results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596DFC23CBF4490003A77D /* Recommendations_results.swift */; };
 		21596E0023CBF5570003A77D /* Characters_staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596DFF23CBF5570003A77D /* Characters_staff.swift */; };
@@ -121,6 +119,7 @@
 		21F75BB02481635300505327 /* OnHoldManga+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F75BA02481635200505327 /* OnHoldManga+CoreDataClass.swift */; };
 		21F75BB12481635300505327 /* DroppedManga+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F75BA12481635200505327 /* DroppedManga+CoreDataProperties.swift */; };
 		21F75BB22481635300505327 /* PlanToRead+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F75BA22481635200505327 /* PlanToRead+CoreDataProperties.swift */; };
+		21F75BB42485514E00505327 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F75BB32485514E00505327 /* ReviewService.swift */; };
 		B28E686EEFBAB12E9E1AD5F9 /* Pods_Anime_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F08A441934523003CC8EAA0 /* Pods_Anime_List.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,8 +140,6 @@
 		2140816C23D7AE2300319AA4 /* CharacterDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetails.swift; sourceTree = "<group>"; };
 		2140816E23D7AE4B00319AA4 /* Mangaography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mangaography.swift; sourceTree = "<group>"; };
 		2140817023D7AE5500319AA4 /* Animeography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animeography.swift; sourceTree = "<group>"; };
-		2141CC73243AB4C700008E40 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		2141CC76243AB52800008E40 /* InAppReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewManager.swift; sourceTree = "<group>"; };
 		21596DFA23CBF43F0003A77D /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 		21596DFC23CBF4490003A77D /* Recommendations_results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations_results.swift; sourceTree = "<group>"; };
 		21596DFF23CBF5570003A77D /* Characters_staff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Characters_staff.swift; sourceTree = "<group>"; };
@@ -243,6 +240,7 @@
 		21F75BA02481635200505327 /* OnHoldManga+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OnHoldManga+CoreDataClass.swift"; sourceTree = "<group>"; };
 		21F75BA12481635200505327 /* DroppedManga+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DroppedManga+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		21F75BA22481635200505327 /* PlanToRead+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlanToRead+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		21F75BB32485514E00505327 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		9F08A441934523003CC8EAA0 /* Pods_Anime_List.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Anime_List.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -272,8 +270,7 @@
 		2141CC75243AB4CE00008E40 /* Store Review */ = {
 			isa = PBXGroup;
 			children = (
-				2141CC73243AB4C700008E40 /* Protocols.swift */,
-				2141CC76243AB52800008E40 /* InAppReviewManager.swift */,
+				21F75BB32485514E00505327 /* ReviewService.swift */,
 			);
 			path = "Store Review";
 			sourceTree = "<group>";
@@ -705,6 +702,7 @@
 				2160EE0F2399F6F6002C9202 /* NetworkLogger.swift in Sources */,
 				21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */,
 				21E13A6C24730FA900D76E60 /* LoadingTableViewCell.swift in Sources */,
+				21F75BB42485514E00505327 /* ReviewService.swift in Sources */,
 				21596E0023CBF5570003A77D /* Characters_staff.swift in Sources */,
 				21F75BA72481635200505327 /* OnHoldManga+CoreDataProperties.swift in Sources */,
 				2197FD1E23B159A30037C88B /* ScheduleTableViewCell.swift in Sources */,
@@ -730,7 +728,6 @@
 				2160EE202399F782002C9202 /* Results.swift in Sources */,
 				21D4621323F4F3C400E1F9B4 /* MyListViewController.swift in Sources */,
 				21E13A672472E91000D76E60 /* SeeAllViewController.swift in Sources */,
-				2141CC74243AB4C700008E40 /* Protocols.swift in Sources */,
 				21920B1023B1588000C9A3B9 /* ScheduleViewController.swift in Sources */,
 				21F75BAD2481635300505327 /* DroppedManga+CoreDataClass.swift in Sources */,
 				2160EE152399F723002C9202 /* JSONParameterEncoder.swift in Sources */,
@@ -740,7 +737,6 @@
 				2160EE3C2399FA55002C9202 /* ImagesExtension.swift in Sources */,
 				2137FD2723F33BC300B984AB /* VoiceActorsManga.swift in Sources */,
 				21F75BAA2481635300505327 /* PlanToRead+CoreDataClass.swift in Sources */,
-				2141CC77243AB52800008E40 /* InAppReviewManager.swift in Sources */,
 				21E372F823DA1C2000447E4E /* MangaDetailsViewController.swift in Sources */,
 				2160D4FC23DB62C30004EE80 /* Voice_Acting_Roles.swift in Sources */,
 				21F75BAF2481635300505327 /* Reading+CoreDataProperties.swift in Sources */,
