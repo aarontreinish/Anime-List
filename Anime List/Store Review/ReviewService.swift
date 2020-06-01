@@ -25,7 +25,7 @@ class ReviewService {
     }
     
     private var oneWeekAgo: Date {
-        return Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+        return Calendar.current.date(byAdding: .day, value: -5, to: Date())!
     }
     
     private var shouldRequestReview: Bool {
@@ -38,9 +38,9 @@ class ReviewService {
     }
     
     func requestReview() {
-        //guard shouldRequestReview else { return }
+        guard shouldRequestReview else { return }
         SKStoreReviewController.requestReview()
-        //lastRequest = Date()
+        lastRequest = Date()
     }
     
 }
