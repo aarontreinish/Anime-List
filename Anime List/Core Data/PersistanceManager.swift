@@ -17,9 +17,9 @@ final class PersistanceManager {
     
     // MARK: - Core Data stack
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentCloudKitContainer = {
+        let container = NSPersistentCloudKitContainer(name: "SavedList")
         
-        let container = NSPersistentContainer(name: "SavedList")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -28,12 +28,228 @@ final class PersistanceManager {
         return container
     }()
     
-    lazy var context = persistentContainer.viewContext
+    lazy var context: NSManagedObjectContext = {
+        let context = persistentContainer.viewContext
+        context.automaticallyMergesChangesFromParent = true
+        return context
+    }()
+    
+    func fetchExistingPlanToWatch() {
+        let entity = String("PlanToWatch")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingWatching() {
+        let entity = String("Watching")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingDroppedAnime() {
+        let entity = String("DroppedAnime")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingDroppedManga() {
+        let entity = String("DroppedManga")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingOnHoldAnime() {
+        let entity = String("OnHoldAnime")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingOnHoldManga() {
+        let entity = String("OnHoldManga")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingPlanToRead() {
+        let entity = String("PlanToRead")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingReading() {
+        let entity = String("DroppedAnime")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingSavedAnime() {
+        let entity = String("SavedAnime")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingSavedManga() {
+        let entity = String("SavedManga")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        fetchRequest.predicate = NSPredicate(format: "sentToCloud == false")
+        
+        do {
+            let fetchedObjects = try context.fetch(fetchRequest) as? [NSManagedObject]
+            
+            if let fetchedObjects = fetchedObjects {
+                for (index, _) in fetchedObjects.enumerated().reversed() {
+                    fetchedObjects[index].setValue(true, forKey: "sentToCloud")
+                }
+            }
+            save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExistingSavedLists() {
+        fetchExistingDroppedAnime()
+        fetchExistingDroppedManga()
+        fetchExistingOnHoldAnime()
+        fetchExistingOnHoldManga()
+        fetchExistingPlanToRead()
+        fetchExistingPlanToWatch()
+        fetchExistingReading()
+        fetchExistingWatching()
+        fetchExistingSavedAnime()
+        fetchExistingSavedManga()
+    }
 
     // MARK: - Core Data Saving support
 
     func save() {
-        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()

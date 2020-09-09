@@ -75,6 +75,7 @@
 		2160EE3C2399FA55002C9202 /* ImagesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE3B2399FA55002C9202 /* ImagesExtension.swift */; };
 		2160EE42239C1A67002C9202 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */; };
 		2160EE48239C54DF002C9202 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */; };
+		216662692508675C00D7A997 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 216662682508675C00D7A997 /* CloudKit.framework */; };
 		21869829241158B400463187 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21869828241158B400463187 /* Extensions.swift */; };
 		218A7A5E23ECB10900A6EC80 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 218A7A5D23ECB10900A6EC80 /* WebKit.framework */; };
 		21920B1023B1588000C9A3B9 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21920B0F23B1588000C9A3B9 /* ScheduleViewController.swift */; };
@@ -196,6 +197,8 @@
 		2160EE3B2399FA55002C9202 /* ImagesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesExtension.swift; sourceTree = "<group>"; };
 		2160EE41239C1A67002C9202 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		2160EE47239C54DF002C9202 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		216662672508675A00D7A997 /* Anime Reference.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Anime Reference.entitlements"; sourceTree = "<group>"; };
+		216662682508675C00D7A997 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		21869828241158B400463187 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		218A7A5D23ECB10900A6EC80 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		21920B0F23B1588000C9A3B9 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +252,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				216662692508675C00D7A997 /* CloudKit.framework in Frameworks */,
 				218A7A5E23ECB10900A6EC80 /* WebKit.framework in Frameworks */,
 				B28E686EEFBAB12E9E1AD5F9 /* Pods_Anime_List.framework in Frameworks */,
 			);
@@ -359,6 +363,7 @@
 		2160EDE62399F5B8002C9202 /* Anime List */ = {
 			isa = PBXGroup;
 			children = (
+				216662672508675A00D7A997 /* Anime Reference.entitlements */,
 				215FB8DC23F87D07003178AF /* Core Data */,
 				2141CC75243AB4CE00008E40 /* Store Review */,
 				21C3D8BE239D52D400C0CE55 /* Enums */,
@@ -499,6 +504,7 @@
 		218A7A5C23ECB10900A6EC80 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				216662682508675C00D7A997 /* CloudKit.framework */,
 				218A7A5D23ECB10900A6EC80 /* WebKit.framework */,
 				9F08A441934523003CC8EAA0 /* Pods_Anime_List.framework */,
 			);
@@ -949,16 +955,17 @@
 			baseConfigurationReference = 029A6A598955A87BB0547215 /* Pods-Anime List.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Anime List/Anime Reference.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NP8854APR4;
 				INFOPLIST_FILE = "Anime List/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList;
 				PRODUCT_NAME = "Anime Reference";
 				SWIFT_VERSION = 5.0;
@@ -971,16 +978,17 @@
 			baseConfigurationReference = 1A351EBF5D57639438B39F8C /* Pods-Anime List.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Anime List/Anime Reference.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NP8854APR4;
 				INFOPLIST_FILE = "Anime List/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList;
 				PRODUCT_NAME = "Anime Reference";
 				SWIFT_VERSION = 5.0;

@@ -23,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         barButtonItemAppearance.tintColor = .systemRed
 
         UITabBar.appearance().tintColor = .systemRed
+        
+        PersistanceManager.shared.fetchExistingSavedLists()
+        
         return true
     }
 
