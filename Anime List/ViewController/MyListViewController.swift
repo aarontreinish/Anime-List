@@ -91,37 +91,37 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getSavedAnime() {
-        let planToWatchList = persistenceManager.fetch(PlanToWatch.self)
+        let planToWatchList = persistenceManager.fetchSortedDataByName(PlanToWatch.self)
         planToWatch = planToWatchList
         
-        let watchingList = persistenceManager.fetch(Watching.self)
+        let watchingList = persistenceManager.fetchSortedDataByName(Watching.self)
         watching = watchingList
         
-        let completedList = persistenceManager.fetch(SavedAnime.self)
+        let completedList = persistenceManager.fetchSortedDataByName(SavedAnime.self)
         savedAnime = completedList
         
-        let onHoldList = persistenceManager.fetch(OnHoldAnime.self)
+        let onHoldList = persistenceManager.fetchSortedDataByName(OnHoldAnime.self)
         onHoldAnime = onHoldList
         
-        let droppedList = persistenceManager.fetch(DroppedAnime.self)
+        let droppedList = persistenceManager.fetchSortedDataByName(DroppedAnime.self)
         droppedAnime = droppedList
         
     }
     
     func getSavedManga() {
-        let planToReadList = persistenceManager.fetch(PlanToRead.self)
+        let planToReadList = persistenceManager.fetchSortedDataByName(PlanToRead.self)
         planToRead = planToReadList
         
-        let readingList = persistenceManager.fetch(Reading.self)
+        let readingList = persistenceManager.fetchSortedDataByName(Reading.self)
         reading = readingList
         
-        let completedList = persistenceManager.fetch(SavedManga.self)
+        let completedList = persistenceManager.fetchSortedDataByName(SavedManga.self)
         savedManga = completedList
         
-        let onHoldList = persistenceManager.fetch(OnHoldManga.self)
+        let onHoldList = persistenceManager.fetchSortedDataByName(OnHoldManga.self)
         onHoldManga = onHoldList
         
-        let droppedList = persistenceManager.fetch(DroppedManga.self)
+        let droppedList = persistenceManager.fetchSortedDataByName(DroppedManga.self)
         droppedManga = droppedList
     }
     
