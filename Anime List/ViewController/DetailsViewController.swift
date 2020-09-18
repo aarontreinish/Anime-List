@@ -279,9 +279,16 @@ class DetailsViewController: UIViewController {
         let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
             self?.checkIfDataIsAllThere()
+            group.leave()
+            
+            group.enter()
+            if self?.animeDetailsArray == nil || self?.animeCharactersArray.count == 0 || self?.animeRecommendationsArray.count == 0 {
+                let banner = StatusBarNotificationBanner(title: "Could not fetch anime, please try again later", style: .danger)
+                banner.show()
+                self?.activityIndicator.stopAnimating()
+            }
+            group.leave()
         }
-        group.leave()
-        
     }
     
     func loadYoutube(url: String) {

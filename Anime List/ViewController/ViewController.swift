@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import StoreKit
+import NotificationBannerSwift
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -154,6 +155,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
             if self?.topUpcomingArray.count == 0 || self?.topRankedArray.count == 0 || self?.topAiringArray.count == 0 || self?.mostPopularArray.count == 0 {
                 self?.getAllData()
+                group.leave()
+            }
+            
+            
+            group.enter()
+            if self?.topUpcomingArray.count == 0 || self?.topRankedArray.count == 0 || self?.topAiringArray.count == 0 || self?.mostPopularArray.count == 0 {
+                let banner = StatusBarNotificationBanner(title: "Could not fetch anime, please try again later", style: .danger)
+                banner.show()
+                self?.activityIndicator.stopAnimating()
             }
             group.leave()
         }

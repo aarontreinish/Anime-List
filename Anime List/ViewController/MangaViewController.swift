@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import NotificationBannerSwift
 
 class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -223,8 +224,17 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
             self?.checkIfDataIsAllThere()
+            group.leave()
+            
+            
+            group.enter()
+            if self?.topFavoritesArray.count == 0 || self?.mostPopularArray.count == 0 || self?.topRankedArray.count == 0 {
+                let banner = StatusBarNotificationBanner(title: "Could not fetch manga, please try again later", style: .danger)
+                banner.show()
+                self?.activityIndicator.stopAnimating()
+            }
+            group.leave()
         }
-        group.leave()
     }
     
     @objc func topRankedSeeAllButtonPressed() {

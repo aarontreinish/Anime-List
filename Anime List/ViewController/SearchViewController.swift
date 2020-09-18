@@ -144,12 +144,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self?.animeResultsArray = results
                 self?.filterAnimeData()
             }
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-                self?.activityIndicator.stopAnimating()
-                self?.tableView.isHidden = false
-            }
         }
         
         networkManager.getSearchedManga(name: searchBar.text ?? "") { [weak self] (results, error) in
@@ -161,43 +155,34 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self?.mangaResultsArray = results
                 self?.filterMangaData()
             }
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-                self?.activityIndicator.stopAnimating()
-                self?.tableView.isHidden = false
-            }
         }
         
-        networkManager.getSearchedCharacters(name: searchBar.text ?? "") { [weak self] (results, error) in
-            if let error = error {
-                print(error)
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             
-            if let results = results {
-                self?.characterResultsArray = results
-            }
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-                self?.activityIndicator.stopAnimating()
-                self?.tableView.isHidden = false
-            }
-        }
-        
-        networkManager.getSearchedPeople(name: searchBar.text ?? "") { [weak self] (results, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            if let results = results {
-                self?.personResultsArray = results
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                    self?.activityIndicator.stopAnimating()
-                    self?.tableView.isHidden = false
+            self?.networkManager.getSearchedCharacters(name: self?.searchBar.text ?? "") { [weak self] (results, error) in
+                if let error = error {
+                    print(error)
                 }
+                
+                if let results = results {
+                    self?.characterResultsArray = results
+                }
+            }
+            
+            self?.networkManager.getSearchedPeople(name: self?.searchBar.text ?? "") { [weak self] (results, error) in
+                if let error = error {
+                    print(error)
+                }
+                
+                if let results = results {
+                    self?.personResultsArray = results
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.tableView.isHidden = false
             }
         }
     }

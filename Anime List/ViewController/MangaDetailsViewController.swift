@@ -276,9 +276,16 @@ class MangaDetailsViewController: UIViewController {
         let deadlineTime = DispatchTime.now() + 2.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
             self?.checkIfDataIsAllThere()
+            group.leave()
+            
+            group.enter()
+            if self?.mangaDetailsArray == nil || self?.mangaCharactersArray.count == 0 || self?.mangaRecommendationsArray.count == 0 {
+                let banner = StatusBarNotificationBanner(title: "Could not fetch manga, please try again later", style: .danger)
+                banner.show()
+                self?.activityIndicator.stopAnimating()
+            }
+            group.leave()
         }
-        group.leave()
-        
     }
     
     func addToPlanToRead() {
