@@ -599,6 +599,7 @@
 				2160EDE12399F5B8002C9202 /* Frameworks */,
 				2160EDE22399F5B8002C9202 /* Resources */,
 				FB48CE4448831470F653847B /* [CP] Embed Pods Frameworks */,
+				21CB3F6E2518EFCC0063E46A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -658,6 +659,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		21CB3F6E2518EFCC0063E46A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		AB8667C35E63F49AFCC5D80F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -959,6 +977,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Anime List/Anime Reference.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NP8854APR4;
 				INFOPLIST_FILE = "Anime List/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -983,6 +1002,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Anime List/Anime Reference.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NP8854APR4;
 				INFOPLIST_FILE = "Anime List/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

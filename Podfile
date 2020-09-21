@@ -8,6 +8,7 @@ target 'Anime List' do
   # Pods for Anime List
   pod 'Firebase/CoreOnly'
 	pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 	pod 'Firebase/Database'
   pod 'NotificationBannerSwift', '~> 3.0.0'
 
