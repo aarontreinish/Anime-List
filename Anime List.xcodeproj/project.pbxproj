@@ -985,7 +985,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList;
 				PRODUCT_NAME = "Anime Reference";
 				SWIFT_VERSION = 5.0;
@@ -1010,7 +1010,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList;
 				PRODUCT_NAME = "Anime Reference";
 				SWIFT_VERSION = 5.0;
