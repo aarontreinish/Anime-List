@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwiftUI
 
 class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -78,6 +79,59 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
     
+    func convertToJSONArray(entity: [NSManagedObject]) -> Any {
+        var jsonArray: [[String: Any]] = []
+        for item in entity {
+            var dict: [String: Any] = [:]
+            for attribute in item.entity.attributesByName {
+                //check if value is present, then add key to dictionary so as to avoid the nil value crash
+                if let value = item.value(forKey: attribute.key) {
+                    dict[attribute.key] = value
+                }
+            }
+            jsonArray.append(dict)
+        }
+        return jsonArray
+    }
+    
+    func saveJSONToDevice(array: Any) {
+        guard let watchingData = try? JSONSerialization.data(withJSONObject: array) else { return }
+        print(watchingData)
+        UserDefaults.standard.set(watchingData, forKey: "watching")
+        
+//        do {
+//            let fileURL = try FileManager.default
+//                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//                .appendingPathComponent("watching.json")
+//
+//            try JSONSerialization.data(withJSONObject: array)
+//                .write(to: fileURL)
+//        } catch {
+//            print(error)
+//        }
+    }
+    
+    func readJSONFromDevice() {
+        
+        let data = UserDefaults.standard.object(forKey: "watching")
+        print(data)
+        
+        guard let anime = try? JSONDecoder().decode([AnimeWidget].self, from: data as! Data) else { return }
+        
+        print(anime)
+//        do {
+//            let fileURL = try FileManager.default
+//                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+//                .appendingPathComponent("watching.json")
+//
+//            let data = try Data(contentsOf: fileURL)
+//            let foo = try JSONDecoder().decode([AnimeWidget].self, from: data)
+//            print(foo)
+//        } catch {
+//            print(error)
+//        }
+    }
+    
     @objc func refreshData() {
         if segmentedController.selectedSegmentIndex == 0 {
             getSavedAnime()
@@ -97,6 +151,9 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let watchingList = persistenceManager.fetchSortedDataByName(Watching.self)
         watching = watchingList
         
+        let convertedEntity = convertToJSONArray(entity: watching)
+        saveJSONToDevice(array: convertedEntity)
+        
         let completedList = persistenceManager.fetchSortedDataByName(SavedAnime.self)
         savedAnime = completedList
         
@@ -105,7 +162,6 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let droppedList = persistenceManager.fetchSortedDataByName(DroppedAnime.self)
         droppedAnime = droppedList
-        
     }
     
     func getSavedManga() {

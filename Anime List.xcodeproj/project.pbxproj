@@ -29,6 +29,8 @@
 		21596E0623CBF5C00003A77D /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0523CBF5C00003A77D /* Staff.swift */; };
 		21596E0823CBFC480003A77D /* CharactersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0723CBFC480003A77D /* CharactersCollectionViewCell.swift */; };
 		21596E0A23CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21596E0923CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift */; };
+		215EDE2825115318008D3E01 /* AnimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EDE2625115309008D3E01 /* AnimeWidget.swift */; };
+		215EFE5825115F5A00319361 /* NewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EDE2C25115BF3008D3E01 /* NewView.swift */; };
 		215FB8D723F4F6E4003178AF /* MyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215FB8D623F4F6E4003178AF /* MyListTableViewCell.swift */; };
 		215FB8DA23F87CF6003178AF /* SavedManga+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215FB8D823F87CF6003178AF /* SavedManga+CoreDataClass.swift */; };
 		215FB8DB23F87CF6003178AF /* SavedManga+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215FB8D923F87CF6003178AF /* SavedManga+CoreDataProperties.swift */; };
@@ -82,8 +84,15 @@
 		2197FD1E23B159A30037C88B /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD1D23B159A30037C88B /* ScheduleTableViewCell.swift */; };
 		2197FD2323B15D100037C88B /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2223B15D100037C88B /* Schedule.swift */; };
 		2197FD2523B15D170037C88B /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2197FD2423B15D170037C88B /* Day.swift */; };
+		21AB827F2509221A008A2216 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21AB827E2509221A008A2216 /* WidgetKit.framework */; };
+		21AB82812509221A008A2216 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21AB82802509221A008A2216 /* SwiftUI.framework */; };
+		21AB82842509221A008A2216 /* AnimeReferenceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AB82832509221A008A2216 /* AnimeReferenceWidget.swift */; };
+		21AB82862509221B008A2216 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21AB82852509221B008A2216 /* Assets.xcassets */; };
+		21AB828A2509221B008A2216 /* AnimeReferenceWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 21AB827D2509221A008A2216 /* AnimeReferenceWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		21C3D8C0239D52ED00C0CE55 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C3D8BF239D52ED00C0CE55 /* Section.swift */; };
 		21C8F5B62475B22500E85F37 /* PersonSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C8F5B52475B22500E85F37 /* PersonSearch.swift */; };
+		21CB3F872518FF290063E46A /* AnimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215EDE2625115309008D3E01 /* AnimeWidget.swift */; };
+		21CB4022251923A50063E46A /* ImageLoaderAndCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CB4021251923A50063E46A /* ImageLoaderAndCaching.swift */; };
 		21D461E023F4678300E1F9B4 /* SavedList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21D461DE23F4678300E1F9B4 /* SavedList.xcdatamodeld */; };
 		21D461E623F468F600E1F9B4 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D461E523F468F600E1F9B4 /* PersistanceManager.swift */; };
 		21D4621023F46C9700E1F9B4 /* Anime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */; };
@@ -124,6 +133,30 @@
 		B28E686EEFBAB12E9E1AD5F9 /* Pods_Anime_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F08A441934523003CC8EAA0 /* Pods_Anime_List.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		21AB82882509221B008A2216 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2160EDDC2399F5B8002C9202 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 21AB827C2509221A008A2216;
+			remoteInfo = AnimeReferenceWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		21AB828B2509221B008A2216 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				21AB828A2509221B008A2216 /* AnimeReferenceWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		029A6A598955A87BB0547215 /* Pods-Anime List.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anime List.debug.xcconfig"; path = "Target Support Files/Pods-Anime List/Pods-Anime List.debug.xcconfig"; sourceTree = "<group>"; };
 		1A351EBF5D57639438B39F8C /* Pods-Anime List.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anime List.release.xcconfig"; path = "Target Support Files/Pods-Anime List/Pods-Anime List.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +182,9 @@
 		21596E0523CBF5C00003A77D /* Staff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
 		21596E0723CBFC480003A77D /* CharactersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersCollectionViewCell.swift; sourceTree = "<group>"; };
 		21596E0923CBFC5D0003A77D /* RecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
+		215EDE2625115309008D3E01 /* AnimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeWidget.swift; sourceTree = "<group>"; };
+		215EDE29251159AA008D3E01 /* AnimeReferenceWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnimeReferenceWidgetExtension.entitlements; sourceTree = "<group>"; };
+		215EDE2C25115BF3008D3E01 /* NewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewView.swift; sourceTree = "<group>"; };
 		215FB8D623F4F6E4003178AF /* MyListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListTableViewCell.swift; sourceTree = "<group>"; };
 		215FB8D823F87CF6003178AF /* SavedManga+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedManga+CoreDataClass.swift"; sourceTree = "<group>"; };
 		215FB8D923F87CF6003178AF /* SavedManga+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedManga+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -205,8 +241,15 @@
 		2197FD1D23B159A30037C88B /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		2197FD2223B15D100037C88B /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		2197FD2423B15D170037C88B /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		21AB827D2509221A008A2216 /* AnimeReferenceWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AnimeReferenceWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		21AB827E2509221A008A2216 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		21AB82802509221A008A2216 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		21AB82832509221A008A2216 /* AnimeReferenceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeReferenceWidget.swift; sourceTree = "<group>"; };
+		21AB82852509221B008A2216 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		21AB82872509221B008A2216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21C3D8BF239D52ED00C0CE55 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		21C8F5B52475B22500E85F37 /* PersonSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonSearch.swift; sourceTree = "<group>"; };
+		21CB4021251923A50063E46A /* ImageLoaderAndCaching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderAndCaching.swift; sourceTree = "<group>"; };
 		21D461DF23F4678300E1F9B4 /* SavedList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SavedList.xcdatamodel; sourceTree = "<group>"; };
 		21D461E523F468F600E1F9B4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		21D4620E23F46C9700E1F9B4 /* Anime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Anime+CoreDataClass.swift"; path = "Anime List/Core Data/Anime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -255,6 +298,15 @@
 				216662692508675C00D7A997 /* CloudKit.framework in Frameworks */,
 				218A7A5E23ECB10900A6EC80 /* WebKit.framework in Frameworks */,
 				B28E686EEFBAB12E9E1AD5F9 /* Pods_Anime_List.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21AB827A2509221A008A2216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21AB82812509221A008A2216 /* SwiftUI.framework in Frameworks */,
+				21AB827F2509221A008A2216 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +397,9 @@
 		2160EDDB2399F5B8002C9202 = {
 			isa = PBXGroup;
 			children = (
+				215EDE29251159AA008D3E01 /* AnimeReferenceWidgetExtension.entitlements */,
 				2160EDE62399F5B8002C9202 /* Anime List */,
+				21AB82822509221A008A2216 /* AnimeReferenceWidget */,
 				2160EDE52399F5B8002C9202 /* Products */,
 				218A7A5C23ECB10900A6EC80 /* Frameworks */,
 				FDB0DC0934EEC6B2ED8726B1 /* Pods */,
@@ -356,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				2160EDE42399F5B8002C9202 /* Anime Reference.app */,
+				21AB827D2509221A008A2216 /* AnimeReferenceWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -507,6 +562,8 @@
 				216662682508675C00D7A997 /* CloudKit.framework */,
 				218A7A5D23ECB10900A6EC80 /* WebKit.framework */,
 				9F08A441934523003CC8EAA0 /* Pods_Anime_List.framework */,
+				21AB827E2509221A008A2216 /* WidgetKit.framework */,
+				21AB82802509221A008A2216 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,6 +614,19 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
+		21AB82822509221A008A2216 /* AnimeReferenceWidget */ = {
+			isa = PBXGroup;
+			children = (
+				21AB82832509221A008A2216 /* AnimeReferenceWidget.swift */,
+				21AB82852509221B008A2216 /* Assets.xcassets */,
+				21AB82872509221B008A2216 /* Info.plist */,
+				215EDE2625115309008D3E01 /* AnimeWidget.swift */,
+				215EDE2C25115BF3008D3E01 /* NewView.swift */,
+				21CB4021251923A50063E46A /* ImageLoaderAndCaching.swift */,
+			);
+			path = AnimeReferenceWidget;
+			sourceTree = "<group>";
+		};
 		21C3D8BE239D52D400C0CE55 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,15 +669,34 @@
 				2160EDE12399F5B8002C9202 /* Frameworks */,
 				2160EDE22399F5B8002C9202 /* Resources */,
 				FB48CE4448831470F653847B /* [CP] Embed Pods Frameworks */,
+				21AB828B2509221B008A2216 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				21AB82892509221B008A2216 /* PBXTargetDependency */,
 			);
 			name = "Anime List";
 			productName = "Anime List";
 			productReference = 2160EDE42399F5B8002C9202 /* Anime Reference.app */;
 			productType = "com.apple.product-type.application";
+		};
+		21AB827C2509221A008A2216 /* AnimeReferenceWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 21AB828E2509221B008A2216 /* Build configuration list for PBXNativeTarget "AnimeReferenceWidgetExtension" */;
+			buildPhases = (
+				21AB82792509221A008A2216 /* Sources */,
+				21AB827A2509221A008A2216 /* Frameworks */,
+				21AB827B2509221A008A2216 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AnimeReferenceWidgetExtension;
+			productName = AnimeReferenceWidgetExtension;
+			productReference = 21AB827D2509221A008A2216 /* AnimeReferenceWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -615,12 +704,15 @@
 		2160EDDC2399F5B8002C9202 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1110;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Aaron Treinish";
 				TargetAttributes = {
 					2160EDE32399F5B8002C9202 = {
 						CreatedOnToolsVersion = 11.1;
+					};
+					21AB827C2509221A008A2216 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
@@ -638,6 +730,7 @@
 			projectRoot = "";
 			targets = (
 				2160EDE32399F5B8002C9202 /* Anime List */,
+				21AB827C2509221A008A2216 /* AnimeReferenceWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -652,6 +745,14 @@
 				2160EDF12399F5BC002C9202 /* Assets.xcassets in Resources */,
 				21372DD0240DFC0D00D13247 /* GoogleService-Info.plist in Resources */,
 				2160EDEF2399F5B8002C9202 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21AB827B2509221A008A2216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21AB82862509221B008A2216 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,6 +887,7 @@
 				215FB8DA23F87CF6003178AF /* SavedManga+CoreDataClass.swift in Sources */,
 				21C8F5B62475B22500E85F37 /* PersonSearch.swift in Sources */,
 				2160EE052399F6B2002C9202 /* NetworkManager.swift in Sources */,
+				21CB3F872518FF290063E46A /* AnimeWidget.swift in Sources */,
 				2160D50023DB63590004EE80 /* Anime_Staff_Positions.swift in Sources */,
 				2160EDE82399F5B8002C9202 /* AppDelegate.swift in Sources */,
 				2160D4F523DB61200004EE80 /* AppearancesCollectionViewCell.swift in Sources */,
@@ -814,7 +916,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		21AB82792509221A008A2216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				215EFE5825115F5A00319361 /* NewView.swift in Sources */,
+				215EDE2825115318008D3E01 /* AnimeWidget.swift in Sources */,
+				21CB4022251923A50063E46A /* ImageLoaderAndCaching.swift in Sources */,
+				21AB82842509221A008A2216 /* AnimeReferenceWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		21AB82892509221B008A2216 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 21AB827C2509221A008A2216 /* AnimeReferenceWidgetExtension */;
+			targetProxy = 21AB82882509221B008A2216 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2160EDED2399F5B8002C9202 /* Main.storyboard */ = {
@@ -954,6 +1075,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 029A6A598955A87BB0547215 /* Pods-Anime List.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Anime List/Anime Reference.entitlements";
@@ -978,6 +1100,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A351EBF5D57639438B39F8C /* Pods-Anime List.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Anime List/Anime Reference.entitlements";
@@ -993,6 +1116,54 @@
 				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList;
 				PRODUCT_NAME = "Anime Reference";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		21AB828C2509221B008A2216 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = AnimeReferenceWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NP8854APR4;
+				INFOPLIST_FILE = AnimeReferenceWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList.AnimeReferenceWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		21AB828D2509221B008A2216 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = AnimeReferenceWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NP8854APR4;
+				INFOPLIST_FILE = AnimeReferenceWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.aarontreinish.AnimeList.AnimeReferenceWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1015,6 +1186,15 @@
 			buildConfigurations = (
 				2160EDF92399F5BC002C9202 /* Debug */,
 				2160EDFA2399F5BC002C9202 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		21AB828E2509221B008A2216 /* Build configuration list for PBXNativeTarget "AnimeReferenceWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21AB828C2509221B008A2216 /* Debug */,
+				21AB828D2509221B008A2216 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
