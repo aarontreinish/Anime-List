@@ -282,7 +282,7 @@ class DetailsViewController: UIViewController {
             group.leave()
             
             group.enter()
-            if self?.animeDetailsArray == nil || self?.animeCharactersArray.count == 0 || self?.animeRecommendationsArray.count == 0 {
+            if self?.animeDetailsArray == nil {
                 let banner = StatusBarNotificationBanner(title: "Could not fetch anime, please try again later", style: .danger)
                 banner.show()
                 self?.activityIndicator.stopAnimating()
