@@ -94,43 +94,68 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         print(malId)
                         let name = planToWatch[indexPath.row].name ?? ""
                         let imageURL = planToWatch[indexPath.row].image_url ?? ""
-                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                        showLongPressActionSheetAnime(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 1 {
                         let malId = watching[indexPath.row].mal_id
                         print(malId)
                         let name = watching[indexPath.row].name ?? ""
                         let imageURL = watching[indexPath.row].image_url ?? ""
-                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                        showLongPressActionSheetAnime(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 2 {
                         let malId = savedAnime[indexPath.row].mal_id
                         print(malId)
                         let name = savedAnime[indexPath.row].name ?? ""
                         let imageURL = savedAnime[indexPath.row].image_url ?? ""
-                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                        showLongPressActionSheetAnime(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 3 {
                         let malId = onHoldAnime[indexPath.row].mal_id
                         print(malId)
                         let name = onHoldAnime[indexPath.row].name ?? ""
                         let imageURL = onHoldAnime[indexPath.row].image_url ?? ""
-                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                        showLongPressActionSheetAnime(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 4 {
                         let malId = droppedAnime[indexPath.row].mal_id
                         print(malId)
                         let name = droppedAnime[indexPath.row].name ?? ""
                         let imageURL = droppedAnime[indexPath.row].image_url ?? ""
-                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                        showLongPressActionSheetAnime(name: name, malId: malId, imageURL: imageURL)
                     }
                 } else if segmentedController.selectedSegmentIndex == 1 {
                     if watchSegmentedController.selectedSegmentIndex == 0 {
-                       
+                        let malId = planToRead[indexPath.row].mal_id
+                        print(malId)
+                        let name = planToRead[indexPath.row].name ?? ""
+                        let imageURL = planToRead[indexPath.row].image_url ?? ""
+                        
+                        showLongPressActionSheetManga(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                        let malId = reading[indexPath.row].mal_id
+                        print(malId)
+                        let name = reading[indexPath.row].name ?? ""
+                        let imageURL = reading[indexPath.row].image_url ?? ""
                         
+                        showLongPressActionSheetManga(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                        let malId = savedManga[indexPath.row].mal_id
+                        print(malId)
+                        let name = savedManga[indexPath.row].name ?? ""
+                        let imageURL = savedManga[indexPath.row].image_url ?? ""
                         
+                        showLongPressActionSheetManga(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                        let malId = onHoldManga[indexPath.row].mal_id
+                        print(malId)
+                        let name = onHoldManga[indexPath.row].name ?? ""
+                        let imageURL = onHoldManga[indexPath.row].image_url ?? ""
                         
+                        showLongPressActionSheetManga(name: name, malId: malId, imageURL: imageURL)
                     } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                        let malId = droppedManga[indexPath.row].mal_id
+                        print(malId)
+                        let name = droppedManga[indexPath.row].name ?? ""
+                        let imageURL = droppedManga[indexPath.row].image_url ?? ""
                         
+                        showLongPressActionSheetManga(name: name, malId: malId, imageURL: imageURL)
                     }
                 }
             }
@@ -149,7 +174,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
     
-    func showLongPressActionSheet(name: String, malId: Float, imageURL: String) {
+    func showLongPressActionSheetAnime(name: String, malId: Float, imageURL: String) {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
         let planToWatchAction = UIAlertAction(title: "Add to Plan to Watch", style: .default) { (action) in
@@ -170,7 +195,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
             
-            self.addToCompleted(name: name, malId: malId, imageURL: imageURL)
+            self.addToCompletedAnime(name: name, malId: malId, imageURL: imageURL)
             
             self.getSavedAnime()
             self.tableView.reloadData()
@@ -178,7 +203,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
             
-            self.addToOnHold(name: name, malId: malId, imageURL: imageURL)
+            self.addToOnHoldAnime(name: name, malId: malId, imageURL: imageURL)
             
             self.getSavedAnime()
             self.tableView.reloadData()
@@ -186,10 +211,20 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
             
-            self.addToDropped(name: name, malId: malId, imageURL: imageURL)
+            self.addToDroppedAnime(name: name, malId: malId, imageURL: imageURL)
             
             self.getSavedAnime()
             self.tableView.reloadData()
+        }
+        
+        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
+            self.removeFromEntity(malId: malId)
+            
+            self.getSavedAnime()
+            self.tableView.reloadData()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) removed successfully", style: .danger)
+            banner.show()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -199,17 +234,79 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         optionMenu.addAction(completedAction)
         optionMenu.addAction(onHoldAction)
         optionMenu.addAction(droppedAction)
-//        if checkIfSavedAtAll() == true {
-//            let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
-//                self.removeFromEntity(indexPathRow: indexPathRow)
-//
-//
-//                let banner = StatusBarNotificationBanner(title: "\() removed successfully", style: .danger)
-//                banner.show()
-//            }
-//
-//            optionMenu.addAction(removeAction)
-//        }
+        optionMenu.addAction(removeAction)
+        optionMenu.addAction(cancelAction)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+
+            self.present(optionMenu, animated: true, completion: nil)
+        } else {
+            self.present(optionMenu, animated: true, completion: nil)
+        }
+    }
+    
+    func showLongPressActionSheetManga(name: String, malId: Float, imageURL: String) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let planToReadAction = UIAlertAction(title: "Add to Plan to Read", style: .default) { (action) in
+            
+            self.addToPlanToRead(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedManga()
+            self.tableView.reloadData()
+        }
+        
+        let readingAction = UIAlertAction(title: "Add to Reading", style: .default) { (action) in
+            
+            self.addToReading(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedManga()
+            self.tableView.reloadData()
+        }
+        
+        let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
+            
+            self.addToCompletedManga(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedManga()
+            self.tableView.reloadData()
+        }
+        
+        let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
+            
+            self.addToOnHoldManga(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedManga()
+            self.tableView.reloadData()
+        }
+        
+        let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
+            
+            self.addToDroppedManga(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedManga()
+            self.tableView.reloadData()
+        }
+        
+        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
+            self.removeFromEntity(malId: malId)
+            
+            self.getSavedManga()
+            self.tableView.reloadData()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) removed successfully", style: .danger)
+            banner.show()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        optionMenu.addAction(planToReadAction)
+        optionMenu.addAction(readingAction)
+        optionMenu.addAction(completedAction)
+        optionMenu.addAction(onHoldAction)
+        optionMenu.addAction(droppedAction)
+        optionMenu.addAction(removeAction)
         optionMenu.addAction(cancelAction)
         
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -263,7 +360,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func addToCompleted(name: String, malId: Float, imageURL: String) {
+    func addToCompletedAnime(name: String, malId: Float, imageURL: String) {
         let checkIfSaved = persistenceManager.checkIfExists(SavedAnime.self, malId: malId, attributeName: "mal_id")
         if checkIfSaved == true {
             let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
@@ -284,7 +381,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func addToDropped(name: String, malId: Float, imageURL: String) {
+    func addToDroppedAnime(name: String, malId: Float, imageURL: String) {
         let checkIfSaved = persistenceManager.checkIfExists(DroppedAnime.self, malId: malId, attributeName: "mal_id")
         if checkIfSaved == true {
             let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
@@ -305,7 +402,7 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func addToOnHold(name: String, malId: Float, imageURL: String) {
+    func addToOnHoldAnime(name: String, malId: Float, imageURL: String) {
         let checkIfSaved = persistenceManager.checkIfExists(OnHoldAnime.self, malId: malId, attributeName: "mal_id")
         if checkIfSaved == true {
 
@@ -327,7 +424,109 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func checkIfSavedAtAll() -> Bool {
+    func addToPlanToRead(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(PlanToRead.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(name) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let planToRead = PlanToRead(context: persistenceManager.context)
+            planToRead.mal_id = malId
+            planToRead.image_url = imageURL
+            planToRead.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToReading(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(Reading.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(name) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+
+            let reading = Reading(context: persistenceManager.context)
+            reading.mal_id = malId
+            reading.image_url = imageURL
+            reading.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func addToCompletedManga(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(SavedManga.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(name) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let savedManga = SavedManga(context: persistenceManager.context)
+            savedManga.mal_id = malId
+            savedManga.image_url = imageURL
+            savedManga.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) added successfully", style: .success)
+            banner.show()
+
+        }
+    }
+    
+    func addToDroppedManga(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(OnHoldManga.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(name) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let dropped = DroppedManga(context: persistenceManager.context)
+            dropped.mal_id = malId
+            dropped.image_url = imageURL
+            dropped.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) added successfully", style: .success)
+            banner.show()
+            
+        }
+    }
+    
+    func addToOnHoldManga(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(OnHoldManga.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(name) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let onHold = OnHoldManga(context: persistenceManager.context)
+            onHold.mal_id = malId
+            onHold.image_url = imageURL
+            onHold.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(name) added successfully", style: .success)
+            banner.show()
+        }
+    }
+    
+    func checkIfSavedAtAllAnime(malId: Float) -> Bool {
         let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
         
         let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: Float(selection), attributeName: "mal_id")
@@ -381,17 +580,27 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func removeFromEntity(malId: Float) {
-        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: malId, attributeName: "mal_id")
+        let isCompletedAnime = persistenceManager.checkIfExists(SavedAnime.self, malId: malId, attributeName: "mal_id")
         
         let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: malId, attributeName: "mal_id")
         
         let isWatching = persistenceManager.checkIfExists(Watching.self, malId: malId, attributeName: "mal_id")
         
-        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: malId, attributeName: "mal_id")
+        let isOnHoldAnime = persistenceManager.checkIfExists(OnHoldAnime.self, malId: malId, attributeName: "mal_id")
         
-        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: malId, attributeName: "mal_id")
+        let isDroppedAnime = persistenceManager.checkIfExists(DroppedAnime.self, malId: malId, attributeName: "mal_id")
         
-        if isCompleted == true {
+        let isCompletedManga = persistenceManager.checkIfExists(SavedManga.self, malId: malId, attributeName: "mal_id")
+        
+        let isPlanToRead = persistenceManager.checkIfExists(PlanToRead.self, malId: malId, attributeName: "mal_id")
+        
+        let isReading = persistenceManager.checkIfExists(Reading.self, malId: malId, attributeName: "mal_id")
+        
+        let isOnHoldManga = persistenceManager.checkIfExists(OnHoldManga.self, malId: malId, attributeName: "mal_id")
+        
+        let isDroppedManga = persistenceManager.checkIfExists(DroppedManga.self, malId: malId, attributeName: "mal_id")
+        
+        if isCompletedAnime == true {
             deleteAnime(entity: SavedAnime.self, malId: malId)
         }
         
@@ -403,12 +612,32 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
             deleteAnime(entity: Watching.self, malId: malId)
         }
         
-        if isOnHold == true {
+        if isOnHoldAnime == true {
             deleteAnime(entity: OnHoldAnime.self, malId: malId)
         }
         
-        if isDropped == true {
+        if isDroppedAnime == true {
             deleteAnime(entity: DroppedAnime.self, malId: malId)
+        }
+        
+        if isCompletedManga == true {
+            deleteAnime(entity: SavedManga.self, malId: malId)
+        }
+        
+        if isPlanToRead == true {
+            deleteAnime(entity: PlanToRead.self, malId: malId)
+        }
+        
+        if isReading == true {
+            deleteAnime(entity: Reading.self, malId: malId)
+        }
+        
+        if isOnHoldManga == true {
+            deleteAnime(entity: OnHoldManga.self, malId: malId)
+        }
+        
+        if isDroppedManga == true {
+            deleteAnime(entity: DroppedManga.self, malId: malId)
         }
     }
     
