@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import NotificationBannerSwift
 
 class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -52,6 +53,9 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.refreshControl = refresher
         
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressOnTableView))
+        tableView.addGestureRecognizer(longPress)
+        
         if #available(iOS 13.0, *) {
             segmentedController.selectedSegmentTintColor = .systemRed
             watchSegmentedController.selectedSegmentTintColor = .systemRed
@@ -78,6 +82,61 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
     
+    @objc func longPressOnTableView(sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == UIGestureRecognizer.State.began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                // your code here, get the row for the indexPath or do whatever you want
+                if segmentedController.selectedSegmentIndex == 0 {
+                    if watchSegmentedController.selectedSegmentIndex == 0 {
+                        let malId = planToWatch[indexPath.row].mal_id
+                        print(malId)
+                        let name = planToWatch[indexPath.row].name ?? ""
+                        let imageURL = planToWatch[indexPath.row].image_url ?? ""
+                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                    } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                        let malId = watching[indexPath.row].mal_id
+                        print(malId)
+                        let name = watching[indexPath.row].name ?? ""
+                        let imageURL = watching[indexPath.row].image_url ?? ""
+                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                    } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                        let malId = savedAnime[indexPath.row].mal_id
+                        print(malId)
+                        let name = savedAnime[indexPath.row].name ?? ""
+                        let imageURL = savedAnime[indexPath.row].image_url ?? ""
+                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                    } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                        let malId = onHoldAnime[indexPath.row].mal_id
+                        print(malId)
+                        let name = onHoldAnime[indexPath.row].name ?? ""
+                        let imageURL = onHoldAnime[indexPath.row].image_url ?? ""
+                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                    } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                        let malId = droppedAnime[indexPath.row].mal_id
+                        print(malId)
+                        let name = droppedAnime[indexPath.row].name ?? ""
+                        let imageURL = droppedAnime[indexPath.row].image_url ?? ""
+                        showLongPressActionSheet(name: name, malId: malId, imageURL: imageURL)
+                    }
+                } else if segmentedController.selectedSegmentIndex == 1 {
+                    if watchSegmentedController.selectedSegmentIndex == 0 {
+                       
+                    } else if watchSegmentedController.selectedSegmentIndex == 1 {
+                        
+                    } else if watchSegmentedController.selectedSegmentIndex == 2 {
+                        
+                    } else if watchSegmentedController.selectedSegmentIndex == 3 {
+                        
+                    } else if watchSegmentedController.selectedSegmentIndex == 4 {
+                        
+                    }
+                }
+            }
+        }
+    }
+    
     @objc func refreshData() {
         if segmentedController.selectedSegmentIndex == 0 {
             getSavedAnime()
@@ -88,6 +147,273 @@ class MyListViewController: UIViewController, UITableViewDelegate, UITableViewDa
         refresher.endRefreshing()
         
         tableView.reloadData()
+    }
+    
+    func showLongPressActionSheet(name: String, malId: Float, imageURL: String) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let planToWatchAction = UIAlertAction(title: "Add to Plan to Watch", style: .default) { (action) in
+            
+            self.addToPlanToWatch(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedAnime()
+            self.tableView.reloadData()
+        }
+        
+        let watchingAction = UIAlertAction(title: "Add to Watching", style: .default) { (action) in
+            
+            self.addToWatching(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedAnime()
+            self.tableView.reloadData()
+        }
+        
+        let completedAction = UIAlertAction(title: "Add to Completed", style: .default) { (action) in
+            
+            self.addToCompleted(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedAnime()
+            self.tableView.reloadData()
+        }
+        
+        let onHoldAction = UIAlertAction(title: "Add to On Hold", style: .default) { (action) in
+            
+            self.addToOnHold(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedAnime()
+            self.tableView.reloadData()
+        }
+        
+        let droppedAction = UIAlertAction(title: "Add to Dropped", style: .default) { (action) in
+            
+            self.addToDropped(name: name, malId: malId, imageURL: imageURL)
+            
+            self.getSavedAnime()
+            self.tableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        optionMenu.addAction(planToWatchAction)
+        optionMenu.addAction(watchingAction)
+        optionMenu.addAction(completedAction)
+        optionMenu.addAction(onHoldAction)
+        optionMenu.addAction(droppedAction)
+//        if checkIfSavedAtAll() == true {
+//            let removeAction = UIAlertAction(title: "Remove", style: .destructive) { (action) in
+//                self.removeFromEntity(indexPathRow: indexPathRow)
+//
+//
+//                let banner = StatusBarNotificationBanner(title: "\() removed successfully", style: .danger)
+//                banner.show()
+//            }
+//
+//            optionMenu.addAction(removeAction)
+//        }
+        optionMenu.addAction(cancelAction)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+
+            self.present(optionMenu, animated: true, completion: nil)
+        } else {
+            self.present(optionMenu, animated: true, completion: nil)
+        }
+    }
+    
+    func addToPlanToWatch(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(PlanToWatch.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let planToWatch = PlanToWatch(context: persistenceManager.context)
+            planToWatch.mal_id = malId
+            planToWatch.image_url = imageURL
+            planToWatch.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) added successfully", style: .success)
+            banner.show()
+            
+        }
+    }
+    
+    func addToWatching(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(Watching.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let watching = Watching(context: persistenceManager.context)
+            watching.mal_id = malId
+            watching.image_url = imageURL
+            watching.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) added successfully", style: .success)
+            banner.show()
+
+        }
+    }
+    
+    func addToCompleted(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(SavedAnime.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+
+            let savedAnime = SavedAnime(context: persistenceManager.context)
+            savedAnime.mal_id = malId
+            savedAnime.image_url = imageURL
+            savedAnime.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) added successfully", style: .success)
+            banner.show()
+
+        }
+    }
+    
+    func addToDropped(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(DroppedAnime.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+
+            let dropped = DroppedAnime(context: persistenceManager.context)
+            dropped.mal_id = malId
+            dropped.image_url = imageURL
+            dropped.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) added successfully", style: .success)
+            banner.show()
+
+        }
+    }
+    
+    func addToOnHold(name: String, malId: Float, imageURL: String) {
+        let checkIfSaved = persistenceManager.checkIfExists(OnHoldAnime.self, malId: malId, attributeName: "mal_id")
+        if checkIfSaved == true {
+
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) is already added", style: .info)
+            banner.show()
+        } else {
+            removeFromEntity(malId: malId)
+            
+            let onHold = OnHoldAnime(context: persistenceManager.context)
+            onHold.mal_id = malId
+            onHold.image_url = imageURL
+            onHold.name = name
+            
+            persistenceManager.save()
+            
+            let banner = StatusBarNotificationBanner(title: "\(String(describing: name)) added successfully", style: .success)
+            banner.show()
+
+        }
+    }
+    
+    func checkIfSavedAtAll() -> Bool {
+        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Watching.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: Float(selection), attributeName: "mal_id")
+        
+        
+        if isCompleted == true || isPlanToWatch == true || isWatching == true || isOnHold == true || isDropped == true {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func checkWhichEntityAnimeIsSavedIn(indexPathRow: Int) -> String {
+        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: Float(savedAnime[indexPathRow].mal_id), attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: Float(planToWatch[indexPathRow].mal_id), attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Watching.self, malId: Float(watching[indexPathRow].mal_id), attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: Float(onHoldAnime[indexPathRow].mal_id), attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: Float(droppedAnime[indexPathRow].mal_id), attributeName: "mal_id")
+        
+        if isCompleted == true {
+            return "Completed"
+        }
+        
+        if isPlanToWatch == true {
+            return "Plan to watch"
+        }
+        
+        if isWatching == true {
+            return "Watching"
+        }
+        
+        if isOnHold == true {
+            return "On hold"
+        }
+        
+        if isDropped == true {
+            return "Dropped"
+        }
+        
+        return ""
+    }
+    
+    func removeFromEntity(malId: Float) {
+        let isCompleted = persistenceManager.checkIfExists(SavedAnime.self, malId: malId, attributeName: "mal_id")
+        
+        let isPlanToWatch = persistenceManager.checkIfExists(PlanToWatch.self, malId: malId, attributeName: "mal_id")
+        
+        let isWatching = persistenceManager.checkIfExists(Watching.self, malId: malId, attributeName: "mal_id")
+        
+        let isOnHold = persistenceManager.checkIfExists(OnHoldAnime.self, malId: malId, attributeName: "mal_id")
+        
+        let isDropped = persistenceManager.checkIfExists(DroppedAnime.self, malId: malId, attributeName: "mal_id")
+        
+        if isCompleted == true {
+            deleteAnime(entity: SavedAnime.self, malId: malId)
+        }
+        
+        if isPlanToWatch == true {
+            deleteAnime(entity: PlanToWatch.self, malId: malId)
+        }
+        
+        if isWatching == true {
+            deleteAnime(entity: Watching.self, malId: malId)
+        }
+        
+        if isOnHold == true {
+            deleteAnime(entity: OnHoldAnime.self, malId: malId)
+        }
+        
+        if isDropped == true {
+            deleteAnime(entity: DroppedAnime.self, malId: malId)
+        }
+    }
+    
+    func deleteAnime<T: NSManagedObject>(entity: T.Type, malId: Float) {
+        persistenceManager.delete(entity.self, malId: malId)
     }
     
     func getSavedAnime() {
