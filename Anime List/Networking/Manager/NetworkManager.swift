@@ -233,6 +233,7 @@ struct NetworkManager {
             
             if let response = response as? HTTPURLResponse {
                 let result = self.handleNetworkResponse(response)
+                
                 switch result {
                 case .success:
                     guard let responseData = data else {
@@ -341,7 +342,7 @@ struct NetworkManager {
                         //print(jsonData)
                         let apiResponse = try JSONDecoder().decode(Anime.self, from: responseData)
                         completion(apiResponse, nil)
-                    }catch {
+                    } catch {
                         print(error)
                         completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }

@@ -151,7 +151,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         group.leave()
         
         group.enter()
-        let deadlineTime = DispatchTime.now() + 2.0
+        let deadlineTime = DispatchTime.now() + 3.0
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
             if self?.topUpcomingArray.count == 0 || self?.topRankedArray.count == 0 || self?.topAiringArray.count == 0 || self?.mostPopularArray.count == 0 {
                 self?.getAllData()
@@ -160,7 +160,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             
             group.enter()
-            if self?.topUpcomingArray.count == 0 || self?.topRankedArray.count == 0 || self?.topAiringArray.count == 0 || self?.mostPopularArray.count == 0 {
+            if self?.topUpcomingArray.count == 0 && self?.topRankedArray.count == 0 && self?.topAiringArray.count == 0 && self?.mostPopularArray.count == 0 {
                 let banner = StatusBarNotificationBanner(title: "Could not fetch anime, please try again later", style: .danger)
                 banner.show()
                 self?.activityIndicator.stopAnimating()
@@ -224,7 +224,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             if self?.topAiringArray.count == 0 {
                 group.enter()
                 

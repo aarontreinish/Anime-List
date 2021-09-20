@@ -228,7 +228,7 @@ class MangaViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             
             group.enter()
-            if self?.topFavoritesArray.count == 0 || self?.mostPopularArray.count == 0 || self?.topRankedArray.count == 0 {
+            if self?.topFavoritesArray.count == 0 && self?.mostPopularArray.count == 0 && self?.topRankedArray.count == 0 {
                 let banner = StatusBarNotificationBanner(title: "Could not fetch manga, please try again later", style: .danger)
                 banner.show()
                 self?.activityIndicator.stopAnimating()

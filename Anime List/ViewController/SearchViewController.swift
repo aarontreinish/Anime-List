@@ -203,6 +203,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print("searchText \(searchBar.text ?? "")")
         searchBar.resignFirstResponder()
         
+        animeResultsArray.removeAll()
+        mangaResultsArray.removeAll()
+        characterResultsArray.removeAll()
+        personResultsArray.removeAll()
+        
         if searchBar.text == "" {
             tableView.isHidden = true
         } else if containsSwearWord(text: searchBar.text ?? "", bannedWords: bannedSearchWords) == true {
